@@ -1,6 +1,6 @@
 import statsmodels.tsa.stattools as smts
 import statsmodels.api as sm
-
+import numpy as np
 import itertools
 
 def coint(df, intercept = True, sig_level = 0.01):
@@ -54,11 +54,51 @@ def coint(df, intercept = True, sig_level = 0.01):
 
     return cointegrated_pairs
 
-def distance(df, threshold = 10):
-    
-    
-    
+def normalize(p):
+    return (p - np.mean(p)) / np.std(p)
 
+def distance(df, n = 10):
+    """
+    Find the closest n pairs (of 2 time series) computed based on their normalized price.
+
+    Parameters
+    ----------
+    df: a dataframe, each column is the time series of a certain stock
+    n: the number maximum number of pairs to return
+
+    Return
+    ----------
+    A list of tuples of the form (name of stock 1, name of stock 2) sorted by distance in assending order.
+    """
+    
+    scores_to_pairs = []
+    
+    stock_names = df.columns.values.tolist()
+    N = len(stock_names)
+    
+    stock_pairs = list(itertools.combinations(stock_names, 2))
+    
+    for pair in stock_pairs:
+        stock_1, stock_2 = pair
+
+        p1 = df[stock_1].values
+        p2 = df[stock_2].values
+
+        p1 = normalize(p1)
+        p2 = normalize(p2)
+
+        diff = p1 - p2
+        dist = (diff * diff).sum()
+        scores_to_pairs.append((dist, pair))
+
+    scores_to_pairs = sorted(scores_to_pairs, key=lambda x: x[0])
+
+    print(scores_to_pairs[:10])
+
+    if len(scores_to_pairs) < n:
+        return [x[1] for x in scores_to_pairs]
+    else:
+        return [x[1] for x in scores_to_pairs[:n]]
 
 
 
