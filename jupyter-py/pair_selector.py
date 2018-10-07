@@ -7,23 +7,25 @@ import matplotlib.pyplot as plt
 def coint(df, intercept = True, sig_level = 0.01):
     """
     Find pairs (of 2 time series) that passes the cointegration test.
-    ----------
+
     Parameters
     ----------
-    df: a dataframe, each column is the time series of a certain stock
+    df: pandas dataframe
+        each column is the time series of a certain stock
     
-    intercept: 
+    intercept: boolean
         if True, OLS and ADF test are done manually
-        if False, the coint() function from statsmodels.tsa.stattools, which does not include 
-        intercept term while doing OLS regression, is used.
+        if False, the coint() function from statsmodels.tsa.stattools, which 
+        does not include intercept term while doing OLS regression, is used.
     
-    sig_level: if p_value of cointegration test is below this level, then we can reject
-    the NULL hypothesis, which says that the two series are not cointegrated
+    sig_level: if p_value of cointegration test is below this level, then we
+        can reject the NULL hypothesis, which says that the two series are not
+        cointegrated
     
-    ----------
     Return
-    ----------
-    A list of tuples of the form (name of stock 1, name of stock 2, p_value of cointegration test).
+    ------
+    A list of tuples of the form (name of stock 1, name of stock 2, p_value of
+    cointegration test).
     
     """
     cointegrated_pairs = []
@@ -71,17 +73,24 @@ def plot_two_series(x1, x2, label1, label2, title, plt_width=10, plt_height=5):
 
 def distance(train_df, test_df, n = 10, plot=True):
     """
-    Find the closest n pairs (of 2 time series) computed based on their normalized price.
+    Find the closest n pairs (of 2 time series) computed based on their
+    normalized price.
 
     Parameters
     ----------
-    train_df: a dataframe for training data, each column is the time series of a certain stock
-    test_df: a dataframe for testing data, each column is the time series of a certain stock
-    n: the number maximum number of pairs to return
+    train_df: pandas dataframe
+        for training data, each column is the time series of a certain stock
+    test_df: pandas dataframe
+        for testing data, each column is the time series of a certain stock
+    n: int
+        the number maximum number of pairs to return
+    plot: boolean
+        if True, plot the result for visualization. Do not plot otherwise
 
     Return
     ----------
-    A list of tuples of the form (name of stock 1, name of stock 2) sorted by distance in assending order.
+    A list of tuples of the form (name of stock 1, name of stock 2) sorted by
+    distance in assending order.
     """
     
     scores_to_pairs = []
@@ -116,7 +125,8 @@ def distance(train_df, test_df, n = 10, plot=True):
     # plot for eyeballing
     if plot == True:
         for pair in results:
-            plot_two_series(train_df[pair[0]], train_df[pair[1]], *pair, title='Training Phrase Data')
+            plot_two_series(train_df[pair[0]], train_df[pair[1]], *pair,
+                title='Training Phrase Data')
 
             P1, P2 = train_df[pair[0]].values, train_df[pair[1]].values
 
@@ -125,28 +135,37 @@ def distance(train_df, test_df, n = 10, plot=True):
 
             p1 = (train_df[pair[0]] - mean1) / std1
             p2 = (train_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair, title='Normalized Training Price Series')
+            plot_two_series(p1, p2, *pair,
+                title='Normalized Training Price Series')
 
             p1 = (test_df[pair[0]] - mean1) / std1
             p2 = (test_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair, title='Normalized Testing Price Series')
+            plot_two_series(p1, p2, *pair,
+                title='Normalized Testing Price Series')
 
     return results
 
 
 def intersection(train_df, test_df, n = 10, plot=True):
     """
-    Find the closest n pairs (of 2 time series) computed based on their normalized price.
+    Find the closest n pairs (of 2 time series) computed based on their
+    normalized price.
 
     Parameters
     ----------
-    train_df: a dataframe for training data, each column is the time series of a certain stock
-    test_df: a dataframe for testing data, each column is the time series of a certain stock
-    n: the number maximum number of pairs to return
+    train_df: pandas dataframe
+        for training data, each column is the time series of a certain stock
+    test_df: pandas dataframe
+        for testing data, each column is the time series of a certain stock
+    n: int
+        the number maximum number of pairs to return
+    plot: boolean
+        if True, plot the result for visualization. Do not plot otherwise
 
     Return
     ----------
-    A list of tuples of the form (name of stock 1, name of stock 2) sorted by distance in assending order.
+    A list of tuples of the form (name of stock 1, name of stock 2) sorted by
+    distance in assending order.
     """
     
     scores_to_pairs = []
@@ -204,7 +223,8 @@ def intersection(train_df, test_df, n = 10, plot=True):
     # plot for eyeballing
     if plot == True:
         for pair in results:
-            plot_two_series(train_df[pair[0]], train_df[pair[1]], *pair, title='Training Phrase Data')
+            plot_two_series(train_df[pair[0]], train_df[pair[1]], *pair,
+                title='Training Phrase Data')
 
             # P1, P2 = train_df[pair[0]].values, train_df[pair[1]].values
 
@@ -228,13 +248,14 @@ def intersection(train_df, test_df, n = 10, plot=True):
 
             p1 = (train_df[pair[0]] - mean1) / std1
             p2 = (train_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair, title='Normalized Training Price Series')
+            plot_two_series(p1, p2, *pair,
+                title='Normalized Training Price Series')
 
             p1 = (test_df[pair[0]] - mean1) / std1
             p2 = (test_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair, title='Normalized Testing Price Series')
+            plot_two_series(p1, p2, *pair,
+                title='Normalized Testing Price Series')
 
-    print('updatedddddd')
     return results
 
 
