@@ -117,6 +117,8 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
     
     stock_pairs = list(itertools.combinations(stock_names, 2))
     i = 0
+
+    # compute scores for all possible pairs
     for pair in stock_pairs:
         price_series = (train_df[pair[0]], train_df[pair[1]])
 
@@ -125,6 +127,8 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
 
         pairs.append(pair)
 
+    # obtain the result pairs by either thresholding the score or choose the
+    # first n pairs
     result_pairs = []
     if "threshold" in config:
         result_indices = np.where(scores < config['threshold'])
@@ -175,38 +179,7 @@ def plot_two_series(x1, x2, label1, label2, title, plt_width=10, plt_height=5):
     plt.legend(loc='best')
     plt.show()
 
-def distance(train_df, test_df, n = 10, plot=True):
-    """
-    Find the closest n pairs (of 2 time series) computed based on their
-    normalized price.
-
-    Parameters
-    ----------
-    train_df: pandas dataframe
-        for training data, each column is the time series of a certain stock
-    test_df: pandas dataframe
-        for testing data, each column is the time series of a certain stock
-    n: int
-        the number maximum number of pairs to return
-    plot: boolean
-        if True, plot the result for visualization. Do not plot otherwise
-
-    Return
-    ----------
-    A list of tuples of the form (name of stock 1, name of stock 2) sorted by
-    distance in assending order.
-    """
-    
-    scores_to_pairs = []
-    
-    stock_names = train_df.columns.values.tolist()
-    N = len(stock_names)
-    
-    stock_pairs = list(itertools.combinations(stock_names, 2))
-    
-    for pair in stock_pairs:
-        P1, P2 = train_df[pair[0]].values, train_df[pair[1]].values
-
+def distance_score(P1, P2):
         mean1, std1 = compute_stat(P1)
         mean2, std2 = compute_stat(P2)
 
@@ -215,22 +188,8 @@ def distance(train_df, test_df, n = 10, plot=True):
 
         # compute distance
         diff = p1 - p2
-        dist = (diff * diff).sum()
-        scores_to_pairs.append((dist, pair))
+        return (diff * diff).sum()
 
-    scores_to_pairs = sorted(scores_to_pairs, key=lambda x: x[0])
-
-    results = None
-    if len(scores_to_pairs) < n:
-        results = [x[1] for x in scores_to_pairs]
-    else:
-        results = [x[1] for x in scores_to_pairs[:n]]
-
-    # plot for eyeballing
-    if plot == True:
-        for pair in results:
-            plot_two_series(train_df[pair[0]], train_df[pair[1]], *pair,
-                title='Training Phrase Data')
 
             P1, P2 = train_df[pair[0]].values, train_df[pair[1]].values
 
@@ -248,6 +207,24 @@ def distance(train_df, test_df, n = 10, plot=True):
                 title='Normalized Testing Price Series')
 
     return results
+
+def distance_transform(training_pair, testing_pair):
+    training_P1, training_P2 = training_pair
+
+    # compute_stat should not change the series
+    mean1, std1 = compute_stat(training_pair[0])
+    mean2, std2 = compute_stat(training_pair[1])
+
+    p1 = (training_pair[0] - mean1) / std1
+    p2 = (training_pair[1] - mean2) / std2
+
+    trans_training = (p1, p2)
+
+    p1 = (testing_pair[0] - mean1) / std1
+    p2 = (testing_pair[1] - mean2) / std2
+
+    trans_testing = (p1, p2)
+    return trans_training, trans_testing
 
 
 def intersection(train_df, test_df, n = 10, plot=True):
