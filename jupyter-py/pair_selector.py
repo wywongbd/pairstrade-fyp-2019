@@ -57,6 +57,110 @@ def coint(df, intercept = True, sig_level = 0.01):
 
     return cointegrated_pairs
 
+def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
+    """
+    Find the desired pairs of stock name either by thresholding the score of
+    each pair or pick the first n pairs with the lowest score.
+
+    Parameters
+    ----------
+    train_df: pandas dataframe
+        For training data, each column is the time series of a stock
+    test_df: pandas dataframe
+        For testing data, each column is the time series of a stock
+    config: map
+        It should contains either "threshold" or "n". The value of "threshold"
+        will be used to determine whether a particular pair will be returned.
+        If the score of a pair is lower than the "threshold" value, the pair
+        will be returned as desired pair. The value of "n" will indicate the
+        maximum number of pairs to return. The n returned pairs have the lowest
+        scores.
+
+        It should also contain a function associated with the key
+        "score_function". The function should accept two series (in type pandas
+        Series or numpy arrays) and return a score. The lower the score is
+        indicates the better the pair are.
+
+        It should contain another function associated with the key 
+        "series_transform". The function should accept two pairs of series (in
+        type pandas Series or numpy arrays). The first pair consists of two
+        training price series and the second pair consists of two corresponding
+        testing price series. This function should return two pairs of
+        transformed series corresponding to the parameter pairs. Spread should
+        be formed by subtracting one series by another within the same pair.
+    plot: boolean
+        if True, plot the returned pairs for visualization. Do not plot
+        otherwise
+
+    Return
+    ----------
+    A list of tuples of the form (name of stock 1, name of stock 2) sorted by
+    distance in assending order.
+    """
+
+    # config checking
+    if ("threshold" in config) ^ ("n" in config):
+        raise Exception(
+            "Please include either the key 'threshold' or 'n' in config.")
+    elif "score_function" not in config:
+        raise Exception("Please include a key 'score_function' in config.")
+    elif "series_transform" not in config:
+        raise Exception("Please include a key 'series_transform' in config.")
+    score_function = config['score_function']
+    series_transform = config['series_transform']
+    
+    stock_names = train_df.columns.values.tolist()
+    N = len(stock_names)
+
+    scores = np.zeros(N)
+    pairs = []
+    
+    stock_pairs = list(itertools.combinations(stock_names, 2))
+    i = 0
+    for pair in stock_pairs:
+        price_series = (train_df[pair[0]], train_df[pair[1]])
+
+        score = score_function(*price_series)
+        scores[i] = score
+
+        pairs.append(pair)
+
+    result_pairs = []
+    if "threshold" in config:
+        result_indices = np.where(scores < config['threshold'])
+        for i in result_indices:
+            result_pairs.append(pairs[i])
+    else:
+        n = config['n']
+        if len(scores) > n:
+            first_n_indices = np.argpartition(scores, n)[:n]
+            for i in first_n_indices:
+                result_pairs.append(pairs[i])
+        else:
+            print('n is larger than the number of combinations of pairs!!!')
+            result_pairs = pairs
+
+
+    # plot for eyeballing
+    if plot == True:
+        for pair in result_pairs:
+            training_price_series = (train_df[pair[0]], train_df[pair[1]])
+            testing_price_series = (test_df[pair[0]], test_df[pair[1]])
+
+            trans_training_series, trans_testing_series = \
+                series_transform(training_price_series, testing_price_series)
+
+            plot_two_series(*price_series, *pair, title='Training Phrase Data')
+
+            plot_two_series(*trans_training_series, *pair,
+                title='Normalized Training Price Series')
+
+            plot_two_series(*trans_testing_series, *pair,
+                title='Normalized Testing Price Series')
+
+    return result_pairs
+
+
 def compute_stat(p):
     return np.mean(p), np.std(p)
 
