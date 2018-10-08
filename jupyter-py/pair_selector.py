@@ -126,6 +126,7 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
         scores[i] = score
 
         pairs.append(pair)
+        i += 1
 
     # obtain the result pairs by either thresholding the score or choose the
     # first n pairs
@@ -225,7 +226,6 @@ def distance_transform(training_pair, testing_pair):
 
     trans_testing = (p1, p2)
     return trans_training, trans_testing
-
 
 def intersection(train_df, test_df, n = 10, plot=True):
     """
