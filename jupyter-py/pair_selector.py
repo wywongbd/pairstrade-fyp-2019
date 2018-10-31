@@ -57,7 +57,7 @@ def coint(df, intercept = True, sig_level = 0.01):
 
     return cointegrated_pairs
 
-def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
+def select_pairs_for_all_combin(train_df, test_df, config, plot=True):
     """
     Find the desired pairs of stock name either by thresholding the score of
     each pair or pick the first n pairs with the lowest score.
@@ -98,8 +98,11 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
     distance in assending order.
     """
 
+    print(config)
+    print("n" in config)
+
     # config checking
-    if ("threshold" in config) ^ ("n" in config):
+    if not (("threshold" in config) ^ ("n" in config)):
         raise Exception(
             "Please include either the key 'threshold' or 'n' in config.")
     elif "score_function" not in config:
@@ -112,17 +115,17 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
     stock_names = train_df.columns.values.tolist()
     N = len(stock_names)
 
-    scores = np.zeros(N)
+    scores = np.zeros(N*(N-1)//2)
     pairs = []
     
-    stock_pairs = list(itertools.combinations(stock_names, 2))
-    i = 0
-
     # compute scores for all possible pairs
+    i = 0
+    stock_pairs = list(itertools.combinations(stock_names, 2))
     for pair in stock_pairs:
         price_series = (train_df[pair[0]], train_df[pair[1]])
 
-        score = score_function(*price_series)
+        # use the provided transform function before compute score
+        score = score_function(*series_transform(price_series))
         scores[i] = score
 
         pairs.append(pair)
@@ -133,14 +136,12 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
     result_pairs = []
     if "threshold" in config:
         result_indices = np.where(scores < config['threshold'])
-        for i in result_indices:
-            result_pairs.append(pairs[i])
+        result_pairs = [pairs[i] for i in result_indices]
     else:
         n = config['n']
         if len(scores) > n:
             first_n_indices = np.argpartition(scores, n)[:n]
-            for i in first_n_indices:
-                result_pairs.append(pairs[i])
+            result_pairs = [pairs[i] for i in first_n_indices]
         else:
             print('n is larger than the number of combinations of pairs!!!')
             result_pairs = pairs
@@ -155,7 +156,8 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
             trans_training_series, trans_testing_series = \
                 series_transform(training_price_series, testing_price_series)
 
-            plot_two_series(*price_series, *pair, title='Training Phrase Data')
+            plot_two_series(*price_series, *pair,
+                title='Training Phase Data')
 
             plot_two_series(*trans_training_series, *pair,
                 title='Normalized Training Price Series')
@@ -165,9 +167,6 @@ def select_pairs_for_all_combin(train_df, test_df, config, scoreF, plot=True):
 
     return result_pairs
 
-
-def compute_stat(p):
-    return np.mean(p), np.std(p)
 
 def plot_two_series(x1, x2, label1, label2, title, plt_width=10, plt_height=5):
     """
@@ -180,52 +179,41 @@ def plot_two_series(x1, x2, label1, label2, title, plt_width=10, plt_height=5):
     plt.legend(loc='best')
     plt.show()
 
-def distance_score(P1, P2):
-        mean1, std1 = compute_stat(P1)
-        mean2, std2 = compute_stat(P2)
-
-        p1 = (P1 - mean1) / std1
-        p2 = (P2 - mean2) / std2
-
-        # compute distance
-        diff = p1 - p2
-        return (diff * diff).sum()
+def distance_score(p1, p2):
+    # compute distance
+    diff = p1 - p2
+    return (diff * diff).sum()
 
 
-            P1, P2 = train_df[pair[0]].values, train_df[pair[1]].values
+def compute_stat(p):
+    return np.mean(p), np.std(p)
 
-            mean1, std1 = compute_stat(P1)
-            mean2, std2 = compute_stat(P2)
 
-            p1 = (train_df[pair[0]] - mean1) / std1
-            p2 = (train_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair,
-                title='Normalized Training Price Series')
-
-            p1 = (test_df[pair[0]] - mean1) / std1
-            p2 = (test_df[pair[1]] - mean2) / std2
-            plot_two_series(p1, p2, *pair,
-                title='Normalized Testing Price Series')
-
-    return results
-
-def distance_transform(training_pair, testing_pair):
+def distance_transform(training_pair, testing_pair=None):
     training_P1, training_P2 = training_pair
 
+    # log transform
+    training_P1, training_P2 = np.log(training_P1), np.log(training_P2)
+
     # compute_stat should not change the series
-    mean1, std1 = compute_stat(training_pair[0])
-    mean2, std2 = compute_stat(training_pair[1])
+    mean1, std1 = compute_stat(training_P1)
+    mean2, std2 = compute_stat(training_P2)
 
-    p1 = (training_pair[0] - mean1) / std1
-    p2 = (training_pair[1] - mean2) / std2
-
+    # normalize training
+    p1 = (training_P1 - mean1) / std1
+    p2 = (training_P2 - mean2) / std2
     trans_training = (p1, p2)
 
-    p1 = (testing_pair[0] - mean1) / std1
-    p2 = (testing_pair[1] - mean2) / std2
+    # normalize testing
+    if testing_pair != None:
+        p1 = (np.log(testing_pair[0]) - mean1) / std1
+        p2 = (np.log(testing_pair[1]) - mean2) / std2
+        trans_testing = (p1, p2)
 
-    trans_testing = (p1, p2)
-    return trans_training, trans_testing
+        # return a tuple if testing_pairs is provided
+        return trans_training, trans_testing
+
+    return trans_training
 
 def intersection(train_df, test_df, n = 10, plot=True):
     """
