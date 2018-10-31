@@ -165,16 +165,30 @@ def select_pairs_for_all_combin(train_df, test_df, config, plot=True):
             plot_two_series(*trans_testing_series, *pair,
                 title='Normalized Testing Price Series')
 
+            plot_spread(*trans_testing_series, *pair,
+                title='Normalized Testing Spread Series')
+
     return result_pairs
 
 
-def plot_two_series(x1, x2, label1, label2, title, plt_width=10, plt_height=5):
+def plot_two_series(x1, x2, label1, label2, title, plt_width=20, plt_height=5):
     """
     Helper function for visualizing two series
     """
     plt.rcParams['figure.figsize'] = [plt_width, plt_height]
-    plt.plot(x1, label=label1)
-    plt.plot(x2, label=label2)
+    plt.plot(x1, marker='.', label=label1)
+    plt.plot(x2, marker='.', label=label2)
+    plt.title(title)
+    plt.legend(loc='best')
+    plt.show()
+
+
+def plot_spread(x1, x2, label1, label2, title, plt_width=20, plt_height=5):
+    """
+    Helper function for visualizing two series
+    """
+    plt.rcParams['figure.figsize'] = [plt_width, plt_height]
+    plt.plot(x1-x2, marker='.', label=label1)
     plt.title(title)
     plt.legend(loc='best')
     plt.show()
@@ -192,9 +206,6 @@ def compute_stat(p):
 def distance_transform(training_pair, testing_pair=None):
     training_P1, training_P2 = training_pair
 
-    # log transform
-    training_P1, training_P2 = np.log(training_P1), np.log(training_P2)
-
     # compute_stat should not change the series
     mean1, std1 = compute_stat(training_P1)
     mean2, std2 = compute_stat(training_P2)
@@ -206,8 +217,8 @@ def distance_transform(training_pair, testing_pair=None):
 
     # normalize testing
     if testing_pair != None:
-        p1 = (np.log(testing_pair[0]) - mean1) / std1
-        p2 = (np.log(testing_pair[1]) - mean2) / std2
+        p1 = (testing_pair[0] - mean1) / std1
+        p2 = (testing_pair[1] - mean2) / std2
         trans_testing = (p1, p2)
 
         # return a tuple if testing_pairs is provided
