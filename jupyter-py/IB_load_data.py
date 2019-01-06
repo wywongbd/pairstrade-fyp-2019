@@ -218,7 +218,8 @@ class TestClient(EClient):
         return resolved_ibcontract
 
 
-    def get_IB_historical_data(self, ibcontract, durationStr="5 D", barSizeSetting="5 mins",
+    def get_IB_historical_data(self, ibcontract, durationStr="5 D", barSizeSetting="5 mins", 
+                               endDateTime=datetime.datetime.today(),
                                tickerid=DEFAULT_HISTORIC_DATA_ID):
 
         """
@@ -226,8 +227,6 @@ class TestClient(EClient):
         ibcontract is a Contract
         :returns list of prices in 4 tuples: Open high low close volume
         """
-
-
         ## Make a place to store the data we're going to return
         historic_data_queue = finishableQueue(self.init_historicprices(tickerid))
 
@@ -235,7 +234,7 @@ class TestClient(EClient):
         self.reqHistoricalData(
             tickerid,  # tickerId,
             ibcontract,  # contract,
-            datetime.datetime.today().strftime("%Y%m%d %H:%M:%S %Z"),  # endDateTime,
+            endDateTime.strftime("%Y%m%d %H:%M:%S"),  # endDateTime,
             durationStr,  # durationStr,
             barSizeSetting,  # barSizeSetting,
             "Midpoint",  # whatToShow,
