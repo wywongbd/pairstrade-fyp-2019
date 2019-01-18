@@ -98,9 +98,6 @@ def select_pairs_for_all_combin(train_df, test_df, config, plot=True):
     distance in assending order.
     """
 
-    print(config)
-    print("n" in config)
-
     # config checking
     if not (("threshold" in config) ^ ("n" in config)):
         raise Exception(
