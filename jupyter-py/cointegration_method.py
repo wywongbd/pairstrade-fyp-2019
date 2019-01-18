@@ -15,93 +15,7 @@ import backtrader as bt
 import backtrader.feeds as btfeeds
 import backtrader.indicators as btind
 
-
-class Metrics(bt.Analyzer):
-    params = dict(
-        lookback=10,
-    )
-
-    def __init__(self):
-        super(Metrics, self).__init__()
-
-        self.pv = []
-        self.status = []
-        self.returns = None
-
-        ###############################################################
-        #  Trade statistics                                           #
-        ###############################################################
-
-        # number of resolved trades
-        self.n_trades = 0
-
-        # a trade (long or short) is not resolved if the position hasn't changed until the end of backtest 
-        self.n_resolved_trades = 0
-        self.n_unresolved_trades = 0
-
-        # average holding period of resolved trades, -1 if there aren't any
-        self.avg_holding_period = -1
-
-        # length of unresolved trade, -1 if there aren't any
-        self.len_unresolved_trade = -1
-
-    def start(self):
-        pass
-
-    def next(self):
-        if min(len(self.strategy.data0), len(self.strategy.data1)) >= self.p.lookback:
-            self.pv.append(self.strategy.broker.getvalue())
-            self.status.append(self.strategy.status)
-            
-    def stop(self):
-        # convert lists to series
-        self.pv = pd.Series(self.pv)
-        
-        # calculate returns
-        self.returns = self.pv.diff()[1:]
-        
-        # calculate number of trades
-        self.compute_trade_statistics()
-        
-    def compute_trade_statistics(self):
-        _n = 0
-        _mean = 0
-        _counter = 0
-        _curstate = 0
-        
-        for i, status in enumerate(self.status):
-            if _curstate == 0:
-                if status == 0:
-                    continue
-                else:
-                    # entered position
-                    _curstate = status
-                    _counter = 1
-                    
-            else:
-                if status == 0 or status != _curstate:
-                    # changed position
-                    _mean = (_n * _mean + _counter) / float(_n + 1)
-                    _n += 1
-                    _counter = 1
-                    _curstate = status
-                    
-                elif status == _curstate:
-                    _counter += 1
-        
-        self.n_resolved_trades = _n 
-        self.n_unresolved_trades = 0 if (_curstate == 0) else 1
-        self.n_trades = self.n_resolved_trades + self.n_unresolved_trades
-        self.avg_holding_period = _mean if (self.n_resolved_trades > 0) else -1
-        self.len_unresolved_trade = _counter if (self.n_unresolved_trades == 1) else -1
-        
-    def portfolio_value(self):
-        return self.pv
-
-    def returns_std(self):
-        return self.returns.std()
-
-class DistanceStrategy(bt.Strategy):
+class CointStrategy(bt.Strategy):
     params = dict (
         lookback=84,
         max_lookback=84,
@@ -121,7 +35,6 @@ class DistanceStrategy(bt.Strategy):
         self.max_lookback = self.p.max_lookback
         self.enter_threshold_size = self.p.enter_threshold_size
         self.exit_threshold_size = self.p.exit_threshold_size
-        self.exposure = 200000
         
         # Parameters for printing
         self.print_bar = self.p.print_bar
@@ -129,6 +42,10 @@ class DistanceStrategy(bt.Strategy):
         self.print_transaction = self.p.print_transaction
             
         # signals
+        self.zscore = None
+        self.adf_pvalue = None
+        self.intercept = None
+        self.slope = None
         self.resid_mean = None
         self.resid_std = None
         self.spread = None
@@ -192,9 +109,12 @@ class DistanceStrategy(bt.Strategy):
         Y = pd.Series(self.data0.get(size=self.lookback, ago=0))
         X = pd.Series(self.data1.get(size=self.lookback, ago=0))
         
-        self.spread = (self.data0[0] - self.data1[0])
-        
         if self.status == 0:
+        	log_Y = np.log(Y)
+        	log_X = np.log(X)
+
+        	
+        	'''
             self.spread_mean = (Y - X).mean()
             self.spread_std = (Y - X).std()
 
@@ -202,6 +122,9 @@ class DistanceStrategy(bt.Strategy):
             self.lower_limit = self.spread_mean - self.enter_threshold_size * self.spread_std
             self.up_medium = self.spread_mean + self.exit_threshold_size * self.spread_std
             self.low_medium = self.spread_mean - self.exit_threshold_size * self.spread_std
+            '''
+
+        self.spread = (self.data0[0] - self.data1[0])
     
         ##################################################################################################
         # STRATEGY LOGIC                                                                                 #
@@ -328,9 +251,6 @@ class DistanceStrategy(bt.Strategy):
         commission = min(max(1, 0.005*qty), 0.01*price*qty)
         self.broker.add_cash(-1*commission)
     
-    def incur_borrow_cost(self, ):
-        pass
-
     def stop(self):
         if self.print_bar:
             print("-", end="")
