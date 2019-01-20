@@ -121,7 +121,6 @@ class DistanceStrategy(bt.Strategy):
         self.max_lookback = self.p.max_lookback
         self.enter_threshold_size = self.p.enter_threshold_size
         self.exit_threshold_size = self.p.exit_threshold_size
-        self.exposure = 200000
         
         # Parameters for printing
         self.print_bar = self.p.print_bar
@@ -217,6 +216,8 @@ class DistanceStrategy(bt.Strategy):
         elif self.status == 1:
             # "SHORT the spread" status
             # short data0, long data1
+
+            # self.incur_borrow_cost(self.initial_price_data0, self.qty0)
             
             if self.spread < self.lower_limit:
                 self.long_spread()
@@ -239,6 +240,8 @@ class DistanceStrategy(bt.Strategy):
         elif self.status == 2:
             # "LONG the spread" status
             # short data1, long data0
+
+            # self.incur_borrow_cost(self.initial_price_data1, self.qty1)
             
             if self.spread > self.upper_limit:
                 self.short_spread()
@@ -328,8 +331,10 @@ class DistanceStrategy(bt.Strategy):
         commission = min(max(1, 0.005*qty), 0.01*price*qty)
         self.broker.add_cash(-1*commission)
     
-    def incur_borrow_cost(self, ):
-        pass
+    def incur_borrow_cost(self, price, qty):
+        # 0.25 percent (annualized) borrow cost
+        cost = 0.0025 * abs(qty) * price / 365.0
+        self.broker.add_cash(-1*cost) 
 
     def stop(self):
         if self.print_bar:
