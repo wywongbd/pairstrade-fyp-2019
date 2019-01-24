@@ -49,10 +49,11 @@ def coint(df, intercept = True, sig_level = 0.01):
 
             model = sm.OLS(Y, X)
             results = model.fit()
+            intercept, slope = results.params
 
             p_value = smts.adfuller(results.resid)[1]
 
-        if p_value < sig_level:
+        if p_value < sig_level and slope > 0:
             cointegrated_pairs.append(tuple([stock_1, stock_2, p_value]))
 
     return cointegrated_pairs
