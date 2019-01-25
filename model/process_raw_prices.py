@@ -23,9 +23,21 @@ def compute_intercept_and_pvalue(p1, p2):
     return (np.mean(Y - X), smts.adfuller(Y - X)[1])
 
 
+def compute_alpha_beta(Y, X):
+    ln_Y = np.log(Y)
+    ln_X = np.log(X)
+    _X = sm.add_constant(ln_X)
+
+    model = sm.OLS(ln_Y, _X)
+    results = model.fit()
+    beta, alpha = results.params
+    return alpha, beta
+
+
 def generate_pair_df(df1, df2, training_period=52):
     df1_train, df1_test = df1[:training_period], df1[training_period:]
     df2_train, df2_test = df2[:training_period], df2[training_period:]
+    testing_period = len(df1_test)
 
     intercept, pvalue = compute_intercept_and_pvalue(df1_train['close'], df2_train['close'])
 
@@ -64,6 +76,18 @@ def generate_pair_df(df1, df2, training_period=52):
     df_combined["low2"] = df2_test["low"]
     df_combined["close2"] = df2_test["close"]
     df_combined["logClose2"] = np.log(df2_test["close"])
+
+    alpha_t, beta_t = [], []
+    for i in range(testing_period):
+        current_t = training_period + i
+        df1_window = df1[current_t-training_period:current_t]['close']
+        df2_window = df1[current_t-training_period:current_t]['close']
+        a, b = compute_alpha_beta(df1_window, df2_window)
+        alpha_t.append(a)
+        beta_t.append(b)
+
+    df_combined["alpha"] = pd.Series(alpha_t)
+    df_combined["beta"] = pd.Series(beta_t)
 
     return df_combined
 
