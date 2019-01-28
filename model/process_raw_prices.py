@@ -15,84 +15,121 @@ def get_filename_without_ext(path):
     return os.path.splitext(filename)[0]
 
 
-def compute_intercept_and_pvalue(p1, p2):
-    # log Y = intercept + log X + c
-    Y, X = pd.Series(np.log(p1)), pd.Series(np.log(p2))
+# def compute_intercept_and_pvalue(p1, p2):
+#     # log Y = intercept + log X + c
+#     Y, X = pd.Series(np.log(p1)), pd.Series(np.log(p2))
 
-    # returns (intercept, pvalue)
-    return (np.mean(Y - X), smts.adfuller(Y - X)[1])
+#     # returns (intercept, pvalue)
+#     return (np.mean(Y - X), smts.adfuller(Y - X)[1])
 
 
 def compute_alpha_beta(Y, X):
-    ln_Y = np.log(Y)
-    ln_X = np.log(X)
-    _X = sm.add_constant(ln_X)
+    _X = sm.add_constant(X)
 
-    model = sm.OLS(ln_Y, _X)
+    model = sm.OLS(Y, _X)
     results = model.fit()
     beta, alpha = results.params
     return alpha, beta
 
 
+def normalize_array(arr, train_arr):
+    return (arr - np.mean(arr))/np.std(train_arr)
+
+
+# def normalize_log_close(df, training_period):
+#     return normalize_array(df['logClose'].values, df[:training_period]['logClose'].values)
+
+
+def split_train_test(df, training_period):
+    return df[:training_period], df[training_period:]
+
+
+def compute_spread(Y, X, alpha, beta):
+    return Y - alpha*X - beta
+
+
+def compute_rolling_data(arrs, training_period, data_num, func):
+    # assume all arrs are of the same length
+    testing_period = len(arrs[0]) - training_period
+    # initialize empty stats
+    stats = np.zeros((data_num, testing_period))
+    # use rolling windows
+    for i in range(testing_period):
+        windows_with_curr_val = [arr[i:training_period+i+1] for arr in arrs]
+        stats[:, i] = func(*windows_with_curr_val)
+    
+    if data_num == 1:
+        return stats[0]
+    else:
+        return stats
+
+
+def compute_alpha_beta_exclude_current(Y, X):
+    return compute_alpha_beta(Y[:-1], X[:-1])
+
+
+def compute_rolling_alpha_beta(df1, df2, training_period):
+    return compute_rolling_data(
+        [df1['normalizedLogClose'].values, df2['normalizedLogClose'].values],
+        training_period, 2, compute_alpha_beta_exclude_current
+    )
+
+
+def compute_normalize_current(arr):
+    return (arr[-1] - np.mean(arr[:-1]))/np.std(arr[:-1])
+
+
+def compute_rolling_normalization(df, training_period):
+    return compute_rolling_data(
+        [df['logClose'].values],
+        training_period, 1, compute_normalize_current
+    )
+
+
 def generate_pair_df(df1, df2, training_period=52):
-    df1_train, df1_test = df1[:training_period], df1[training_period:]
-    df2_train, df2_test = df2[:training_period], df2[training_period:]
-    testing_period = len(df1_test)
+    # assume df1 and df2 have the same length and dates
+    
+    # compute log price
+    df1['logClose'] = np.log(df1['close'].values)
+    df2['logClose'] = np.log(df2['close'].values)
+    
+    df1_train, df1_test = split_train_test(df1, training_period)
+    df2_train, df2_test = split_train_test(df2, training_period)
 
-    intercept, pvalue = compute_intercept_and_pvalue(df1_train['close'], df2_train['close'])
-
+    # the resulting df
     df_combined = pd.DataFrame()
 
     # date
-    df_combined["date"] = df1_test["date"]
+    df_combined["date"] = df1_test["date"].values
+    
+    # raw prices
+    df_combined['close1'] = df1_test["close"].values
+    df_combined['close2'] = df2_test["close"].values
 
-    # # datetime features
-    # df_combined['year'] = df1_test['year']
-    # df_combined['monthOfYear'] = df1_test['monthOfYear']
-    # df_combined['dayOfMonth'] = df1_test['dayOfMonth']
-    # df_combined['hourOfDay'] = df1_test['hourOfDay']
-    # df_combined['minuteOfHour'] = df1_test['minuteOfHour']
-    # df_combined['dayOfWeek'] = df1_test['dayOfWeek']
-    # df_combined['dayOfYear'] = df1_test['dayOfYear']
-    # df_combined['weekOfYear'] = df1_test['weekOfYear']
-    # df_combined['isHoliday'] = df1_test['isHoliday']
-    # df_combined['prevDayIsHoliday'] = df1_test['prevDayIsHoliday']
-    # df_combined['nextDayIsHoliday'] = df1_test['nextDayIsHoliday']
-
-    # spread and pvalue
-    df_combined["spread"] = pd.Series(np.log(df1_test['close']) - np.log(df2_test['close']) - intercept)
-    df_combined["zscore"] = (df_combined["spread"] - np.mean(df_combined["spread"])) / np.std(df_combined["spread"])
-    df_combined["pvalue"] = pvalue
-
-    # price information of both stocks
-    df_combined["open1"] = df1_test["open"]
-    df_combined["high1"] = df1_test["high"]
-    df_combined["low1"] = df1_test["low"]
-    df_combined["close1"] = df1_test["close"]
-    df_combined["logClose1"] = np.log(df1_test["close"])
-
-    df_combined["open2"] = df2_test["open"]
-    df_combined["high2"] = df2_test["high"]
-    df_combined["low2"] = df2_test["low"]
-    df_combined["close2"] = df2_test["close"]
-    df_combined["logClose2"] = np.log(df2_test["close"])
-
-    alpha_t, beta_t = [], []
-    for i in range(testing_period):
-        current_t = training_period + i
-        df1_window = df1[current_t-training_period:current_t]['close']
-        df2_window = df1[current_t-training_period:current_t]['close']
-        a, b = compute_alpha_beta(df1_window, df2_window)
-        alpha_t.append(a)
-        beta_t.append(b)
-
-    df_combined["alpha"] = pd.Series(alpha_t)
-    df_combined["beta"] = pd.Series(beta_t)
+    # rolling normalized log price
+    df_combined['normalizedLogClose1'] = compute_rolling_normalization(df1, training_period)
+    df_combined['normalizedLogClose2'] = compute_rolling_normalization(df2, training_period)
+    df1_train_log_close = df1_train['logClose'].values
+    df2_train_log_close = df2_train['logClose'].values
+    df1['normalizedLogClose'] = np.concatenate((normalize_array(df1_train_log_close, df1_train_log_close),
+                                                df_combined['normalizedLogClose1']))
+    df2['normalizedLogClose'] = np.concatenate((normalize_array(df2_train_log_close, df2_train_log_close),
+                                                df_combined['normalizedLogClose2']))
+    
+    # rolling computed alpha and beta
+    df_combined["alpha"], df_combined["beta"] = compute_rolling_alpha_beta(df1, df2, training_period)
+    
+    df_combined["spread"] = compute_spread(df_combined['normalizedLogClose1'].values,
+                                           df_combined['normalizedLogClose2'].values,
+                                           df_combined["alpha"].values,
+                                           df_combined["beta"].values)
+    
+#     df_combined["zscore"] = normalize_array(df_combined["spread"].values, train_spread)
 
     return df_combined
 
 
-def generate_pairs_training_data(raw_files_path_pattern="../../dataset/nyse-daily/*.csv",
+def generate_pairs_training_data(raw_files_path_pattern,
                                  result_path="../../dataset/nyse-daily-transformed",
                                  points_per_cut=252, min_size=252*4, training_period=52):
 
@@ -113,7 +150,7 @@ def generate_pairs_training_data(raw_files_path_pattern="../../dataset/nyse-dail
         if len(df) >= min_size:
             data[filename_without_ext] = df
             N_STOCKS_TAKEN += 1
-    print("Collected %d stocks with the same length of history." % N_STOCKS_TAKEN)
+    print("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
 
     stocks = list(data.keys())
     TOTAL_NUM_OF_PAIRS = len(stocks) * (len(stocks)-1) // 2
