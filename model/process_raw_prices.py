@@ -36,8 +36,8 @@ def normalize_array(arr, train_arr):
     return (arr - np.mean(arr))/np.std(train_arr)
 
 
-# def normalize_log_close(df, training_period):
-#     return normalize_array(df['logClose'].values, df[:training_period]['logClose'].values)
+def normalize_log_close(df, training_period):
+    return normalize_array(df['logClose'].values, df[:training_period]['logClose'].values)
 
 
 def split_train_test(df, training_period):
@@ -75,15 +75,15 @@ def compute_rolling_alpha_beta(df1, df2, training_period):
     )
 
 
-def compute_normalize_current(arr):
-    return (arr[-1] - np.mean(arr[:-1]))/np.std(arr[:-1])
+# def compute_normalize_current(arr):
+#     return (arr[-1] - np.mean(arr[:-1]))/np.std(arr[:-1])
 
 
-def compute_rolling_normalization(df, training_period):
-    return compute_rolling_data(
-        [df['logClose'].values],
-        training_period, 1, compute_normalize_current
-    )
+# def compute_rolling_normalization(df, training_period):
+#     return compute_rolling_data(
+#         [df['logClose'].values],
+#         training_period, 1, compute_normalize_current
+#     )
 
 
 def generate_pair_df(df1, df2, training_period=52):
@@ -92,6 +92,9 @@ def generate_pair_df(df1, df2, training_period=52):
     # compute log price
     df1['logClose'] = np.log(df1['close'].values)
     df2['logClose'] = np.log(df2['close'].values)
+    
+    df1['normalizedLogClose'] = normalize_log_close(df1, training_period)
+    df2['normalizedLogClose'] = normalize_log_close(df2, training_period)
     
     df1_train, df1_test = split_train_test(df1, training_period)
     df2_train, df2_test = split_train_test(df2, training_period)
@@ -107,14 +110,8 @@ def generate_pair_df(df1, df2, training_period=52):
     df_combined['close2'] = df2_test["close"].values
 
     # rolling normalized log price
-    df_combined['normalizedLogClose1'] = compute_rolling_normalization(df1, training_period)
-    df_combined['normalizedLogClose2'] = compute_rolling_normalization(df2, training_period)
-    df1_train_log_close = df1_train['logClose'].values
-    df2_train_log_close = df2_train['logClose'].values
-    df1['normalizedLogClose'] = np.concatenate((normalize_array(df1_train_log_close, df1_train_log_close),
-                                                df_combined['normalizedLogClose1']))
-    df2['normalizedLogClose'] = np.concatenate((normalize_array(df2_train_log_close, df2_train_log_close),
-                                                df_combined['normalizedLogClose2']))
+    df_combined['normalizedLogClose1'] = df1_test['normalizedLogClose'].values
+    df_combined['normalizedLogClose2'] = df2_test['normalizedLogClose'].values
     
     # rolling computed alpha and beta
     df_combined["alpha"], df_combined["beta"] = compute_rolling_alpha_beta(df1, df2, training_period)
