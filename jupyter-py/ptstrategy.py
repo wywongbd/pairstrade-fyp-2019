@@ -56,6 +56,7 @@ class PTStrategy(bt.Strategy):
         self.lower_limit = None
         self.up_medium = None
         self.low_medium = None
+        self.allow_trade = True
 
     #######################################################################################
     @staticmethod
@@ -88,9 +89,9 @@ class PTStrategy(bt.Strategy):
 	#######################################################################################
     def next(self):
         # this is important for grid search, to ensure all trading strats start together
-        if min(len(self.data0), len(self.data1)) < self.max_lookback:
+        if min(len(self.data0), len(self.data1)) <= self.max_lookback:
             return
-
+        
         # if an order is active, no new orders are allowed
         if self.orderid:
             return  
@@ -98,12 +99,13 @@ class PTStrategy(bt.Strategy):
         ###################################################################################
         # COMPUTE UPPER AND LOWER LIMITS                                                  #
         ###################################################################################
-        if self.status == 0 or True:
+        if self.status == 0:
             self.update_enter_exit_levels()
         ###################################################################################
         # STRATEGY LOGIC                                                                  #
         ###################################################################################
-        self.run_trade_logic()
+        if self.allow_trade:
+            self.run_trade_logic()
 
     def short_spread(self):
         x = int((2 * self.broker.getvalue() / 3.0) / (self.data0.close[0]))  
