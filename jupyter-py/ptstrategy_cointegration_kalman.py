@@ -85,11 +85,11 @@ class CointKalmanStrategy(PTStrategy):
 
         if self.status == 0:
             # "NO position" status
-            # alpha must be > 0 to take position!!
+            # alpha must be > 0 to take position?
 
-            if spread > self.upper_limit:
+            if spread > self.upper_limit and self.alpha > 0:
                 self.short_spread()
-            elif spread < self.lower_limit:
+            elif spread < self.lower_limit and self.alpha > 0:
                 self.long_spread()
 
         elif self.status == 1:
@@ -98,8 +98,11 @@ class CointKalmanStrategy(PTStrategy):
             if self.consider_borrow_cost: 
                 PTStrategy.incur_borrow_cost(self.initial_price_data0, self.qty0)
             
-            if spread < self.lower_limit:
+            if spread < self.lower_limit and self.alpha > 0:
                 self.long_spread()
+                
+            elif spread < self.lower_limit and self.alpha <= 0:
+                self.exit_spread()
                 
             elif spread < self.up_medium:
                 self.exit_spread()
@@ -122,8 +125,11 @@ class CointKalmanStrategy(PTStrategy):
             if self.consider_borrow_cost: 
                 self.incur_borrow_cost(self.initial_price_data1, self.qty1)
             
-            if spread > self.upper_limit:
+            if spread > self.upper_limit and self.alpha > 0:
                 self.short_spread()
+            
+            elif spread > self.upper_limit and self.alpha <= 0:
+                self.exit_spread()
                 
             elif spread > self.low_medium:
                 self.exit_spread()
