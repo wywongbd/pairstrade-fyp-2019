@@ -41,11 +41,11 @@ class CointStrategy(PTStrategy):
 
         if self.status == 0:
             # "NO position" status
-            # alpha must be > 0 to take position!!
+            # alpha must be > 0 to take position?
 
-            if spread > self.upper_limit and self.alpha > 0:
+            if spread > self.upper_limit:
                 self.short_spread()
-            elif spread < self.lower_limit and self.alpha > 0:
+            elif spread < self.lower_limit:
                 self.long_spread()
 
         elif self.status == 1:
@@ -56,7 +56,7 @@ class CointStrategy(PTStrategy):
             
             if spread < self.lower_limit:
                 self.long_spread()
-                
+
             elif spread < self.up_medium:
                 self.exit_spread()
             

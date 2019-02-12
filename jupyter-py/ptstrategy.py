@@ -20,6 +20,7 @@ class PTStrategy(bt.Strategy):
         exit_threshold_size = 0.5,
         loss_limit = -0.015,
         consider_borrow_cost = False,
+        consider_commission = False,
         print_bar = True,
         print_msg = False,
         print_transaction = False,
@@ -37,6 +38,7 @@ class PTStrategy(bt.Strategy):
         self.exit_threshold_size = self.p.exit_threshold_size
         self.loss_limit = self.p.loss_limit
         self.consider_borrow_cost = self.p.consider_borrow_cost
+        self.consider_commission = self.p.consider_commission
 
         # Parameters for printing
         self.print_bar = self.p.print_bar
@@ -176,15 +178,18 @@ class PTStrategy(bt.Strategy):
                 
                 if self.print_transaction:
                     PTStrategy.log(buytxt, order.executed.dt)
+                
+                if self.consider_commission:
+                    self.incur_commission(order.executed.price, order.executed.size)
                     
-                self.incur_commission(order.executed.price, order.executed.size)
             else:
                 selltxt = 'SELL COMPLETE, %.2f' % order.executed.price
                 
                 if self.print_transaction:
                     PTStrategy.log(selltxt, order.executed.dt)
                     
-                self.incur_commission(order.executed.price, order.executed.size)
+                if self.consider_commission:
+                    self.incur_commission(order.executed.price, order.executed.size)
 
         elif order.status in [order.Expired, order.Canceled, order.Margin]:
             if self.print_transaction:
