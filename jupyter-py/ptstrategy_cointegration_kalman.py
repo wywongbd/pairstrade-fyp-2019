@@ -98,11 +98,8 @@ class CointKalmanStrategy(PTStrategy):
             if self.consider_borrow_cost: 
                 PTStrategy.incur_borrow_cost(self.initial_price_data0, self.qty0)
             
-            if spread < self.lower_limit and self.alpha > 0:
+            if spread < self.lower_limit:
                 self.long_spread()
-                
-            elif spread < self.lower_limit and self.alpha <= 0:
-                self.exit_spread()
                 
             elif spread < self.up_medium:
                 self.exit_spread()
@@ -125,11 +122,8 @@ class CointKalmanStrategy(PTStrategy):
             if self.consider_borrow_cost: 
                 self.incur_borrow_cost(self.initial_price_data1, self.qty1)
             
-            if spread > self.upper_limit and self.alpha > 0:
+            if spread > self.upper_limit:
                 self.short_spread()
-            
-            elif spread > self.upper_limit and self.alpha <= 0:
-                self.exit_spread()
                 
             elif spread > self.low_medium:
                 self.exit_spread()
