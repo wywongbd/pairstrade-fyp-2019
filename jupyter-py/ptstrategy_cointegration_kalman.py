@@ -85,11 +85,11 @@ class CointKalmanStrategy(PTStrategy):
 
         if self.status == 0:
             # "NO position" status
-            # alpha must be > 0 to take position!!
+            # alpha must be > 0 to take position?
 
-            if spread > self.upper_limit:
+            if spread > self.upper_limit and self.alpha > 0:
                 self.short_spread()
-            elif spread < self.lower_limit:
+            elif spread < self.lower_limit and self.alpha > 0:
                 self.long_spread()
 
         elif self.status == 1:
