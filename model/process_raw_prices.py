@@ -9,6 +9,8 @@ import statsmodels.api as sm
 
 import itertools
 
+import time
+
 
 def get_filename_without_ext(path):
     filename = os.path.basename(path)
@@ -124,6 +126,54 @@ def generate_pair_df(df1, df2, training_period=52):
 #     df_combined["zscore"] = normalize_array(df_combined["spread"].values, train_spread)
 
     return df_combined
+
+
+def generate_pairs_data(raw_files_path_pattern,
+                        result_path="../../dataset/nyse-daily-transformed-1",
+                        points_per_cut=[252,500+52], training_period=52):
+    min_size = sum(points_per_cut)
+
+    nyse_csv_paths = sorted(glob.glob(raw_files_path_pattern))
+    print("Collected %d stocks in raw data." % len(nyse_csv_paths))
+
+    data = {}
+    N_STOCKS_TAKEN = 0
+
+    for path in nyse_csv_paths:
+        filename_without_ext = get_filename_without_ext(path)
+
+        # read the csv file as dataframe
+        df = pd.read_csv(path)
+        df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+
+        # if price history is long enough, we take it
+        if len(df) >= min_size:
+            data[filename_without_ext] = df
+            N_STOCKS_TAKEN += 1
+    print("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
+
+    stocks = list(data.keys())
+    TOTAL_NUM_OF_PAIRS = len(stocks) * (len(stocks)-1) // 2
+    i = 1
+    start_time = time.time()
+    for stk1, stk2 in itertools.combinations(stocks, 2):
+        df1, df2 = data[stk1], data[stk2]
+
+        for j in range(len(points_per_cut)):
+            start_ind = sum(points_per_cut[:j])
+            df1_slice = df1[start_ind:start_ind+points_per_cut[j]]
+            df2_slice = df2[start_ind:start_ind+points_per_cut[j]]
+
+            df3 = generate_pair_df(df1_slice, df2_slice, training_period=training_period)
+
+            PATH = stk1 + "-" + stk2 + "-" + str(j)
+            df3.to_csv(path_or_buf=os.path.join(result_path, PATH+".csv"), index=False)
+        
+        if i % 100 == 0:
+            # print message
+            print((str(i) + "/" + str(TOTAL_NUM_OF_PAIRS) + " completed. time_spent: {:.1f}s").format(time.time()-start_time))
+            start_time = time.time()
+        i += 1
 
 
 def generate_pairs_training_data(raw_files_path_pattern,
