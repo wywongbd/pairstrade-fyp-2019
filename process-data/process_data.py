@@ -27,6 +27,13 @@ def my_read_csv(p):
 
 
 def recreate_dir(folder):
+    if folder == None:
+        raise Exception('folder cannot be None.')
+    elif len(folder) == 0:
+        raise Exception('folder cannot be empty string.')
+    elif False not in [c == '/' for c in list(folder)]:
+        raise Exception('folder cannot be root.')
+
     shutil.rmtree(folder, ignore_errors=True)
     os.makedirs(folder, exist_ok=True)
 
@@ -34,11 +41,9 @@ def recreate_dir(folder):
 def trim_raw_data_files(start_date=datetime.date(2015, 1, 1),
                         end_date=datetime.date(2019, 1, 5),
                         raw_folder="../../dataset/nyse-daily/",
-                        trimmed_folder="../../dataset/nyse-daily-trimmed/",
                         result_folder="../../dataset/nyse-daily-trimmed-same-length/"):
     
     raw_files_path_pattern = raw_folder+"*.csv"
-    trimmed_files_path_pattern = trimmed_folder+"*.csv"
 
     # raw dataset files pattern
     nyse_csv_paths = sorted(glob.glob(raw_files_path_pattern))
@@ -50,20 +55,18 @@ def trim_raw_data_files(start_date=datetime.date(2015, 1, 1),
     plt.title('Stock data length distribution')
     plt.gcf().set_size_inches(10, 5)
     plt.show()
-
-    # trim data and put them into a trimmed folder
-    recreate_dir(trimmed_folder)
+    
+    trimmed_df = {}
 
     for p in nyse_csv_paths:
         filename = get_filename_without_ext(p)
         df = my_read_csv(p)
         df = df[(pd.Timestamp(start_date) <= df['date']) & (df['date'] < pd.Timestamp(end_date))]
-        df.to_csv(path_or_buf=join(trimmed_folder, filename + '.csv'), index=False)
+        if len(df) > 0:
+            trimmed_df[filename] = df
 
-
-    nyse_trimmed_csv_paths = sorted(glob.glob(trimmed_files_path_pattern))
-    lengths = [len(pd.read_csv(p)) for p in nyse_trimmed_csv_paths]
-    print("There are {} trimmed stock data.".format(len(nyse_trimmed_csv_paths)))
+    lengths = [len(df) for fn, df in trimmed_df.items()]
+    print("There are {} trimmed stock data.".format(len(trimmed_df)))
     n, bins, patches = plt.hist(lengths, 20)
     plt.xlabel('length')
     plt.ylabel('frequency')
@@ -73,16 +76,13 @@ def trim_raw_data_files(start_date=datetime.date(2015, 1, 1),
 
     max_length = max(lengths)
     max_length_data = []
-    max_length_data_path = []
-    for p in nyse_trimmed_csv_paths:
-        temp_df = pd.read_csv(p)
-        if len(temp_df) == max_length:
-            max_length_data.append(temp_df)
-            max_length_data_path.append(p)
+    for fn, df in trimmed_df.items():
+        if len(df) == max_length:
+            max_length_data.append((fn, df))
 
     # find intersection of the max length group of stocks
-    intersection = max_length_data[0]['date'].values
-    for temp_df in max_length_data[1:]:
+    intersection = max_length_data[0][1]['date'].values
+    for fn, temp_df in max_length_data[1:]:
         intersection, _, __ = np.intersect1d(
             intersection,
             temp_df['date'].values,
@@ -96,11 +96,13 @@ def trim_raw_data_files(start_date=datetime.date(2015, 1, 1),
 
         # save those stocks in a result folder
         recreate_dir(result_folder)
+        
+        for fn, df in max_length_data:
+            df.to_csv(path_or_buf=join(result_folder, fn + '.csv'), index=False)
 
-        for p in max_length_data_path:
-            shutil.copy(p, result_folder)
         print('The processed dataset was placed in:', result_folder)
-        print('There should be {} csv files.'.format(len(max_length_data_path)))
+        print('There should be {} csv files.'.format(len(max_length_data)))
+        return dict(max_length_data)
     else:
         print('All stock data starting from date {} with max length do not have common trading date.'.format(str(start_date)))
-        print('ERROR: need to do some other complicated preprocessing')
+        raise Exception('ERROR: need to do some other complicated preprocessing')
