@@ -120,3 +120,17 @@ class GSTools(object):
 			agg_df[key] = data[key][col]
 
 		return agg_df
+    
+	@staticmethod
+	def get_aggregated_with_dates(data, col='close'):
+		'''
+		Returns a dataframe with all close prices aggregated together.
+
+		'''
+		agg_df = pd.DataFrame()
+
+		for key in data.keys():
+			agg_df[key] = data[key][col]
+			agg_df["date"] = data[key]["date"]
+
+		return agg_df
