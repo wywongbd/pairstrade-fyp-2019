@@ -63,9 +63,9 @@ parser.add_argument("--lookback_values", default=[20, 30, 40, 50], nargs='+', ty
                     help="Lookback values to be tested. Only useful if strategy is distance or cointegration.")
 parser.add_argument("--enter_thresholds", default=[1.0, 1.5, 2.0], nargs='+', type=float, 
                     help="Enter threshold values to be tested (in units 'number of SD from mean').")
-parser.add_argument("--exit_thresholds", default=[0.25, 0.5], nargs='+', type=float, 
+parser.add_argument("--exit_thresholds", default=[0.5], nargs='+', type=float, 
                     help="Exit threshold values to be tested (in units 'number of SD from mean').")
-parser.add_argument("--loss_limits", default=[-0.005], nargs='+', type=float, 
+parser.add_argument("--loss_limits", default=[-0.005, -0.01], nargs='+', type=float, 
                     help="Position will exit if loss exceeded this loss limit.")
 
 config = parser.parse_args()
@@ -284,12 +284,12 @@ def main():
         results_df.to_csv(path_or_buf=path, index=False)
 
         # calculate MACRO attributes
-        avg_sharpe_ratio = results_df['sharpe_ratio'].mean()
-        median_sharpe_ratio = results_df['sharpe_ratio'].median()
+        avg_sharpe_ratio = results_df['sharperatio'].mean()
+        median_sharpe_ratio = results_df['sharperatio'].median()
 
-        avg_overall_return = results_df['overall_return'].mean()
-        median_overall_return = results_df['overall_return'].median()
-        overall_return_std = results_df['overall_return'].std()
+        avg_overall_return = results_df['profit'].mean()
+        median_overall_return = results_df['profit'].median()
+        overall_return_std = results_df['profit'].std()
         
         if config.strategy_type == "distance" or config.strategy_type == "cointegration":
             tup = (params["lookback"], params["enter_threshold"], params["exit_threshold"], params["loss_limit"],
@@ -311,10 +311,31 @@ def main():
 
         macro_results.append(tup)
         _logger.info("Performance of this set of parameters: {}".format(tup))
-
-        # nextline
-        _logger.info("")
     
+    macro_results_df = pd.DataFrame(macro_results)
+    if config.strategy_type == "distance" or config.strategy_type == "cointegration":
+        macro_results_df.columns = ['lookback', 
+                                    'enter_threshold_size', 
+                                    'exit_threshold_size',
+                                    'loss_limit', 
+                                    'avg_sharpe_ratio', 
+                                    'median_sharpe_ratio',
+                                    'avg_overall_return', 
+                                    'median_overall_return',
+                                    'overall_return_std',
+                                    'uuid']
+    elif config.strategy_type == "kalman":
+        macro_results_df.columns = ['enter_threshold_size', 
+                                    'exit_threshold_size',
+                                    'loss_limit', 
+                                    'avg_sharpe_ratio', 
+                                    'median_sharpe_ratio',
+                                    'avg_overall_return', 
+                                    'median_overall_return',
+                                    'overall_return_std',
+                                    'uuid']
+
+    macro_results_df.to_csv(output_dir + '/' + 'summary.csv', index=False)
     
 if __name__ == '__main__':
     main()
