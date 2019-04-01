@@ -135,9 +135,8 @@ class PTStrategy(bt.Strategy):
     
     def long_spread(self):
         # Calculating the number of shares for each stock
-        x = int((2 * self.broker.getvalue() / 3.0) / (self.data0.close[0])) 
-        y = int((2 * self.broker.getvalue() / 3.0) / (self.data1.close[0])) 
-
+        x = int((2 * self.broker.getvalue() / 3.0) / (self.data0[0])) 
+        y = int((2 * self.broker.getvalue() / 3.0) / (self.data1[0])) 
 
         # Place the order
         self.buy(data=self.data0, size=(x + self.qty0))  # Place an order for buying x + qty1 shares

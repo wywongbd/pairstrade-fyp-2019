@@ -41,10 +41,10 @@ def coint(df, intercept = True, sig_level = 0.01):
         p_value = 0
 
         if not intercept:
-            p_value = smts.coint(df[stock_1].values, df[stock_2].values, trend='c')[1]
+            p_value = smts.coint(df[stock_1].values.astype(float), df[stock_2].values.astype(float), trend='c')[1]
         else:
-            Y = df[stock_1]
-            X = df[stock_2]
+            Y = df[stock_1].values.astype(float)
+            X = df[stock_2].values.astype(float)
             X = sm.add_constant(X)
 
             model = sm.OLS(Y, X)
