@@ -74,7 +74,7 @@ def main():
     ##################################################################################################
     # Setup logger and output dir                                                                    #
     ##################################################################################################
-    output_dir = 'output/test{}'.format(datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3])
+    output_dir = 'output/test-{}'.format(datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3])
     if not os.path.exists(output_dir):
         pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
     
