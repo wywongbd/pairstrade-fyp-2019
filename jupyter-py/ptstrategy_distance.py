@@ -13,8 +13,8 @@ class DistStrategy(PTStrategy):
         self.resid_std = None
 
     def update_enter_exit_levels(self):
-        Y = pd.Series(self.data0.get(size=self.lookback, ago=0))
-        X = pd.Series(self.data1.get(size=self.lookback, ago=0))
+        Y = pd.Series(self.data0.get(size=self.lookback, ago=1))
+        X = pd.Series(self.data1.get(size=self.lookback, ago=1))
 
         self.spread_mean = (Y - X).mean()
         self.spread_std = (Y - X).std()

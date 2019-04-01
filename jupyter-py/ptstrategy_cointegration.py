@@ -17,8 +17,8 @@ class CointStrategy(PTStrategy):
         self.intercept = None
 
     def update_enter_exit_levels(self):
-        Y = np.log(pd.Series(self.data0.get(size=self.lookback, ago=0)))
-        X = np.log(pd.Series(self.data1.get(size=self.lookback, ago=0)))
+        Y = np.log(pd.Series(self.data0.get(size=self.lookback, ago=1)))
+        X = np.log(pd.Series(self.data1.get(size=self.lookback, ago=1)))
         _X = sm.add_constant(X)
 
         model = sm.OLS(Y, _X)
