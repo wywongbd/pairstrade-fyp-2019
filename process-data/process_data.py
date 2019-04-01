@@ -15,15 +15,11 @@ import matplotlib.pyplot as plt
 from collections import Counter, defaultdict
 import datetime
 
-import logging
-
 # custom
 from process_raw_prices import get_filename_without_ext
 
 plt.rcParams["patch.force_edgecolor"] = True
 plt.rcParams["font.size"] = 12
-
-_logger = logging.getLogger(__name__)
 
 
 def my_read_csv(p):
@@ -57,7 +53,7 @@ def trim_raw_data_files(
     # raw dataset files pattern
     nyse_csv_paths = sorted(glob.glob(raw_files_path_pattern))
     lengths = [len(pd.read_csv(p)) for p in nyse_csv_paths]
-    _logger.info("There are {} stock data csv files.".format(len(nyse_csv_paths)))
+    print("There are {} stock data csv files.".format(len(nyse_csv_paths)))
     if plot:
         plt.hist(lengths, 50)
         plt.xlabel("length")
@@ -79,7 +75,7 @@ def trim_raw_data_files(
             trimmed_df[filename] = df
 
     lengths = [len(df) for fn, df in trimmed_df.items()]
-    _logger.info("There are {} trimmed stock data.".format(len(trimmed_df)))
+    print("There are {} trimmed stock data.".format(len(trimmed_df)))
     if plot:
         plt.hist(lengths, 20)
         plt.xlabel("length")
@@ -119,13 +115,17 @@ def trim_raw_data_files(
         for fn, df in max_length_data:
             df.to_csv(path_or_buf=join(result_folder, fn + ".csv"), index=False)
 
-        _logger.info("The processed dataset was placed in: {}".format(result_folder))
-        _logger.info("There should be {} csv files.".format(len(max_length_data)))
+        print("The processed dataset was placed in: {}".format(result_folder))
+        print("There should be {} csv files.".format(len(max_length_data)))
         return dict(max_length_data)
     else:
-        _logger.info(
+        print(
             "All stock data starting from date {} with max length do not have common trading date.".format(
                 str(start_date)
             )
         )
         raise Exception("ERROR: need to do some other complicated preprocessing")
+
+
+if __name__ == "__main__":
+    trim_raw_data_files()
