@@ -1,5 +1,6 @@
 import math
 import itertools
+import logging
 
 import pandas as pd
 import numpy as np
@@ -7,6 +8,8 @@ import datetime as dt
 import backtrader as bt
 
 from abc import ABC, abstractmethod
+
+_logger = logging.getLogger(__name__)
 
 class PTStrategy(bt.Strategy):
     # abstract base class 
@@ -65,7 +68,7 @@ class PTStrategy(bt.Strategy):
     def log(txt, dt=None):
         dt = dt or self.data.datetime[0]
         dt = bt.num2date(dt)
-        print('%s, %s' % (dt.isoformat(), txt))
+        _logger.info('%s, %s' % (dt.isoformat(), txt))
 
     @staticmethod
     def long_portfolio_value(price, qty):
@@ -132,9 +135,8 @@ class PTStrategy(bt.Strategy):
     
     def long_spread(self):
         # Calculating the number of shares for each stock
-        x = int((2 * self.broker.getvalue() / 3.0) / (self.data0.close[0])) 
-        y = int((2 * self.broker.getvalue() / 3.0) / (self.data1.close[0])) 
-
+        x = int((2 * self.broker.getvalue() / 3.0) / (self.data0[0])) 
+        y = int((2 * self.broker.getvalue() / 3.0) / (self.data1[0])) 
 
         # Place the order
         self.buy(data=self.data0, size=(x + self.qty0))  # Place an order for buying x + qty1 shares
@@ -210,11 +212,11 @@ class PTStrategy(bt.Strategy):
 
     def stop(self):
         if self.print_bar:
-        	print("-", end="")
+        	_logger.info("-")
 
         if self.print_msg:
-        	print('==================================================')
-        	print('Starting Value: %.2f' % self.broker.startingcash)
-        	print('Ending   Value: %.2f' % self.broker.getvalue())
-        	print('==================================================')
+        	_logger.info('==================================================')
+        	_logger.info('Starting Value: %.2f' % self.broker.startingcash)
+        	_logger.info('Ending   Value: %.2f' % self.broker.getvalue())
+        	_logger.info('==================================================')
 

@@ -52,7 +52,7 @@ class CointStrategy(PTStrategy):
             # "SHORT the spread" status
             # short data0, long data1
             if self.consider_borrow_cost: 
-                PTStrategy.incur_borrow_cost(self.initial_price_data0, self.qty0)
+                self.incur_borrow_cost(self.initial_price_data0, self.qty0)
             
             if spread < self.lower_limit:
                 self.long_spread()
