@@ -128,7 +128,8 @@ def main():
                             loss_limit=config.loss_limit,
                             consider_borrow_cost=True,
                             consider_commission=False,
-                            print_msg=True
+                            print_msg=True,
+                            print_transaction=True
                            )
     elif config.strategy_type == "cointegration":
         cerebro.addstrategy(CointStrategy, 
@@ -138,7 +139,9 @@ def main():
                             exit_threshold_size=config.exit_threshold, 
                             loss_limit=config.loss_limit,
                             consider_borrow_cost=True,
-                            consider_commission=True
+                            consider_commission=True,
+                            print_msg=True,
+                            print_transaction=True
                            )
     elif config.strategy_type == "kalman":
         cerebro.addstrategy(CointKalmanStrategy, 
@@ -147,7 +150,9 @@ def main():
                             exit_threshold_size=config.exit_threshold, 
                             loss_limit=config.loss_limit,
                             consider_borrow_cost=True,
-                            consider_commission=True
+                            consider_commission=True,
+                            print_msg=True,
+                            print_transaction=True
                            )
     # Add analyzers
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='mysharpe')

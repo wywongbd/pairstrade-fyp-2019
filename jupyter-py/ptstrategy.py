@@ -65,8 +65,8 @@ class PTStrategy(bt.Strategy):
 
     #######################################################################################
     @staticmethod
-    def log(txt, dt=None):
-        dt = dt or self.data.datetime[0]
+    def log(txt, dt=None, data=None):
+        dt = dt or data.datetime[0]
         dt = bt.num2date(dt)
         _logger.info('%s, %s' % (dt.isoformat(), txt))
 

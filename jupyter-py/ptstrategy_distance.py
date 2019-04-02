@@ -23,9 +23,18 @@ class DistStrategy(PTStrategy):
         self.lower_limit = self.spread_mean - self.enter_threshold_size * self.spread_std
         self.up_medium = self.spread_mean + self.exit_threshold_size * self.spread_std
         self.low_medium = self.spread_mean - self.exit_threshold_size * self.spread_std
+        
+        if self.print_msg:
+            PTStrategy.log("Thresholds: {}".format((self.upper_limit, 
+                                                    self.lower_limit, 
+                                                    self.up_medium, 
+                                                    self.low_medium)), None, self.data0)
 
     def get_spread(self):
-        return (self.data0[0] - self.data1[0])
+        spread = (self.data0[0] - self.data1[0])
+        if self.print_msg:
+            PTStrategy.log("Spread = {}".format(spread), None, self.data0)
+        return spread
 
     def run_trade_logic(self):
         spread = self.get_spread()
