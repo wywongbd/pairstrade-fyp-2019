@@ -78,7 +78,10 @@ class CointKalmanStrategy(PTStrategy):
             self.allow_trade = True
 
     def get_spread(self):
-        return (math.log(self.data0[0]) - self.alpha * math.log(self.data1[0]) - self.intercept)
+        spread = (math.log(self.data0[0]) - self.alpha * math.log(self.data1[0]) - self.intercept)
+        if self.print_msg:
+            PTStrategy.log("Spread = {}".format(spread), None, self.data0)
+        return spread
 
     def run_trade_logic(self):
         spread = self.get_spread()
