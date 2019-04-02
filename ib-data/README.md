@@ -1,0 +1,1 @@
+**Remark**: Price histories collected in this directory belongs to stocks listed on *NYSE* and *NASDAQ* from the *tech* industry.
