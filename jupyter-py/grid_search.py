@@ -74,7 +74,7 @@ def main():
     ##################################################################################################
     # Setup logger and output dir                                                                    #
     ##################################################################################################
-    output_dir = 'output/test-{}'.format(datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3])
+    output_dir = 'output/grid-search-{}'.format(datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3])
     if not os.path.exists(output_dir):
         pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
     
@@ -245,7 +245,7 @@ def main():
                 cerebro.addstrategy(CointKalmanStrategy, 
                                     max_lookback=MAX_LOOKBACK,
                                     enter_threshold_size=params["enter_threshold"], 
-                                    exit_threshold_size=params["enter_threshold"], 
+                                    exit_threshold_size=params["exit_threshold"], 
                                     loss_limit=params["loss_limit"],
                                     consider_borrow_cost=True,
                                     consider_commission=False
