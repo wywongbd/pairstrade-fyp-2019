@@ -1,12 +1,13 @@
 import glob
 import pandas as pd
+import datetime
 
 from pytz import timezone
-from datetime import datetime
+from datetime import datetime as dt
 
 # Helper function                                                                                
 def get_current_time():
-    return datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3]
+    return dt.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3]
 
 class Decoder(object):
 	@staticmethod
@@ -21,7 +22,7 @@ class Decoder(object):
 		keyword = "[strategy-status]"
 
 		match_lines = []
-		with open(log_file_path, "r") as file:
+		with open(log_path, "r") as file:
 			for line in file:
 				idx = line.find(keyword)
 				if idx >= 0:
