@@ -23,6 +23,9 @@ class CointKalmanStrategy(PTStrategy):
         status_dict = {}
 
         # general status
+        status_dict["date"] = bt.num2date(self.data0.datetime[0])
+        status_dict["data0"] = self.data0[0]
+        status_dict["data1"] = self.data1[0]
         status_dict["lookback"] = self.lookback
         status_dict["max_lookback"] = self.max_lookback
         status_dict["enter_threshold_size"] = self.enter_threshold_size
@@ -47,12 +50,12 @@ class CointKalmanStrategy(PTStrategy):
         status_dict["allow_trade"] = self.allow_trade 
         status_dict["alpha"] = self.alpha 
         status_dict["intercept"] = self.intercept
-        status_dict["filtered_state_means"] = self.filtered_state_means
-        status_dict["filtered_state_covariances"] = self.filtered_state_covariances
+        # status_dict["filtered_state_means"] = self.filtered_state_means
+        # status_dict["filtered_state_covariances"] = self.filtered_state_covariances
         status_dict["spread_std"] = self.spread_std
 
         # log the dictionary
-        PTStrategy.log("Status: {}".format(status_dict), None, self.data0)
+        PTStrategy.log("[strategy-status]: {}".format(status_dict), None, self.data0)
 
     def update_enter_exit_levels(self):
         if (self.kf is None):

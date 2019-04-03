@@ -20,6 +20,9 @@ class CointStrategy(PTStrategy):
         status_dict = {}
 
         # general status
+        status_dict["date"] = bt.num2date(self.data0.datetime[0])
+        status_dict["data0"] = self.data0[0]
+        status_dict["data1"] = self.data1[0]
         status_dict["lookback"] = self.lookback
         status_dict["max_lookback"] = self.max_lookback
         status_dict["enter_threshold_size"] = self.enter_threshold_size
@@ -48,7 +51,7 @@ class CointStrategy(PTStrategy):
         status_dict["resid_std"] = self.resid_std
 
         # log the dictionary
-        PTStrategy.log("Status: {}".format(status_dict), None, self.data0)
+        PTStrategy.log("[strategy-status]: {}".format(status_dict), None, self.data0)
 
     def update_enter_exit_levels(self):
         Y = np.log(pd.Series(self.data0.get(size=self.lookback, ago=1)))

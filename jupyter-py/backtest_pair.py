@@ -21,6 +21,7 @@ from custom_analyzer import Metrics
 from pandas_datafeed import PandasData
 from datetime import datetime
 from pytz import timezone
+from decode_logs import get_current_time
 from pair_selector import *
 
 sys.path.append("../process-data")
@@ -36,8 +37,9 @@ sys.path.pop()
 parser = argparse.ArgumentParser()
 parser.add_argument("--data_path", type=str, default="../ib-data/nyse-daily-tech/",
                     help="Path to stock price data")
+parser.add_argument("--output_dir", type=str, default=None, help="Path to output directory.")
 parser.add_argument("--strategy_type", default="distance", type=str, choices=["distance", "cointegration", "kalman"],
-                    help="Type of strategy used, either distance, cointegration, or kalman")
+                    help="Type of strategy used, either distance, cointegration, or kalman.")
 
 parser.add_argument("--stk0", type=str, default="AAN",
                     help="Stock symbol of first stock.")
@@ -63,11 +65,18 @@ parser.add_argument("--loss_limit", default=-0.005, type=float,
 
 config = parser.parse_args()
 
+##################################################################################################
+# Main function                                                                                  #
+##################################################################################################
+
 def main():
     ##################################################################################################
     # Setup logger and output dir                                                                    #
     ##################################################################################################
-    output_dir = 'output/backtest-{}'.format(datetime.now(timezone('Asia/Hong_Kong')).strftime('%Y-%m-%d_%H-%M-%S-%f')[:-3])
+    output_dir = config.output_dir
+
+    if output_dir is None:
+        output_dir = 'output/backtest-{}'.format(get_current_time())
     if not os.path.exists(output_dir):
         pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
     
