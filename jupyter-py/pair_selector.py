@@ -2,6 +2,12 @@ import statsmodels.tsa.stattools as smts
 import statsmodels.api as sm
 import numpy as np
 import itertools
+import platform
+
+if platform.system() == "Darwin":
+    import matplotlib
+    matplotlib.use('PS')
+
 import matplotlib.pyplot as plt
 
 def coint(df, intercept = True, sig_level = 0.01):
