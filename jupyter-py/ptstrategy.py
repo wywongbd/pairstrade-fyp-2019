@@ -27,12 +27,18 @@ class PTStrategy(bt.Strategy):
         print_bar = True,
         print_msg = False,
         print_transaction = False,
+        stk0_symbol = '',
+        stk1_symbol = '',
     )
 
     #######################################################################################
     def __init__(self):
         # keeps track whether order is pending
         self.orderid = None
+
+        # general info
+        self.stk0_symbol = self.p.stk0_symbol
+        self.stk1_symbol = self.p.stk1_symbol
 
         # Strategy params
         self.lookback = self.p.lookback
@@ -62,6 +68,13 @@ class PTStrategy(bt.Strategy):
         self.up_medium = None
         self.low_medium = None
         self.allow_trade = True
+        
+        # for logging
+        self.latest_trade_action = None
+        self.sell_stk = None
+        self.buy_stk = None
+        self.sell_amt = None
+        self.buy_amt = None
 
     #######################################################################################
     @staticmethod
@@ -97,6 +110,13 @@ class PTStrategy(bt.Strategy):
 
 	#######################################################################################
     def next(self):
+        # reset variable
+        self.latest_trade_action = None
+        self.sell_stk = None
+        self.buy_stk = None
+        self.sell_amt = None
+        self.buy_amt = None
+
         # this is important for grid search, to ensure all trading strats start together
         if min(len(self.data0), len(self.data1)) <= self.max_lookback:
             return
@@ -137,6 +157,13 @@ class PTStrategy(bt.Strategy):
         self.initial_long_pv = PTStrategy.long_portfolio_value(self.qty1, self.data1[0])
         self.initial_short_pv = 0.5 * self.data0[0] * self.qty0
         self.initial_price_data0, self.initial_price_data1 = self.data0[0], self.data1[0]
+        
+        # logging
+        self.latest_trade_action = "short_spread"
+        self.sell_stk = self.stk0_symbol
+        self.buy_stk = self.stk1_symbol
+        self.sell_amt = x + self.qty0
+        self.buy_amt = y + self.qty1
     
     def long_spread(self):
         # Calculating the number of shares for each stock
@@ -159,11 +186,25 @@ class PTStrategy(bt.Strategy):
         self.initial_long_pv = PTStrategy.long_portfolio_value(self.qty0, self.data0[0])
         self.initial_short_pv = 0.5 * self.data1[0] * self.qty1
         self.initial_price_data0, self.initial_price_data1 = self.data0[0], self.data1[0]
+
+        # logging
+        self.latest_trade_action = "long_spread"
+        self.sell_stk = self.stk1_symbol
+        self.buy_stk = self.stk0_symbol
+        self.sell_amt = y + self.qty1
+        self.buy_amt = x + self.qty0
     
     def exit_spread(self):
         # Exit position
         self.close(self.data0)
         self.close(self.data1)
+
+        # logging
+        self.latest_trade_action = "exit_spread"
+        self.sell_stk = None
+        self.buy_stk = None
+        self.sell_amt = None
+        self.buy_amt = None
 
         # update counters
         self.qty0 = 0

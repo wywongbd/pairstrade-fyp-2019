@@ -32,5 +32,8 @@ class Decoder(object):
 		for line in match_lines:
 			dict_list.append(eval(line[len(keyword) + 2: -1]))
 
-		return pd.DataFrame(dict_list)
+		big_df = pd.DataFrame(dict_list)
+		action_df = big_df[['spread', 'date', 'latest_trade_action', 'sell_stk', 'buy_stk', 'buy_amt', 'sell_amt']] 
+		action_df = action_df[action_df.latest_trade_action.notnull()].reset_index()
 
+		return big_df, action_df

@@ -130,6 +130,8 @@ def main():
     # Add the strategy
     if config.strategy_type == "distance":
         cerebro.addstrategy(DistStrategy, 
+                            stk0_symbol=stk0,
+                            stk1_symbol=stk1,
                             lookback=config.lookback,
                             max_lookback=pre_backtest_size,
                             enter_threshold_size=config.enter_threshold, 
@@ -142,6 +144,8 @@ def main():
                            )
     elif config.strategy_type == "cointegration":
         cerebro.addstrategy(CointStrategy, 
+                            stk0_symbol=stk0,
+                            stk1_symbol=stk1,
                             lookback=config.lookback,
                             max_lookback=pre_backtest_size,
                             enter_threshold_size=config.enter_threshold, 
@@ -154,6 +158,8 @@ def main():
                            )
     elif config.strategy_type == "kalman":
         cerebro.addstrategy(CointKalmanStrategy, 
+                            stk0_symbol=stk0,
+                            stk1_symbol=stk1,
                             max_lookback=pre_backtest_size,
                             enter_threshold_size=config.enter_threshold, 
                             exit_threshold_size=config.exit_threshold, 

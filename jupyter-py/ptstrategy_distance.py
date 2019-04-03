@@ -37,6 +37,11 @@ class DistStrategy(PTStrategy):
         status_dict["up_medium"] = self.up_medium 
         status_dict["low_medium"] = self.low_medium 
         status_dict["portfolio_value"] = self.broker.getvalue()
+        status_dict["latest_trade_action"] =self.latest_trade_action
+        status_dict["sell_stk"] = self.sell_stk
+        status_dict["buy_stk"] = self.buy_stk
+        status_dict["sell_amt"] = self.sell_amt 
+        status_dict["buy_amt"] = self.buy_amt
 
         # strategy-specific status
         status_dict["spread"] = self.get_spread()
