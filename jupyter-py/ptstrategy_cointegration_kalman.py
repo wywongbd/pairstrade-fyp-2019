@@ -19,6 +19,41 @@ class CointKalmanStrategy(PTStrategy):
         self.spread_std = None
         self.kf = None
 
+    def log_status(self):
+        status_dict = {}
+
+        # general status
+        status_dict["lookback"] = self.lookback
+        status_dict["max_lookback"] = self.max_lookback
+        status_dict["enter_threshold_size"] = self.enter_threshold_size
+        status_dict["exit_threshold_size"] = self.exit_threshold_size
+        status_dict["loss_limit"] = self.loss_limit
+        status_dict["status"] = self.status
+        status_dict["qty0"] = self.qty0
+        status_dict["qty1"] = self.qty1 
+        status_dict["initial_price_data0"] = self.initial_price_data0 
+        status_dict["initial_price_data1"] = self.initial_price_data1 
+        status_dict["initial_cash"] = self.initial_cash 
+        status_dict["initial_long_pv"] = self.initial_long_pv
+        status_dict["initial_short_pv"] = self.initial_short_pv
+        status_dict["upper_limit"] = self.upper_limit 
+        status_dict["lower_limit"] = self.lower_limit 
+        status_dict["up_medium"] = self.up_medium 
+        status_dict["low_medium"] = self.low_medium 
+        status_dict["portfolio_value"] = self.broker.getvalue()
+
+        # strategy-specific status
+        status_dict["spread"] = self.get_spread()
+        status_dict["allow_trade"] = self.allow_trade 
+        status_dict["alpha"] = self.alpha 
+        status_dict["intercept"] = self.intercept
+        status_dict["filtered_state_means"] = self.filtered_state_means
+        status_dict["filtered_state_covariances"] = self.filtered_state_covariances
+        status_dict["spread_std"] = self.spread_std
+
+        # log the dictionary
+        PTStrategy.log("Status: {}".format(status_dict), None, self.data0)
+
     def update_enter_exit_levels(self):
         if (self.kf is None):
             Y = np.log(pd.Series(self.data0.get(size=self.max_lookback, ago=0)).values)[:, np.newaxis]
@@ -79,8 +114,8 @@ class CointKalmanStrategy(PTStrategy):
 
     def get_spread(self):
         spread = (math.log(self.data0[0]) - self.alpha * math.log(self.data1[0]) - self.intercept)
-        if self.print_msg:
-            PTStrategy.log("Spread = {}".format(spread), None, self.data0)
+        # if self.print_msg:
+        #     PTStrategy.log("Spread = {}".format(spread), None, self.data0)
         return spread
 
     def run_trade_logic(self):
