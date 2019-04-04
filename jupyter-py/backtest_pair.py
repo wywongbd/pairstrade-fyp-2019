@@ -186,10 +186,12 @@ def main():
     results_dict["pair"] = stk0 + "-" + stk1
     results_dict["sharperatio"]= strat[0].analyzers.mysharpe.get_analysis()['sharperatio']
     results_dict["returnstd"] = strat[0].analyzers.metrics.returns_std()
+    results_dict["avg_holding_period"] = strat[0].analyzers.metrics.avg_holding_period
+    results_dict["n_trades"] = strat[0].analyzers.metrics.n_trades
     results_dict["startcash"] = cerebro.getbroker().startingcash
     results_dict["endcash"] = cerebro.getbroker().getvalue()
     results_dict["profit"] = (results_dict["endcash"] - results_dict["startcash"]) / results_dict["startcash"]
-    _logger.info("Performance of this pair: {}".format(results_dict))
+    _logger.info("[pair-performance]: {}".format(results_dict))
     
 if __name__ == '__main__':
     main()
