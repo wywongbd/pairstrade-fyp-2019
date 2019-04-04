@@ -8,16 +8,16 @@ app = Flask(__name__)
 # to activate bokeh server
 # cd to the update.py location and run this
 # bokeh serve ./<update1>.py ./<update2>.py --allow-websocket-origin=127.0.0.1:5000
+# bokeh serve ./client-demo.py --allow-websocket-origin=127.0.0.1:5000
 
 @app.route("/")
 def index():
 	# format
 	# name-of-js-to-add = server_document(url="http://localhost:5006/<py file that generate the graph and updates it>")
     
-    # script1=server_document(url="http://localhost:5006/update")
+    client_demo_script=server_document(url="http://localhost:5006/client-demo")
     # script2=server_document(url="http://localhost:5006/update2")
-
-    return render_template('client-demo.html')
+    return render_template('client-demo.html', client_plot=client_demo_script)
 
 if __name__ == "__main__":
     app.run()
