@@ -18,20 +18,21 @@ from bokeh.plotting import figure, show
 from bokeh.layouts import column, widgetbox
 from bokeh.models.widgets import Button, Select, DateRangeSlider
 
-print(os.getcwd())
-
 # import backtesting script
-sys.path.append("/jupyter-py/")
+sys.path.append('./jupyter_py')
+sys.path.append('./process_data')
+sys.path.append('./log_helper')
+sys.path.append('./model')
+
 from decode_logs import *
-sys.path.pop()
 
 # use this dictionary to store all backtesting params
 backtest_params = {
     "strategy_type": "kalman",
     "stk_0": "AAN",
     "stk_1": "AER",
-    "backtest_start": "2016-05-01",
-    "backtest_end": "2016-12-31"
+    "backtest_start": "2017-05-01",
+    "backtest_end": "2017-12-31"
 }
     
 def build_normalized_price_fig(data):
@@ -41,7 +42,7 @@ def build_normalized_price_fig(data):
     STK_1_LINE_WIDTH = 1.5
     STK_2_LINE_WIDTH = 1.5
     WINDOW_SIZE = 10
-    TITLE = "PRICE OF X vs Y" 
+    TITLE = "PRICE OF {} vs {}".format(backtest_params["stk_0"], backtest_params["stk_1"]) 
     HEIGHT = 250
     SLIDER_HEIGHT = 150
     WIDTH = 600
@@ -156,7 +157,7 @@ def build_widgets_wb(stock_list):
 
     # ========== Select Stocks ============= #
     select_stk_1 = Select(width = WIDGET_WIDTH, title='Select Stock 1:', value = stock_list[0], options=stock_list)
-    select_stk_2 = Select(width = WIDGET_WIDTH, title='Select Stock 2:', value = stock_list[0], options=stock_list)
+    select_stk_2 = Select(width = WIDGET_WIDTH, title='Select Stock 2:', value = stock_list[1], options=stock_list)
 
     # ========== Strategy Type ============= #
     strategy_list = ['kalman', 'distance', 'cointegration']
@@ -166,8 +167,8 @@ def build_widgets_wb(stock_list):
     # date time variables
     MAX_START = date(2014, 1, 1)
     MAX_END = date(2018, 12, 30)
-    DEFAULT_START = date(2016, 5, 1)
-    DEFAULT_END = date(2016, 12, 31)
+    DEFAULT_START = date(2017, 5, 1)
+    DEFAULT_END = date(2017, 12, 31)
     STEP = 1
 
     backtest_dates = DateRangeSlider(width = WIDGET_WIDTH, 
@@ -179,11 +180,11 @@ def build_widgets_wb(stock_list):
 
     # controls = column(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt)
     controls_wb = widgetbox(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt, width=600)
-    return controls_wb
+    return controls_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt
 
-output_dir = "/jupyter-py/output/" + get_current_time()
+output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
 execution_command = """
-python /jupyter-py/backtest_pair.py \
+python ./jupyter_py/backtest_pair.py \
 --strategy_type {} \
 --output_dir {} \
 --backtest_start {} \
@@ -205,11 +206,9 @@ execution_command = execution_command.format(backtest_params["strategy_type"],
                                             backtest_params["stk_0"],
                                             backtest_params["stk_1"])
 
-print(execution_command)
-#     os.system("rm -rf ../../jupyter-py/output")
 os.system(execution_command)
 
-stock_list = glob.glob("/ib-data/nyse-daily-tech/*.csv")
+stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
 for i, file in enumerate(stock_list):
     stock_list[i] = os.path.basename(file)[:-4]
 
@@ -221,7 +220,73 @@ metrics_dict = Decoder.get_strategy_performance(output_dir)
 normalized_price_fig = build_normalized_price_fig(backtest_df)
 spread_fig = build_spread_fig(backtest_df, trades_df)
 pv_fig = build_pv_fig(backtest_df)
-widget_wb = build_widgets_wb(stock_list)
+widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
+
+def update_stk_1(attrname, old, new):
+    backtest_params['stk_0'] = select_stk_1.value
+    
+def update_stk_2(attrname, old, new):
+    backtest_params['stk_1'] = select_stk_2.value
+    
+def update_strategy(attrname, old, new):
+    backtest_params['strategy_type'] = select_strategy.value
+
+def update_dates(attrname, old, new):
+    val = list(backtest_dates.value)
+    # backtest_params['backtest_start'] = str(datetime.datetime.fromtimestamp(val[0]).date())
+    # backtest_params['backtest_end'] = str(datetime.datetime.fromtimestamp(val[1]).date())
+
+def run_backtest():
+    output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
+    execution_command = """
+    python ./jupyter_py/backtest_pair.py \
+    --strategy_type {} \
+    --output_dir {} \
+    --backtest_start {} \
+    --backtest_end {} \
+    --stk0 {} \
+    --stk1 {}
+    """
+    if backtest_params["strategy_type"] == "kalman":
+        execution_command += " --kalman_estimation_length 200"
+    elif backtest_params["strategy_type"] == "cointegration":
+        execution_command += " --lookback 76"
+    elif backtest_params["strategy_type"] == "distance":
+        execution_command += " --lookback 70"
+
+    execution_command = execution_command.format(backtest_params["strategy_type"], 
+                                                output_dir,
+                                                backtest_params["backtest_start"],
+                                                backtest_params["backtest_end"],
+                                                backtest_params["stk_0"],
+                                                backtest_params["stk_1"])
+
+    os.system(execution_command)
+
+    stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
+    for i, file in enumerate(stock_list):
+        stock_list[i] = os.path.basename(file)[:-4]
+
+    # get results from log file
+    backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
+    metrics_dict = Decoder.get_strategy_performance(output_dir)
+
+    # build figures
+    normalized_price_fig = build_normalized_price_fig(backtest_df)
+    spread_fig = build_spread_fig(backtest_df, trades_df)
+    pv_fig = build_pv_fig(backtest_df)
+    # widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
+
+    grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')
+    curdoc().clear()
+    curdoc().add_root(grid)
+
+# behavior
+select_stk_1.on_change('value', update_stk_1)
+select_stk_2.on_change('value', update_stk_2)
+select_strategy.on_change('value', update_strategy)
+backtest_dates.on_change('value', update_dates)
+start_bt.on_click(run_backtest)
 
 # build_final_gridplot
 grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')

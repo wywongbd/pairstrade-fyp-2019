@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("../model")
-
+sys.path.append('./model')
 
 import os
 from os.path import isfile, isdir, join, splitext
@@ -20,7 +20,6 @@ from process_raw_prices import get_filename_without_ext
 
 plt.rcParams["patch.force_edgecolor"] = True
 plt.rcParams["font.size"] = 12
-
 
 def my_read_csv(p):
     df = pd.read_csv(p)
