@@ -24,8 +24,10 @@ from pytz import timezone
 from decode_logs import get_current_time
 from pair_selector import *
 
-sys.path.append("../process-data")
-sys.path.append("../log-helper")
+print(os.getcwd())
+
+sys.path.append("/process-data")
+sys.path.append("/log-helper")
 from process_data import trim_raw_data_files
 from log_helper import LogHelper
 sys.path.pop()
@@ -35,7 +37,7 @@ sys.path.pop()
 # Define parameters                                                                              #
 ##################################################################################################
 parser = argparse.ArgumentParser()
-parser.add_argument("--data_path", type=str, default="../ib-data/nyse-daily-tech/",
+parser.add_argument("--data_path", type=str, default="/ib-data/nyse-daily-tech/",
                     help="Path to stock price data")
 parser.add_argument("--output_dir", type=str, default=None, help="Path to output directory.")
 parser.add_argument("--strategy_type", default="distance", type=str, choices=["distance", "cointegration", "kalman"],
@@ -76,7 +78,7 @@ def main():
     output_dir = config.output_dir
 
     if output_dir is None:
-        output_dir = 'output/backtest-{}'.format(get_current_time())
+        output_dir = 'jupyter-py/output/backtest-{}'.format(get_current_time())
     if not os.path.exists(output_dir):
         pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
     

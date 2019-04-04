@@ -2,7 +2,6 @@
 import os
 import sys
 import glob
-import logging
 import pandas as pd
 import numpy as np
 from datetime import date
@@ -18,10 +17,8 @@ from bokeh.plotting import figure, show
 from bokeh.layouts import column, widgetbox
 from bokeh.models.widgets import Button, Select, DateRangeSlider
 
-print(os.getcwd())
-
 # import backtesting script
-sys.path.append("/jupyter-py/")
+sys.path.append("../jupyter-py/")
 from decode_logs import *
 sys.path.pop()
 
@@ -181,49 +178,52 @@ def build_widgets_wb(stock_list):
     controls_wb = widgetbox(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt, width=600)
     return controls_wb
 
-output_dir = "/jupyter-py/output/" + get_current_time()
-execution_command = """
-python /jupyter-py/backtest_pair.py \
---strategy_type {} \
---output_dir {} \
---backtest_start {} \
---backtest_end {} \
---stk0 {} \
---stk1 {}
-"""
-if backtest_params["strategy_type"] == "kalman":
-    execution_command += " --kalman_estimation_length 200"
-elif backtest_params["strategy_type"] == "cointegration":
-    execution_command += " --lookback 76"
-elif backtest_params["strategy_type"] == "distance":
-    execution_command += " --lookback 70"
-
-execution_command = execution_command.format(backtest_params["strategy_type"], 
-                                            output_dir,
-                                            backtest_params["backtest_start"],
-                                            backtest_params["backtest_end"],
-                                            backtest_params["stk_0"],
-                                            backtest_params["stk_1"])
-
-print(execution_command)
+def main():
+    output_dir = "../../jupyter-py/output/" + get_current_time()
+    execution_command = 
+    """
+    python ../../jupyter-py/backtest_pair.py 
+    --strategy_type {} 
+    --output_dir {}
+    --backtest_start {}
+    --backtest_end {}
+    --stk0 {}
+    --stk1 {}
+    """
+    if backtest_params["strategy_type"] == "kalman":
+        execution_command += " --kalman_estimation_length 200"
+    elif backtest_params["strategy_type"] == "cointegration":
+        execution_command += " --lookback 76"
+    elif backtest_params["strategy_type"] == "distance":
+        execution_command += " --lookback 70"
+    
+    execution_command= execution_command.format(backtest_params["strategy_type"], 
+                                                output_dir,
+                                                backtest_params["backtest_start"],
+                                                backtest_params["backtest_end"],
+                                                backtest_params["stk_0"],
+                                                backtest_params["stk_1"])
+    
 #     os.system("rm -rf ../../jupyter-py/output")
-os.system(execution_command)
+    os.system(execution_command)
+    
+    stock_list = glob.glob("../../ib-data/nyse-daily-tech/*.csv")
+    for i, file in enumerate(stock_list):
+        stock_list[i] = os.path.basename(file)[:-4]
+    
+    # get results from log file
+    backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
+    metrics_dict = Decoder.get_strategy_performance(output_dir)
+    
+    # build figures
+    normalized_price_fig = build_normalized_price_fig(backtest_df)
+    spread_fig = build_spread_fig(backtest_df, trades_df)
+    pv_fig = build_pv_fig(backtest_df)
+    widget_wb = build_widgets_wb(stock_list)
+    
+    # build_final_gridplot
+    grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')
+    curdoc().add_root(grid)
 
-stock_list = glob.glob("/ib-data/nyse-daily-tech/*.csv")
-for i, file in enumerate(stock_list):
-    stock_list[i] = os.path.basename(file)[:-4]
-
-# get results from log file
-backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
-metrics_dict = Decoder.get_strategy_performance(output_dir)
-
-# build figures
-normalized_price_fig = build_normalized_price_fig(backtest_df)
-spread_fig = build_spread_fig(backtest_df, trades_df)
-pv_fig = build_pv_fig(backtest_df)
-widget_wb = build_widgets_wb(stock_list)
-
-# build_final_gridplot
-grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')
-curdoc().add_root(grid)
-
+if __name__ == '__main__':
+    main()
