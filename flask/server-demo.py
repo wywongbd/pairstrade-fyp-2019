@@ -1,3 +1,4 @@
+
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from bokeh.embed import server_document
 app = Flask(__name__)
@@ -12,10 +13,11 @@ app = Flask(__name__)
 def index():
 	# format
 	# name-of-js-to-add = server_document(url="http://localhost:5006/<py file that generate the graph and updates it>")
-    script1=server_document(url="http://localhost:5006/update")
+    
+    # script1=server_document(url="http://localhost:5006/update")
     # script2=server_document(url="http://localhost:5006/update2")
 
-    return render_template('index.html', plot1=script1)
+    return render_template('client-demo.html')
 
 if __name__ == "__main__":
     app.run()
