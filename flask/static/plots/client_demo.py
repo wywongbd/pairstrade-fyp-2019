@@ -16,7 +16,7 @@ from bokeh.plotting import figure, show
 
 # bokeh widgets
 from bokeh.layouts import column, widgetbox
-from bokeh.models.widgets import Button, Select, DateRangeSlider
+from bokeh.models.widgets import Button, Select, DateRangeSlider, TableColumn, DataTable
 
 # import backtesting script
 sys.path.append('./jupyter_py')
@@ -160,8 +160,8 @@ def build_pv_fig(data):
     pv_p.xaxis[0].formatter = DatetimeTickFormatter()
     return pv_p
 
-def build_widgets_wb(stock_list):
-    # CODE SECTION: setup widgets, widgetbox name = controls_wb
+def build_widgets_wb(stock_list, metrics):
+    # CODE SECTION: setup buttons, widgetbox name = controls_wb
     WIDGET_WIDTH = 250
 
     # ========== Select Stocks ============= #
@@ -188,8 +188,21 @@ def build_widgets_wb(stock_list):
     start_bt = Button(label="Backtest", button_type="success", width = WIDGET_WIDTH)
 
     # controls = column(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt)
-    controls_wb = widgetbox(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt, width=600)
-    return controls_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt
+    controls_wb = widgetbox(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt, width=300)
+
+    # CODE SECTION: setup table, widgetbox name = metrics_wb
+
+    metric_source = ColumnDataSource(metrics)
+    metric_columns = [
+        TableColumn(field="Metrics", title="Metrics"),
+        TableColumn(field="Value", title="Performance"),
+    ]
+
+    metric_table = DataTable(source=metric_source, columns=metric_columns, width=300)
+
+    # return the master widgetbox
+    master_wb = row(controls_wb, widgetbox(metric_table))
+    return master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt
 
 output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
 execution_command = """
@@ -223,12 +236,14 @@ for i, file in enumerate(stock_list):
 
 # get results from log file
 backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
-metrics_dict = Decoder.get_strategy_performance(output_dir)
+metrics_dict = Decoder.get_strategy_performance(str(output_dir))
+metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
+metrics_pd.columns = ['Metrics', 'Value']
 
 # build figures
 spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
 pv_fig = build_pv_fig(backtest_df)
-widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
+master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list, metrics_pd)
 
 def update_stk_1(attrname, old, new):
     backtest_params['stk_0'] = select_stk_1.value
@@ -277,14 +292,16 @@ def run_backtest():
 
     # get results from log file
     backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
-    metrics_dict = Decoder.get_strategy_performance(output_dir)
+    metrics_dict = Decoder.get_strategy_performance(str(output_dir))
+    metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
+    metrics_pd.columns = ['Metrics', 'Value']
 
     # build figures
     spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
     pv_fig = build_pv_fig(backtest_df)
-    # widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
+    master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list, metrics_pd)
     
-    left = column(widget_wb, pv_fig)
+    left = column(master_wb, pv_fig)
     grid = row(left, spread_fig)
     curdoc().clear()
     curdoc().add_root(grid)
@@ -297,7 +314,7 @@ backtest_dates.on_change('value', update_dates)
 start_bt.on_click(run_backtest)
 
 # build_final_gridplot
-left = column(widget_wb, pv_fig)
+left = column(master_wb, pv_fig)
 grid = row(left, spread_fig)
 curdoc().add_root(grid)
 
