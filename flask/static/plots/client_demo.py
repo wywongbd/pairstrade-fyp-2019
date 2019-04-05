@@ -10,7 +10,7 @@ from datetime import date
 # figure plotting
 import bokeh.models as bkm
 from bokeh.io import show, curdoc
-from bokeh.layouts import column, gridplot
+from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, RangeTool, DatetimeTickFormatter, LabelSet
 from bokeh.plotting import figure, show
 
@@ -35,7 +35,7 @@ backtest_params = {
     "backtest_end": "2017-12-31"
 }
     
-def build_normalized_price_fig(data):
+def build_price_and_spread_fig(data, action_df):
     # ========== themes & appearance ============= #
     STK_1_LINE_COLOR = "#053061"
     STK_2_LINE_COLOR = "#67001f"
@@ -66,52 +66,39 @@ def build_normalized_price_fig(data):
     normp.yaxis.axis_label = 'Price'
 
     normp.xaxis[0].formatter = DatetimeTickFormatter()
-
-
-    # ========== RANGE SELECT TOOL ============= #
-
-    select = figure(title="Drag the middle and edges of the selection box to change the range above",
-                    plot_height=SLIDER_HEIGHT, plot_width=WIDTH, y_range=normp.y_range,
-                    x_axis_type="datetime", y_axis_type=None,
-                    tools="", toolbar_location=None, background_fill_color="#efefef")
-
-    range_tool = RangeTool(x_range=normp.x_range)
-    range_tool.overlay.fill_color = "navy"
-    range_tool.overlay.fill_alpha = 0.2
-
-    select.line('date', 'close', source=STK_1_source, line_color = STK_1_LINE_COLOR, line_width = STK_1_LINE_WIDTH)
-    select.line('date', 'close', source=STK_2_source, line_color = STK_2_LINE_COLOR, line_width = STK_2_LINE_WIDTH)
-    select.ygrid.grid_line_color = None
-    select.add_tools(range_tool)
-    select.toolbar.active_multi = range_tool
-
-    return column(normp, select)
-
-def build_spread_fig(data, action_df):
+    
+    # ========== render spread stuff ============= #
+    
     palette = ["#053061", "#67001f"]
     LINE_WIDTH = 1.5
     LINE_COLOR = palette[-1]
-    TITLE = "RULE BASED SPREAD TRADING"
+    SPREAD_TITLE = "RULE BASED SPREAD TRADING"
     HEIGHT = 250
     WIDTH = 600
 
     # ========== data ============= #
     # TODO: get action_source array
     # TODO: map actions to colours so can map to palette[i]
-    dates = np.array(data['date'], dtype=np.datetime64)
-    spread_source = ColumnDataSource(data=dict(date=dates, spread=data['spread']))
+    spread_source = ColumnDataSource(data=dict(date=dates, 
+                                               spread=data['spread'], 
+                                               upper_limit=data['upper_limit'], 
+                                               lower_limit=data['lower_limit']))
     action_source = ColumnDataSource(action_df)
     # action_source['colors'] = [palette[i] x for x in action_source['actions']]
 
     # ========== figure INTERACTION properties ============= #
     TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
 
-    spread_p = figure(tools=TOOLS, toolbar_location=None, plot_height=HEIGHT, plot_width=WIDTH, title=TITLE)
+    spread_p = figure(tools=TOOLS, 
+                      toolbar_location=None, 
+                      plot_height=HEIGHT, 
+                      plot_width=WIDTH, 
+                      title=SPREAD_TITLE, 
+                      x_range=(dates[-WINDOW_SIZE], dates[-1]))
     # spread_p.background_fill_color = "#dddddd"
     spread_p.xaxis.axis_label = "Backtest Period"
     spread_p.yaxis.axis_label = "Spread"
     # spread_p.grid.grid_line_color = "white"
-
 
     # ========== plot data points ============= #
     # plot the POINT coords of the ACTIONS
@@ -129,9 +116,31 @@ def build_spread_fig(data, action_df):
 
     # plot the spread over time
     spread_p.line('date', 'spread', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
+    spread_p.line('date', 'upper_limit', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
+    spread_p.line('date', 'lower_limit', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
     spread_p.xaxis[0].formatter = DatetimeTickFormatter()
+
+    # ========== RANGE SELECT TOOL ============= #
+
+    select = figure(title="Drag the middle and edges of the selection box to change the range above",
+                    plot_height=SLIDER_HEIGHT, plot_width=WIDTH, y_range=normp.y_range,
+                    x_axis_type="datetime", y_axis_type=None,
+                    tools="", toolbar_location='above', background_fill_color="#efefef")
+
+    range_tool = RangeTool(x_range=normp.x_range)
+    range_tool.overlay.fill_color = "navy"
+    range_tool.overlay.fill_alpha = 0.2
     
-    return spread_p
+    range_tool_spread = RangeTool(x_range=spread_p.x_range)
+
+    select.line('date', 'close', source=STK_1_source, line_color = STK_1_LINE_COLOR, line_width = STK_1_LINE_WIDTH)
+    select.line('date', 'close', source=STK_2_source, line_color = STK_2_LINE_COLOR, line_width = STK_2_LINE_WIDTH)
+    select.ygrid.grid_line_color = None
+    select.add_tools(range_tool)
+    select.add_tools(range_tool_spread)
+    select.toolbar.active_multi = range_tool
+
+    return column(normp, spread_p, select)
 
 def build_pv_fig(data):
     # ========== themes & appearance ============= #
@@ -217,8 +226,7 @@ backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
 metrics_dict = Decoder.get_strategy_performance(output_dir)
 
 # build figures
-normalized_price_fig = build_normalized_price_fig(backtest_df)
-spread_fig = build_spread_fig(backtest_df, trades_df)
+spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
 pv_fig = build_pv_fig(backtest_df)
 widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
 
@@ -272,12 +280,12 @@ def run_backtest():
     metrics_dict = Decoder.get_strategy_performance(output_dir)
 
     # build figures
-    normalized_price_fig = build_normalized_price_fig(backtest_df)
-    spread_fig = build_spread_fig(backtest_df, trades_df)
+    spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
     pv_fig = build_pv_fig(backtest_df)
     # widget_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list)
-
-    grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')
+    
+    left = column(widget_wb, pv_fig)
+    grid = row(left, spread_fig)
     curdoc().clear()
     curdoc().add_root(grid)
 
@@ -289,7 +297,8 @@ backtest_dates.on_change('value', update_dates)
 start_bt.on_click(run_backtest)
 
 # build_final_gridplot
-grid = gridplot([[widget_wb, normalized_price_fig], [pv_fig, spread_fig]], sizing_mode='fixed')
+left = column(widget_wb, pv_fig)
+grid = row(left, spread_fig)
 curdoc().add_root(grid)
 
 
