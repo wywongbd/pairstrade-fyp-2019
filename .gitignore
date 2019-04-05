@@ -3,3 +3,4 @@
 __pycache__
 tmp-data/
 tmp/
+.DS_Store

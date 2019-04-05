@@ -104,7 +104,7 @@ def build_spread_fig(data, action_df):
     # action_source['colors'] = [palette[i] x for x in action_source['actions']]
 
     # ========== figure INTERACTION properties ============= #
-    TOOLS = "hover,pan,wheel_zoom,box_zoom,reset,save"
+    TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
 
     spread_p = figure(tools=TOOLS, toolbar_location=None, plot_height=HEIGHT, plot_width=WIDTH, title=TITLE)
     # spread_p.background_fill_color = "#dddddd"
