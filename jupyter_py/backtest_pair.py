@@ -45,7 +45,7 @@ parser.add_argument("--stk0", type=str, default="AAN",
 parser.add_argument("--stk1", type=str, default="AER",
                     help="Stock symbol of second stock.")
 
-parser.add_argument("--kalman_estimation_length", type=int, default=50,
+parser.add_argument("--kalman_estimation_length", type=int, default=200,
                     help="Number of days used for Kalman EM algorithm. Only useful if strategy is kalman.")
 
 parser.add_argument("--backtest_start", type=str, default="2018-05-01",
@@ -59,7 +59,7 @@ parser.add_argument("--enter_threshold", default=2.0, type=float,
                     help="Enter threshold value to be tested (in units 'number of SD from mean').")
 parser.add_argument("--exit_threshold", default=0.5, type=float, 
                     help="Exit threshold value to be tested (in units 'number of SD from mean').")
-parser.add_argument("--loss_limit", default=-0.005, type=float, 
+parser.add_argument("--loss_limit", default=-0.5, type=float, 
                     help="Position will exit if loss exceeded this loss limit.")
 
 config = parser.parse_args()

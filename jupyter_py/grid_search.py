@@ -23,8 +23,8 @@ from datetime import datetime
 from pytz import timezone
 from pair_selector import *
 
-sys.path.append("../process-data")
-sys.path.append("../log-helper")
+sys.path.append("../process_data")
+sys.path.append("../log_helper")
 from process_data import trim_raw_data_files
 from log_helper import LogHelper
 sys.path.pop()
@@ -34,7 +34,7 @@ sys.path.pop()
 # Define parameters                                                                              #
 ##################################################################################################
 parser = argparse.ArgumentParser()
-parser.add_argument("--data_path", type=str, default="../ib-data/nyse-daily-tech/",
+parser.add_argument("--data_path", type=str, default="../data/nyse-daily-tech/",
                     help="Path to stock price data")
 parser.add_argument("--strategy_type", default="distance", type=str, choices=["distance", "cointegration", "kalman"],
                     help="Type of strategy used, either distance, cointegration, or kalman")
@@ -90,7 +90,7 @@ def main():
     end_date_dt = datetime.strptime(config.end_date, "%Y-%m-%d").date() 
     data = trim_raw_data_files(start_date=start_date_dt,
                                end_date=end_date_dt,
-                               raw_folder="../ib-data/nyse-daily-tech/",
+                               raw_folder="../data/nyse-daily-tech/",
                                result_folder="../tmp-data/")
     
     for stk in data:
