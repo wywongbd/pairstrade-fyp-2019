@@ -1,16 +1,19 @@
 import random
 import numpy as np
 import tensorflow as tf
+import logging
 
 import rl_load_data
 import rl_constants
+
+_logger = logging.getLogger(__name__)
 
 # glob_indices should be assigned to None if an epoch finished
 glob_indices = None
 sample_start_index = None
 list_of_pairs_in_epoch = None
 curr_pairs = None
-def get_random_history(all_pairs_slices, all_pairs_df, batch_size, indices):
+def get_random_history(all_pairs_slices, all_pairs_df, batch_size, indices, pair_name=None):
     """Sample some pairs and get the history of those pairs. The history should have
     three dimension. The first dimension is for time. The second dimension is indexed
     by features name. The third dimension is the index of training instance.
@@ -28,26 +31,46 @@ def get_random_history(all_pairs_slices, all_pairs_df, batch_size, indices):
     elif False in [(0<=i and i<rl_constants.num_of_period) for i in indices]:
         raise Exception('indices should be a list of index from 0 to {}'.format(rl_constants.num_of_period-1))
     
-    # reset the list of pairs in epoch
-    if glob_indices == None or set(glob_indices) != set(indices):
-        glob_indices = indices
-        list_of_pairs_in_epoch = []
-        for i in glob_indices:
-            list_of_pairs_in_epoch.extend(all_pairs_slices[i])
-        random.shuffle(list_of_pairs_in_epoch)
-        sample_start_index = 0
-    
-    # normal update of index
-    sample_end_index = sample_start_index+batch_size
-    sample_pair_slices = list_of_pairs_in_epoch[sample_start_index:sample_end_index]
-    curr_pairs = sample_pair_slices
-    
-    # reached the end of data
-    if sample_end_index >= len(list_of_pairs_in_epoch):
-        glob_indices = None
-    
-    # update index for next batch
-    sample_start_index += batch_size
+    if pair_name == None:
+        # reset the list of pairs in epoch
+        if glob_indices == None or set(glob_indices) != set(indices):
+            glob_indices = indices
+            list_of_pairs_in_epoch = []
+            for i in glob_indices:
+                list_of_pairs_in_epoch.extend(all_pairs_slices[i])
+            random.shuffle(list_of_pairs_in_epoch)
+            sample_start_index = 0
+
+        # normal update of index
+        sample_end_index = sample_start_index+batch_size
+        sample_pair_slices = list_of_pairs_in_epoch[sample_start_index:sample_end_index]
+        curr_pairs = sample_pair_slices
+
+        # reached the end of data
+        if sample_end_index >= len(list_of_pairs_in_epoch):
+            glob_indices = None
+
+        # update index for next batch
+        sample_start_index += batch_size
+    else:
+        # assume data_indices only has one element
+        stock1, stock2 = pair_name.split('-')
+        pair_name1 = stock2+"-"+stock1
+        pair_df_name = pair_name+"-{}".format(indices[0])
+        pair_df_name1 = pair_name1+"-{}".format(indices[0])
+        _logger.info("name {}".format(pair_df_name))
+        _logger.info("name1 {}".format(pair_df_name1))
+        
+        _logger.info("keys {}".format([k for k, v in all_pairs_df.items()]))
+        
+        if pair_df_name in all_pairs_df:
+            sample_pair_slices = [pair_df_name]
+            
+        elif pair_df_name1 in all_pairs_df:
+            sample_pair_slices = [pair_df_name1]
+        
+        else:
+            _logger.info("error loading pair {}!".format(pair_name))
     
     # return to the environment. this should be no greater than batch_size
     actual_batch_size = len(sample_pair_slices)
@@ -99,14 +122,15 @@ class TradingEnvironment():
         self.all_pairs_df = all_pairs_df
         self.col_name_to_ind = col_name_to_ind
         
-    def _reset_env(self, data_indices):
+    def _reset_env(self, data_indices, pair_name):
         
         # prepare a batch of history and input_history
         # actual batch_size depends on the dataset
         self.history, curr_batch_size = get_random_history(self.all_pairs_slices,
                                                            self.all_pairs_df,
                                                            self.batch_size,
-                                                           data_indices)
+                                                           data_indices,
+                                                           pair_name)
         batch_size = curr_batch_size
         self.input_history = compute_input_history(self.history)
         
@@ -130,11 +154,11 @@ class TradingEnvironment():
         # create or update self.state variable
         self.update_state()
     
-    def reset(self, data_indices):
+    def reset(self, data_indices, pair_name=None):
         """Return an initial state for the trading environment"""
         
         # determine what dataset to use
-        self._reset_env(data_indices)
+        self._reset_env(data_indices, pair_name)
         return self.state
     
     def compute_reward(self, action):

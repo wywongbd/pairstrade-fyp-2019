@@ -93,6 +93,55 @@ def get_hkg_time():
     return hkg_time
 
 
+def evaluate_a_pair(data_indices, pair_name):
+    done = False
+    s = env.reset(data_indices, pair_name)
+    saved_a = [0]
+    saved_portfolio_val = [env.port_val[0]]
+
+    # for accumalting episode statistics
+    act_batch_size = tf.shape(s).numpy()[0]
+    _logger.info("this batch size should be 1: {}".format(act_batch_size))
+    total_r = np.zeros(act_batch_size)
+
+    # internally the episode length is fixed by trading_period
+    while not done:
+        logits = pi(s)
+        a = sample_action(logits, act_batch_size)
+        saved_a.append(a[0].numpy())
+
+        # get immediate reward, update state, and get done
+        r, s, done = env.step(a.numpy())
+        saved_portfolio_val.append(env.port_val[0])
+        
+    date = env.history[:,-1,0]
+
+#     plt.figure()
+#     plt.plot(env.history[:,-1,0], env.history[:,rl_load_data.col_name_to_ind["spread"],0])
+#     plt.plot(env.history[:,-1,0], saved_a)
+#     plt.savefig(join(plot_folder_path, 'spread_action_{}.png'.format(pair_name)))
+    
+#     plt.figure()
+#     plt.plot(env.history[:,-1,0], saved_portfolio_val)
+#     plt.savefig(join(plot_folder_path, 'portfolio_val_{}.png'.format(pair_name)))
+    
+    for i, v in enumerate(saved_a):
+        if v == 0:
+            saved_a[i] = 'exit_spread'
+        elif v == 1:
+            saved_a[i] = 'long_spread'
+        elif v == 2:
+            saved_a[i] = 'short_spread'
+
+    result_df = pd.DataFrame({'spread': env.history[:,rl_load_data.col_name_to_ind["spread"],0],
+                  'date': env.history[:,-1,0],
+                  'latest_trade_action': saved_a
+                 })
+    
+    _logger.info("{}".format(result_df))
+    return result_df
+
+
 def run_batch_for_evaluate_performance(return_list, data_indices):
     done = False
     s = env.reset(data_indices)
@@ -353,13 +402,14 @@ class StateEncodingModel(tf.keras.Model):
     def reset_state(self, batch_size):
         self.state = self.cell.zero_state(batch_size, tf.float32)
 
-        
+
 def generate_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--job_name", type=str, required=True, help="The job name.")
     parser.add_argument("--batch_size", type=int, default=300)
     parser.add_argument("--num_of_epoch", type=int, default=80)
-    parser.add_argument("--h_dim", type=int, default=300, help="RNN hidden state dimension")
+    # h_dim 300 is very good
+    parser.add_argument("--h_dim", type=int, default=150, help="RNN hidden state dimension")
     parser.add_argument("--num_rnn_layers", type=int, default=1, help="number of RNN layer")
     parser.add_argument("--layer1_out_num", type=int, default=20, help="number of layer1 output")
     parser.add_argument("--lr", type=float, default=5e-4, help="learning rate")
@@ -433,7 +483,7 @@ def main(config):
     global checkpoint_dir
     global _logger
     
-    copy_config(config)
+    
     
     
     plot_folder_path = './logging/{}/plots/'.format(job_name)
@@ -447,9 +497,11 @@ def main(config):
     _logger = logging.getLogger(__name__)
     
     _logger.info("Hello World!")
+    _logger.info("{}".format(config))
     
     _logger.info("config.train_indices = {}".format(config.train_indices))
     _logger.info("config.test_indices = {}".format(config.test_indices))
+    _logger.info("num_of_batch = {}".format(num_of_batch))
     
     
     # load data
@@ -472,6 +524,10 @@ def main(config):
     # create checkpoint object
     root = tf.train.Checkpoint(pi=pi, state_encoding_model=state_encoding_model, optimizer=optimizer)
     
+#     restore_model("./logging/train_012_test_3/saved_models/20190409_044426")
+    
+#     evaluate_a_pair([0], "AAN-AER")
+    
     # evaluate performance on train dataset
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
     plot_rs_dist(train_rs, 'RL_train_result_before_train', '')
@@ -480,7 +536,7 @@ def main(config):
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
     plot_rs_dist(test_rs, 'RL_test_result_before_train', '')
     
-    train(config.train_indices, 300)
+    train(config.train_indices, num_of_batch*2)
 #     train(config.train_indices, num_of_batch)
     
     # evaluate performance on train dataset
@@ -495,5 +551,7 @@ def main(config):
 if __name__ == '__main__':
     
     config = generate_parser().parse_args()
+    
+    copy_config(config)
     
     main(config)

@@ -8,7 +8,7 @@ import rl_constants
 
 _logger = logging.getLogger(__name__)
 
-df_columns = ['close1', 'close2', 'normalizedLogClose1', 'normalizedLogClose2', 'spread', 'alpha', 'beta']
+df_columns = ['close1', 'close2', 'normalizedLogClose1', 'normalizedLogClose2', 'spread', 'alpha', 'beta', 'date']
 col_name_to_ind = {}
 for i, c in enumerate(df_columns):
     if c == 'close1':
@@ -17,6 +17,8 @@ for i, c in enumerate(df_columns):
         col_name_to_ind['x_close'] = i
     elif c == 'spread':
         col_name_to_ind['spread'] = i
+    elif c == 'date':
+        col_name_to_ind['date'] = i
         
         
 def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
@@ -41,7 +43,7 @@ def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
     # split for training and testing
     all_pairs = sorted(list(set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])))[:rl_constants.num_of_pair]
     # all_pairs = ["VMW-WUBA"]
-    # all_pairs = ["TWTR-UIS"]
+#     all_pairs = ["AAN-AER"]
     all_pairs_slices = [[] for i in range(rl_constants.num_of_period)]
     for p in all_pairs:
         for i in range(rl_constants.num_of_period):
@@ -61,6 +63,11 @@ def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
     for df_name, df in all_pairs_df.items():
         trading_period = len(df)
         break
+    
+#     for i, lis in enumerate(all_pairs_slices):
+#         print("i = {}".format(i))
+#         print("start date = {}".format(all_pairs_df[lis[0]]["date"].iloc[0]))
+#         print("end date = {}".format(all_pairs_df[lis[0]]["date"].iloc[-1]))
         
     _logger.info("trading_period is {}".format(trading_period))
 
