@@ -20,9 +20,11 @@ for i, c in enumerate(df_columns):
     elif c == 'date':
         col_name_to_ind['date'] = i
         
-        
+
 def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
-              raw_files_path_pattern="../../dataset/nyse-daily-trimmed-same-length/*.csv"):
+              raw_files_path_pattern="../../dataset/nyse-daily-trimmed-same-length/*.csv",
+              filter_pairs=None
+             ):
     
     os.makedirs(dataset_folder_path, exist_ok=True)
 
@@ -41,8 +43,19 @@ def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
     _logger.info("Total number of pair slices: {}".format(len(all_pairs_slices)))
 
     # split for training and testing
-    all_pairs = sorted(list(set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])))[:rl_constants.num_of_pair]
-    # all_pairs = ["VMW-WUBA"]
+    if filter_pairs == None:
+        all_pairs = sorted(list(set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])))[:rl_constants.num_of_pair]
+    else:
+        all_pairs = []
+        for p in filter_pairs:
+            s1, s2 = p.split('-')
+            all_pairs.append('-'.join([s2, s1]))
+        all_possible_pairs = set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])
+        all_pairs.extend(filter_pairs)
+        all_pairs = filter(lambda p: p in all_possible_pairs, all_pairs)
+
+#     all_pairs = ["VMW-WUBA"]
+#     all_pairs = ["MSI-PANW"]
 #     all_pairs = ["AAN-AER"]
     all_pairs_slices = [[] for i in range(rl_constants.num_of_period)]
     for p in all_pairs:
