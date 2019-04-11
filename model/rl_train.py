@@ -114,6 +114,7 @@ def evaluate_a_pair(data_indices, pair_name):
     saved_portfolio_val = [env.port_val[0]]
     y_quantity = [env.quantity['y'][0]]
     x_quantity = [env.quantity['x'][0]]
+    softmax = [np.ones(3)/3] # dummy
 
     # for accumalting episode statistics
     act_batch_size = tf.shape(s).numpy()[0]
@@ -123,6 +124,10 @@ def evaluate_a_pair(data_indices, pair_name):
     # internally the episode length is fixed by trading_period
     while not done:
         logits = pi(s)
+        
+        # softmax
+        softmax.append(tf.nn.softmax(logits).numpy()[0])
+        
         a = sample_action(logits, act_batch_size)
         saved_a.append(a[0].numpy())
         y_quantity.append(env.quantity['y'][0])
@@ -137,6 +142,8 @@ def evaluate_a_pair(data_indices, pair_name):
     xclose = env.history[:, rl_load_data.col_name_to_ind["x_close"], 0]
     y_val = yclose*np.array(y_quantity)
     x_val = xclose*np.array(x_quantity)
+    
+    softmax = np.array(softmax)
 
 #     plt.figure()
 #     plt.plot(env.history[:,-1,0], env.history[:,rl_load_data.col_name_to_ind["spread"],0])
@@ -172,7 +179,11 @@ def evaluate_a_pair(data_indices, pair_name):
     result_df = pd.DataFrame({'spread': env.history[:,rl_load_data.col_name_to_ind["spread"],0],
                               'date': env.history[:,-1,0],
                               'latest_trade_action': saved_a,
-                              'portfolio_value': saved_portfolio_val})
+                              'portfolio_value': saved_portfolio_val,
+                              'softmax_0': softmax[:, 0],
+                              'softmax_1': softmax[:, 1],
+                              'softmax_2': softmax[:, 2]
+                             })
     
     action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0]
     dic = {0: "exit_spread", 1: "long_spread", 2: "short_spread"}
@@ -560,7 +571,7 @@ def main_global_setup(config, filter_pairs=None):
     # create checkpoint object
     root = tf.train.Checkpoint(pi=pi, state_encoding_model=state_encoding_model, optimizer=optimizer)
 
-def main():
+def main(filter_pairs):
     
 #     restore_model("./logging/train_012_test_3/saved_models/20190409_044426")
 
@@ -641,6 +652,6 @@ if __name__ == '__main__':
     
     copy_config(config)
     
-    main_global_setup(config, filter_pairs=["LLL-NOW"])
-    
-    main()
+    filter_pairs = ["LLL-NOW"]
+    main_global_setup(config, filter_pairs=filter_pairs)
+    main(filter_pairs)
