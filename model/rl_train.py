@@ -93,11 +93,27 @@ def get_hkg_time():
     return hkg_time
 
 
+def run_rl_backtest(stock1, stock2, period_index):
+    pair_name = "-".join([stock1, stock2])
+    
+    config = generate_parser().parse_args(['--job_name', 'run_rl_backtest'])
+    
+    copy_config(config)
+    
+    main_global_setup(config, filter_pairs=[pair_name])
+    
+    restore_model("./logging/train_012_test_3_new/saved_models/20190410_050826")
+    
+    return evaluate_a_pair([period_index], pair_name)
+
+
 def evaluate_a_pair(data_indices, pair_name):
     done = False
     s = env.reset(data_indices, pair_name)
     saved_a = [0]
     saved_portfolio_val = [env.port_val[0]]
+    y_quantity = [env.quantity['y'][0]]
+    x_quantity = [env.quantity['x'][0]]
 
     # for accumalting episode statistics
     act_batch_size = tf.shape(s).numpy()[0]
@@ -109,37 +125,62 @@ def evaluate_a_pair(data_indices, pair_name):
         logits = pi(s)
         a = sample_action(logits, act_batch_size)
         saved_a.append(a[0].numpy())
+        y_quantity.append(env.quantity['y'][0])
+        x_quantity.append(env.quantity['x'][0])
 
         # get immediate reward, update state, and get done
         r, s, done = env.step(a.numpy())
         saved_portfolio_val.append(env.port_val[0])
         
     date = env.history[:,-1,0]
+    yclose = env.history[:, rl_load_data.col_name_to_ind["y_close"], 0]
+    xclose = env.history[:, rl_load_data.col_name_to_ind["x_close"], 0]
+    y_val = yclose*np.array(y_quantity)
+    x_val = xclose*np.array(x_quantity)
 
 #     plt.figure()
 #     plt.plot(env.history[:,-1,0], env.history[:,rl_load_data.col_name_to_ind["spread"],0])
 #     plt.plot(env.history[:,-1,0], saved_a)
 #     plt.savefig(join(plot_folder_path, 'spread_action_{}.png'.format(pair_name)))
     
+    fig, (ax1, ax2) = plt.subplots(2, sharex=True, figsize=(14, 7))
+    ax1.plot(env.history[:,rl_load_data.col_name_to_ind["spread"],0], color='b', label='spread')
+    ax1.set_ylabel('spread', color='b')
+    ax1_ = ax1.twinx()
+    ax1_.plot(saved_a, color='r', label='action')
+    ax1_.set_ylabel('action', color='r')
+    ax2.plot(saved_portfolio_val)
+    ax2.set_ylabel('value')
+    ax2.plot(y_val)
+    ax2.plot(x_val)
+    fig.tight_layout()
+    fig.savefig(join(plot_folder_path, 'spread_action_portval_{}_{}.png'.format(pair_name, data_indices[0])))
+    
 #     plt.figure()
 #     plt.plot(env.history[:,-1,0], saved_portfolio_val)
 #     plt.savefig(join(plot_folder_path, 'portfolio_val_{}.png'.format(pair_name)))
+
     
-    for i, v in enumerate(saved_a):
-        if v == 0:
-            saved_a[i] = 'exit_spread'
-        elif v == 1:
-            saved_a[i] = 'long_spread'
-        elif v == 2:
-            saved_a[i] = 'short_spread'
+#     for i, v in enumerate(saved_a):
+#         if v == 0:
+#             saved_a[i] = 'exit_spread'
+#         elif v == 1:
+#             saved_a[i] = 'long_spread'
+#         elif v == 2:
+#             saved_a[i] = 'short_spread'
 
     result_df = pd.DataFrame({'spread': env.history[:,rl_load_data.col_name_to_ind["spread"],0],
-                  'date': env.history[:,-1,0],
-                  'latest_trade_action': saved_a
-                 })
+                              'date': env.history[:,-1,0],
+                              'latest_trade_action': saved_a,
+                              'portfolio_value': saved_portfolio_val})
     
-    _logger.info("{}".format(result_df))
-    return result_df
+    action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0]
+    dic = {0: "exit_spread", 1: "long_spread", 2: "short_spread"}
+    action_df = action_df.replace({'latest_trade_action': dic})
+    
+    _logger.info("\n{}".format(result_df))
+    _logger.info("\n{}".format(action_df))
+    return result_df, action_df
 
 
 def run_batch_for_evaluate_performance(return_list, data_indices):
@@ -473,7 +514,7 @@ root = None
 plot_folder_path = None
 checkpoint_dir = None
 _logger = None
-def main(config):
+def main_global_setup(config, filter_pairs=None):
     global pi
     global state_encoding_model
     global env
@@ -482,9 +523,6 @@ def main(config):
     global plot_folder_path
     global checkpoint_dir
     global _logger
-    
-    
-    
     
     plot_folder_path = './logging/{}/plots/'.format(job_name)
     checkpoint_dir = './logging/{}/saved_models/'.format(job_name)
@@ -503,10 +541,8 @@ def main(config):
     _logger.info("config.test_indices = {}".format(config.test_indices))
     _logger.info("num_of_batch = {}".format(num_of_batch))
     
-    
     # load data
-    all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data()
-
+    all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data(filter_pairs=filter_pairs)
 
     # create objects
     pi = TradingPolicyModel()
@@ -523,29 +559,80 @@ def main(config):
 
     # create checkpoint object
     root = tf.train.Checkpoint(pi=pi, state_encoding_model=state_encoding_model, optimizer=optimizer)
+
+def main():
     
 #     restore_model("./logging/train_012_test_3/saved_models/20190409_044426")
+
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_043649")
     
-#     evaluate_a_pair([0], "AAN-AER")
+    evaluate_a_pair([1], filter_pairs[0])
+
+#     plot_progress()
     
-    # evaluate performance on train dataset
+#     # evaluate performance on train dataset
+#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+#     plot_rs_dist(train_rs, 'RL_train_result_before_train', '')
+    
+#     # evaluate performance on test dataset
+#     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+#     result_list = [(k, v) for k, v in test_total_r_dict.items()]
+#     result_list = sorted(result_list, key=lambda x: x[1], reverse=True)
+#     first_k = int(len(result_list)*0.05)
+#     _logger.info("first_k: {}".format(first_k))
+#     _logger.info("first_k pairs: {}".format(result_list[:first_k]))
+    
+#     plot_rs_dist(test_rs, 'RL_test_result_before_train', '')
+    
+#     train(config.train_indices, num_of_batch*2)
+# #     train(config.train_indices, num_of_batch)
+    
+#     # evaluate performance on train dataset
+#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+#     plot_rs_dist(train_rs, 'RL_train_result_after_train', '')
+    
+#     # evaluate performance on test dataset
+#     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+#     plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
+    
+
+def plot_progress():
+    i = 0
+    
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_003432")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_before_train', '')
-    
-    # evaluate performance on test dataset
+    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_before_train', '')
+    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+    i += 1
     
-    train(config.train_indices, num_of_batch*2)
-#     train(config.train_indices, num_of_batch)
-    
-    # evaluate performance on train dataset
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_010609")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_after_train', '')
-    
-    # evaluate performance on test dataset
+    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
+    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+    i += 1
+    
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_015917")
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+    i += 1
+    
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_034223")
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+    i += 1
+    
+    restore_model("./logging/train_0_test_1_new/saved_models/20190410_043649")
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+    i += 1
 
         
 if __name__ == '__main__':
@@ -554,4 +641,6 @@ if __name__ == '__main__':
     
     copy_config(config)
     
-    main(config)
+    main_global_setup(config, filter_pairs=["LLL-NOW"])
+    
+    main()
