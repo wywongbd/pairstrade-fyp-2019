@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-.vscode/
-.ipynb_checkpoints
-__pycache__
-tmp-data/
-tmp/
-=======
 .vscode/
 .ipynb_checkpoints
 __pycache__
 tmp-data/
 tmp/
 .DS_Store
->>>>>>> brendan/alignment
+model/logging
+model/dataset
