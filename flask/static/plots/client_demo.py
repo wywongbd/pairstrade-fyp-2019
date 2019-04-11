@@ -5,6 +5,7 @@ import glob
 import logging
 import pandas as pd
 import numpy as np
+import datetime
 from datetime import date
 
 # figure plotting
@@ -31,9 +32,13 @@ backtest_params = {
     "strategy_type": "kalman",
     "stk_0": "AAN",
     "stk_1": "AER",
-    "backtest_start": "2017-05-01",
-    "backtest_end": "2017-12-31"
+    "backtest_start": "2018-03-20",
+    "backtest_end": "2019-01-03",
+    "max_start": "2014-01-01",
+    "max_end": "2019-01-03"
 }
+
+RL_period_idx = 3
     
 def build_price_and_spread_fig(data, action_df):
     # ========== themes & appearance ============= #
@@ -83,7 +88,7 @@ def build_price_and_spread_fig(data, action_df):
                                                spread=data['spread'], 
                                                upper_limit=data['upper_limit'], 
                                                lower_limit=data['lower_limit']))
-    action_source = ColumnDataSource(action_df)
+    
     # action_source['colors'] = [palette[i] x for x in action_source['actions']]
 
     # ========== figure INTERACTION properties ============= #
@@ -102,22 +107,24 @@ def build_price_and_spread_fig(data, action_df):
 
     # ========== plot data points ============= #
     # plot the POINT coords of the ACTIONS
-    circles = spread_p.circle("date", "spread", size=12, source=action_source, fill_alpha=0.8)
+    if len(action_df) > 0:
+        action_source = ColumnDataSource(action_df)
+        circles = spread_p.circle("date", "spread", size=12, source=action_source, fill_alpha=0.8)
 
-    circles_hover = bkm.HoverTool(renderers=[circles], tooltips = [
-        ("Action", "@latest_trade_action"),                    
-        ("Stock Bought", "@buy_stk"),
-        ("Bought Amount", "@buy_amt"),
-        ("Stock Sold", "@sell_stk"),
-        ("Sold Amount", "@sell_amt")
-        ])
+        circles_hover = bkm.HoverTool(renderers=[circles], tooltips = [
+            ("Action", "@latest_trade_action"),                    
+            ("Stock Bought", "@buy_stk"),
+            ("Bought Amount", "@buy_amt"),
+            ("Stock Sold", "@sell_stk"),
+            ("Sold Amount", "@sell_amt")
+            ])
 
-    spread_p.add_tools(circles_hover)
+        spread_p.add_tools(circles_hover)
 
     # plot the spread over time
     spread_p.line('date', 'spread', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
-    spread_p.line('date', 'upper_limit', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
-    spread_p.line('date', 'lower_limit', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
+    spread_p.line('date', 'upper_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
+    spread_p.line('date', 'lower_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
     spread_p.xaxis[0].formatter = DatetimeTickFormatter()
 
     # ========== RANGE SELECT TOOL ============= #
@@ -165,19 +172,19 @@ def build_widgets_wb(stock_list, metrics):
     WIDGET_WIDTH = 250
 
     # ========== Select Stocks ============= #
-    select_stk_1 = Select(width = WIDGET_WIDTH, title='Select Stock 1:', value = stock_list[0], options=stock_list)
-    select_stk_2 = Select(width = WIDGET_WIDTH, title='Select Stock 2:', value = stock_list[1], options=stock_list)
+    select_stk_1 = Select(width = WIDGET_WIDTH, title='Select Stock 1:', value = backtest_params["stk_0"], options=stock_list)
+    select_stk_2 = Select(width = WIDGET_WIDTH, title='Select Stock 2:', value = backtest_params["stk_1"], options=stock_list)
 
     # ========== Strategy Type ============= #
-    strategy_list = ['kalman', 'distance', 'cointegration']
+    strategy_list = ['kalman', 'distance', 'cointegration', 'reinforcement learning']
     select_strategy = Select(width = WIDGET_WIDTH, title='Select Strategy:', value = strategy_list[0], options=strategy_list)
 
     # ========== set start/end date ============= #
     # date time variables
-    MAX_START = date(2014, 1, 1)
-    MAX_END = date(2018, 12, 30)
-    DEFAULT_START = date(2017, 5, 1)
-    DEFAULT_END = date(2017, 12, 31)
+    MAX_START = datetime.datetime.strptime(backtest_params["max_start"], "%Y-%m-%d").date()
+    MAX_END = datetime.datetime.strptime(backtest_params["max_end"], "%Y-%m-%d").date()
+    DEFAULT_START = datetime.datetime.strptime(backtest_params["backtest_start"], "%Y-%m-%d").date()
+    DEFAULT_END = datetime.datetime.strptime(backtest_params["backtest_end"], "%Y-%m-%d").date()
     STEP = 1
 
     backtest_dates = DateRangeSlider(width = WIDGET_WIDTH, 
@@ -212,11 +219,11 @@ python ./jupyter_py/backtest_pair.py \
 --backtest_start {} \
 --backtest_end {} \
 --stk0 {} \
---stk1 {}
+--stk1 {}  
 """
-if backtest_params["strategy_type"] == "kalman":
-    execution_command += " --kalman_estimation_length 200"
-elif backtest_params["strategy_type"] == "cointegration":
+# if backtest_params["strategy_type"] == "kalman":
+#     execution_command += " --kalman_estimation_length 200"
+if backtest_params["strategy_type"] == "cointegration":
     execution_command += " --lookback 76"
 elif backtest_params["strategy_type"] == "distance":
     execution_command += " --lookback 70"
@@ -260,41 +267,48 @@ def update_dates(attrname, old, new):
     # backtest_params['backtest_end'] = str(datetime.datetime.fromtimestamp(val[1]).date())
 
 def run_backtest():
-    output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
-    execution_command = """
-    python ./jupyter_py/backtest_pair.py \
-    --strategy_type {} \
-    --output_dir {} \
-    --backtest_start {} \
-    --backtest_end {} \
-    --stk0 {} \
-    --stk1 {}
-    """
-    if backtest_params["strategy_type"] == "kalman":
-        execution_command += " --kalman_estimation_length 200"
-    elif backtest_params["strategy_type"] == "cointegration":
-        execution_command += " --lookback 76"
-    elif backtest_params["strategy_type"] == "distance":
-        execution_command += " --lookback 70"
+    backtest_df, trades_df = None, None
+    
+    if backtest_params["strategy_type"] in ["cointegration", "distance", "kalman"]:
+        output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
+        execution_command = """
+        python ./jupyter_py/backtest_pair.py \
+        --strategy_type {} \
+        --output_dir {} \
+        --backtest_start {} \
+        --backtest_end {} \
+        --stk0 {} \
+        --stk1 {} 
+        """
+    #     if backtest_params["strategy_type"] == "kalman":
+    #         execution_command += " --kalman_estimation_length 200"
+        if backtest_params["strategy_type"] == "cointegration":
+            execution_command += " --lookback 76"
+        elif backtest_params["strategy_type"] == "distance":
+            execution_command += " --lookback 70"
 
-    execution_command = execution_command.format(backtest_params["strategy_type"], 
-                                                output_dir,
-                                                backtest_params["backtest_start"],
-                                                backtest_params["backtest_end"],
-                                                backtest_params["stk_0"],
-                                                backtest_params["stk_1"])
+        execution_command = execution_command.format(backtest_params["strategy_type"], 
+                                                    output_dir,
+                                                    backtest_params["backtest_start"],
+                                                    backtest_params["backtest_end"],
+                                                    backtest_params["stk_0"],
+                                                    backtest_params["stk_1"])
 
-    os.system(execution_command)
+        os.system(execution_command)
 
-    stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
-    for i, file in enumerate(stock_list):
-        stock_list[i] = os.path.basename(file)[:-4]
+        stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
+        for i, file in enumerate(stock_list):
+            stock_list[i] = os.path.basename(file)[:-4]
 
-    # get results from log file
-    backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
-    metrics_dict = Decoder.get_strategy_performance(str(output_dir))
-    metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
-    metrics_pd.columns = ['Metrics', 'Value']
+        # get results from log file
+        backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
+        metrics_dict = Decoder.get_strategy_performance(str(output_dir))
+        metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
+        metrics_pd.columns = ['Metrics', 'Value']
+        
+    else:
+        # perform RL backtest
+        pass
 
     # build figures
     spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
