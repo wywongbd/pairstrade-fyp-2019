@@ -46,22 +46,22 @@ parser.add_argument("--end_date", type=str, default="2018-12-31",
 
 parser.add_argument("--pair_selection_start_date", type=str, default="2018-01-02",
                     help="Start date of pair selection.")
-parser.add_argument("--pair_selection_end_date", type=str, default="2018-03-31",
+parser.add_argument("--pair_selection_end_date", type=str, default="2018-03-20",
                     help="End date of pair selection.")
 
-parser.add_argument("--kalman_estimation_length", type=int, default=50,
+parser.add_argument("--kalman_estimation_length", type=int, default=200,
                     help="Number of days used for Kalman EM algorithm. Only useful if strategy is kalman.")
 
-parser.add_argument("--backtest_start", type=str, default="2018-05-01",
+parser.add_argument("--backtest_start", type=str, default="2018-03-20",
                     help="Start date of backtest.")
-parser.add_argument("--backtest_end", type=str, default="2018-12-31",
+parser.add_argument("--backtest_end", type=str, default="2019-01-03",
                     help="End date of backtest.")
 
 parser.add_argument("--pct", type=float, default=0.95, 
                     help="Top pct percentage of the pairs with lowest distance/lowest pvalue will be backtested.")
 parser.add_argument("--lookback_values", default=[20, 30, 40, 50], nargs='+', type=int, 
                     help="Lookback values to be tested. Only useful if strategy is distance or cointegration.")
-parser.add_argument("--enter_thresholds", default=[1.0, 1.5, 2.0], nargs='+', type=float, 
+parser.add_argument("--enter_thresholds", default=[2.0], nargs='+', type=float, 
                     help="Enter threshold values to be tested (in units 'number of SD from mean').")
 parser.add_argument("--exit_thresholds", default=[0.5], nargs='+', type=float, 
                     help="Exit threshold values to be tested (in units 'number of SD from mean').")
