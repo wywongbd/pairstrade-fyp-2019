@@ -21,8 +21,8 @@ for i, c in enumerate(df_columns):
         col_name_to_ind['date'] = i
         
 
-def load_data(dataset_folder_path='../../dataset/nyse-daily-transformed',
-              raw_files_path_pattern="../../dataset/nyse-daily-trimmed-same-length/*.csv",
+def load_data(dataset_folder_path='./dataset/nyse-daily-transformed',
+              raw_files_path_pattern="./dataset/nyse-daily-trimmed-same-length/*.csv",
               filter_pairs=None
              ):
     
