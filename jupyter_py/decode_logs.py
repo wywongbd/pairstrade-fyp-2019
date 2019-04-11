@@ -61,3 +61,23 @@ class Decoder(object):
 			dict_list.append(eval(line[len(keyword) + 2: -1]))
 
 		return dict_list[0]
+    
+	@staticmethod
+	def get_information_as_df(keyword, output_dir):
+		# This function returns a df
+		# get the path of the log file
+		log_path = glob.glob(output_dir + "/*.log")[0]
+
+		match_lines = []
+		with open(log_path, "r") as file:
+			for line in file:
+				idx = line.find(keyword)
+				if idx >= 0:
+					match_lines.append(line[idx:])
+
+		dict_list = []
+		for line in match_lines:
+			dict_list.append(eval(line[len(keyword) + 2: -1]))
+
+		big_df = pd.DataFrame(dict_list)
+		return big_df
