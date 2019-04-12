@@ -5,6 +5,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter
 
 import math
 import random
@@ -96,7 +97,7 @@ def get_hkg_time():
 def run_rl_backtest(stock1, stock2, period_index):
     pair_name = "-".join([stock1, stock2])
     
-    config = generate_parser().parse_args(['--job_name', 'run_rl_backtest'])
+    config = generate_parser().parse_args(['--job_name', 'run_rl_backtest', '--is_train', 'False'])
     
     copy_config(config)
     
@@ -264,6 +265,36 @@ def plot_rs_dist(rs, fig_name, fig_title):
     plt.savefig(join(plot_folder_path, fig_name+'.png'))
 #     plt.close()
     _logger.info('Number of pairs: {}'.format(len(return_in_percent)))
+    _logger.info('Mean return over all pairs: {:.4f}'.format(np.mean(return_in_percent)))
+
+
+def plot_rs_dist_overlap(rs, fig_title, mean=False, median=False, color=None, methodName=None):
+    return_in_percent = np.array(rs) / rl_constants.initial_cash
+#     stat = plt.hist(return_in_percent, bins=30, weights=np.ones(len(return_in_percent)) / len(return_in_percent))
+    y, binEdges = np.histogram(return_in_percent, bins=50, density=True)
+    
+    bincenters = 0.5*(binEdges[1:]+binEdges[:-1])
+    plt.plot(bincenters,y,'-', color=color, label=methodName)
+    
+    mean_stat = return_in_percent.mean()
+    median_stat = np.median(return_in_percent)
+    
+    if mean:
+        plt.axvline(mean_stat, color=color, linestyle='dashed', linewidth=1, label=methodName+' Mean: {:.3f}'.format(mean_stat))
+    if median:
+        plt.axvline(median_stat, color=color, linestyle='dashed', linewidth=1, label=methodName+' Median: {:.3f}'.format(median_stat))
+    
+    plt.gcf().set_size_inches(14, 7)
+#     plt.gca().yaxis.set_major_formatter(PercentFormatter(1))
+    plt.gca().xaxis.set_major_formatter(PercentFormatter(1))
+    
+    if len(fig_title) != 0:
+        plt.suptitle(fig_title)
+    plt.xlabel('return')
+    plt.ylabel('density of the distribution of all pairs')
+    plt.legend(loc='upper right')
+#     print(stat)
+    _logger.info('Number of pairs:', len(return_in_percent))
     _logger.info('Mean return over all pairs: {:.4f}'.format(np.mean(return_in_percent)))
 
     
@@ -458,6 +489,7 @@ class StateEncodingModel(tf.keras.Model):
 def generate_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--job_name", type=str, required=True, help="The job name.")
+    parser.add_argument("--is_train", type=bool, required=True, help="Is this job training?")
     parser.add_argument("--batch_size", type=int, default=300)
     parser.add_argument("--num_of_epoch", type=int, default=80)
     # h_dim 300 is very good
@@ -607,43 +639,61 @@ def main(filter_pairs):
 #     plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
     
 
-def plot_progress():
+def plot_progress(config):
     i = 0
+    
+    train_rs_list = []
+    test_rs_list = []
     
     restore_model("./logging/train_0_test_1_new/saved_models/20190410_003432")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
     i += 1
+    train_rs_list.append(train_rs)
+    test_rs_list.append(test_rs)
     
     restore_model("./logging/train_0_test_1_new/saved_models/20190410_010609")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
     i += 1
-    
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_015917")
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
-    i += 1
+    train_rs_list.append(train_rs)
+    test_rs_list.append(test_rs)
     
     restore_model("./logging/train_0_test_1_new/saved_models/20190410_034223")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
     i += 1
+    train_rs_list.append(train_rs)
+    test_rs_list.append(test_rs)
     
     restore_model("./logging/train_0_test_1_new/saved_models/20190410_043649")
     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
     i += 1
+    train_rs_list.append(train_rs)
+    test_rs_list.append(test_rs)
+    
+    plt.figure()
+    plot_rs_dist_overlap(train_rs_list[0], '', methodName=str(0), mean=False)
+    plot_rs_dist_overlap(train_rs_list[1], '', methodName=str(1), mean=False, color='r')
+    plot_rs_dist_overlap(train_rs_list[2], '', methodName=str(2), mean=False, color='y')
+    plot_rs_dist_overlap(train_rs_list[3], '', methodName=str(3), mean=False, color='g')
+    plt.savefig(join(plot_folder_path, "RL_training_progress_on_train_data"+'.png'))
+    
+    plt.figure()
+    plot_rs_dist_overlap(test_rs_list[0], '', methodName=str(0), mean=False)
+    plot_rs_dist_overlap(test_rs_list[1], '', methodName=str(1), mean=False, color='r')
+    plot_rs_dist_overlap(test_rs_list[2], '', methodName=str(2), mean=False, color='y')
+    plot_rs_dist_overlap(test_rs_list[3], '', methodName=str(3), mean=False, color='g')
+    plt.savefig(join(plot_folder_path, "RL_training_progress_on_test_data"+'.png'))
 
         
 if __name__ == '__main__':
@@ -652,6 +702,10 @@ if __name__ == '__main__':
     
     copy_config(config)
     
-    filter_pairs = ["LLL-NOW"]
+    filter_pairs = None
     main_global_setup(config, filter_pairs=filter_pairs)
-    main(filter_pairs)
+    
+    if config.is_train:
+        main(filter_pairs)
+    else:
+        plot_progress(config)
