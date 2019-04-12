@@ -489,13 +489,13 @@ class StateEncodingModel(tf.keras.Model):
 def generate_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--job_name", type=str, required=True, help="The job name.")
-    parser.add_argument("--is_train", type=bool, required=True, help="Is this job training?")
+    parser.add_argument("--is_train", default=False, action='store_true', help="Is this job training?")
     parser.add_argument("--batch_size", type=int, default=300)
     parser.add_argument("--num_of_epoch", type=int, default=80)
     # h_dim 300 is very good
     parser.add_argument("--h_dim", type=int, default=150, help="RNN hidden state dimension")
     parser.add_argument("--num_rnn_layers", type=int, default=1, help="number of RNN layer")
-    parser.add_argument("--layer1_out_num", type=int, default=20, help="number of layer1 output")
+    parser.add_argument("--layer1_out_num", type=int, default=50, help="number of layer1 output")
     parser.add_argument("--lr", type=float, default=5e-4, help="learning rate")
     parser.add_argument("--reg", type=float, default=0.00001)
     parser.add_argument("--gamma", type=float, default=5e-4, help="discount factor in reinforcement learning")
@@ -604,18 +604,17 @@ def main_global_setup(config, filter_pairs=None):
     root = tf.train.Checkpoint(pi=pi, state_encoding_model=state_encoding_model, optimizer=optimizer)
 
 def main(filter_pairs):
-    
-#     restore_model("./logging/train_012_test_3/saved_models/20190409_044426")
 
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_043649")
+    # evaluate performance on train dataset
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, 'RL_train_result_before_train', '')
     
-    evaluate_a_pair([1], filter_pairs[0])
-
-#     plot_progress()
+    # evaluate performance on test dataset
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, 'RL_test_result_before_train', '')
     
-#     # evaluate performance on train dataset
-#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_before_train', '')
+    save_model()
+    _logger.info("saving initial random model...")
     
 #     # evaluate performance on test dataset
 #     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
@@ -624,19 +623,18 @@ def main(filter_pairs):
 #     first_k = int(len(result_list)*0.05)
 #     _logger.info("first_k: {}".format(first_k))
 #     _logger.info("first_k pairs: {}".format(result_list[:first_k]))
-    
 #     plot_rs_dist(test_rs, 'RL_test_result_before_train', '')
     
-#     train(config.train_indices, num_of_batch*2)
-# #     train(config.train_indices, num_of_batch)
+    train(config.train_indices, int(num_of_batch*1.5))
+#     train(config.train_indices, num_of_batch)
     
-#     # evaluate performance on train dataset
-#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_after_train', '')
+    # evaluate performance on train dataset
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, 'RL_train_result_after_train', '')
     
-#     # evaluate performance on test dataset
-#     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-#     plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
+    # evaluate performance on test dataset
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
     
 
 def plot_progress(config):
@@ -682,17 +680,19 @@ def plot_progress(config):
     test_rs_list.append(test_rs)
     
     plt.figure()
-    plot_rs_dist_overlap(train_rs_list[0], '', methodName=str(0), mean=False)
-    plot_rs_dist_overlap(train_rs_list[1], '', methodName=str(1), mean=False, color='r')
-    plot_rs_dist_overlap(train_rs_list[2], '', methodName=str(2), mean=False, color='y')
-    plot_rs_dist_overlap(train_rs_list[3], '', methodName=str(3), mean=False, color='g')
+    plot_rs_dist_overlap(train_rs_list[0], '', methodName="model "+str(0), mean=False)
+    plot_rs_dist_overlap(train_rs_list[1], '', methodName="model "+str(1), mean=False, color='r')
+    plot_rs_dist_overlap(train_rs_list[2], '', methodName="model "+str(2), mean=False, color='y')
+    plot_rs_dist_overlap(train_rs_list[3], '', methodName="model "+str(3), mean=False, color='g')
+    plt.xlim(-1, 5)
     plt.savefig(join(plot_folder_path, "RL_training_progress_on_train_data"+'.png'))
     
     plt.figure()
-    plot_rs_dist_overlap(test_rs_list[0], '', methodName=str(0), mean=False)
-    plot_rs_dist_overlap(test_rs_list[1], '', methodName=str(1), mean=False, color='r')
-    plot_rs_dist_overlap(test_rs_list[2], '', methodName=str(2), mean=False, color='y')
-    plot_rs_dist_overlap(test_rs_list[3], '', methodName=str(3), mean=False, color='g')
+    plot_rs_dist_overlap(test_rs_list[0], '', methodName="model "+str(0), mean=False)
+    plot_rs_dist_overlap(test_rs_list[1], '', methodName="model "+str(1), mean=False, color='r')
+    plot_rs_dist_overlap(test_rs_list[2], '', methodName="model "+str(2), mean=False, color='y')
+    plot_rs_dist_overlap(test_rs_list[3], '', methodName="model "+str(3), mean=False, color='g')
+    plt.xlim(-1, 5)
     plt.savefig(join(plot_folder_path, "RL_training_progress_on_test_data"+'.png'))
 
         

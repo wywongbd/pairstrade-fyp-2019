@@ -91,6 +91,9 @@ def compute_input_history(history):
     # no slicing for now
     return history[:,2:5]
 
+#     # no spread
+#     return history[:,2:4]
+
 
 def long_portfolio_value(q, p):
     return q*p
@@ -308,20 +311,20 @@ class TradingEnvironment():
         # use rnn to encode observationans and current stock state into next stock state
         stock_state = self.state_encoding_model(action_observation)
         
-#         # do normalization for total_portfolio_value
-#         # this is extremely important. if not normalized, the action will be highly biased.
-#         portfolio_state = np.array([
-#             self.total_portfolio_value/initial_cash,
-# #             self.quantity['y'],
-# #             self.quantity['x']
-#         ]).T
+        # do normalization for total_portfolio_value
+        # this is extremely important. if not normalized, the action will be highly biased.
+        portfolio_state = np.array([
+            self.port_val/rl_constants.initial_cash,
+#             self.quantity['y'],
+#             self.quantity['x']
+        ]).T
         
-#         # stock state and portfolio state together form the whole environment state
-#         self.state = tf.concat([
-#             stock_state,
-#             tf.one_hot(self.position, position_num)
-#         ], 1)
-        self.state = stock_state
+        # stock state and portfolio state together form the whole environment state
+        self.state = tf.concat([
+            stock_state,
+            portfolio_state
+        ], 1)
+#         self.state = stock_state
     
     def step(self, action):
         """Given the current state and action, return the reward, next state and done.
