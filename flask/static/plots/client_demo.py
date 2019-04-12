@@ -5,8 +5,7 @@ import glob
 import logging
 import pandas as pd
 import numpy as np
-import datetime
-from datetime import date
+from datetime import date, datetime
 
 # figure plotting
 import bokeh.models as bkm
@@ -14,6 +13,7 @@ from bokeh.io import show, curdoc
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, RangeTool, DatetimeTickFormatter, LabelSet
 from bokeh.plotting import figure, show
+from bokeh.client import push_session, pull_session
 
 # bokeh widgets
 from bokeh.layouts import column, widgetbox
@@ -25,22 +25,27 @@ sys.path.append('./process_data')
 sys.path.append('./log_helper')
 sys.path.append('./model')
 
-from decode_logs import *
-
-# use this dictionary to store all backtesting params
-backtest_params = {
-    "strategy_type": "kalman",
-    "stk_0": "AAN",
-    "stk_1": "AER",
-    "backtest_start": "2018-03-20",
-    "backtest_end": "2019-01-03",
-    "max_start": "2014-01-01",
-    "max_end": "2019-01-03"
-}
+from decode_logs import Decoder, get_current_time
+from rl_train import run_rl_backtest
 
 RL_period_idx = 3
+FIRST_ITER = [True, True]
+
+if FIRST_ITER[0] and FIRST_ITER[1]:
+    # use this dictionary to store all backtesting params
+    backtest_params = {
+        "strategy_type": "kalman",
+        "stk_0": "AAN",
+        "stk_1": "AER",
+        "backtest_start": "2018-03-20",
+        "backtest_end": "2019-01-03",
+        "max_start": "2014-01-01",
+        "max_end": "2019-01-03"
+    }
     
 def build_price_and_spread_fig(data, action_df):
+    logging.info("build_price_and_spread_fig(): BEGIN ")
+    
     # ========== themes & appearance ============= #
     STK_1_LINE_COLOR = "#053061"
     STK_2_LINE_COLOR = "#67001f"
@@ -84,10 +89,16 @@ def build_price_and_spread_fig(data, action_df):
     # ========== data ============= #
     # TODO: get action_source array
     # TODO: map actions to colours so can map to palette[i]
-    spread_source = ColumnDataSource(data=dict(date=dates, 
-                                               spread=data['spread'], 
-                                               upper_limit=data['upper_limit'], 
-                                               lower_limit=data['lower_limit']))
+    spread_source = None
+    
+    try:
+        spread_source = ColumnDataSource(data=dict(date=dates, 
+                                                   spread=data['spread'], 
+                                                   upper_limit=data['upper_limit'], 
+                                                   lower_limit=data['lower_limit']))
+    except:
+        spread_source = ColumnDataSource(data=dict(date=dates, 
+                                                   spread=data['spread']))
     
     # action_source['colors'] = [palette[i] x for x in action_source['actions']]
 
@@ -123,8 +134,13 @@ def build_price_and_spread_fig(data, action_df):
 
     # plot the spread over time
     spread_p.line('date', 'spread', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
-    spread_p.line('date', 'upper_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
-    spread_p.line('date', 'lower_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
+    
+    try:
+        spread_p.line('date', 'upper_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
+        spread_p.line('date', 'lower_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
+    except:
+        pass
+    
     spread_p.xaxis[0].formatter = DatetimeTickFormatter()
 
     # ========== RANGE SELECT TOOL ============= #
@@ -146,7 +162,8 @@ def build_price_and_spread_fig(data, action_df):
     select.add_tools(range_tool)
     select.add_tools(range_tool_spread)
     select.toolbar.active_multi = range_tool
-
+    
+    logging.info("build_price_and_spread_fig(): END ") 
     return column(normp, spread_p, select)
 
 def build_pv_fig(data):
@@ -177,14 +194,14 @@ def build_widgets_wb(stock_list, metrics):
 
     # ========== Strategy Type ============= #
     strategy_list = ['kalman', 'distance', 'cointegration', 'reinforcement learning']
-    select_strategy = Select(width = WIDGET_WIDTH, title='Select Strategy:', value = strategy_list[0], options=strategy_list)
+    select_strategy = Select(width = WIDGET_WIDTH, title='Select Strategy:', value = backtest_params["strategy_type"], options=strategy_list)
 
     # ========== set start/end date ============= #
     # date time variables
-    MAX_START = datetime.datetime.strptime(backtest_params["max_start"], "%Y-%m-%d").date()
-    MAX_END = datetime.datetime.strptime(backtest_params["max_end"], "%Y-%m-%d").date()
-    DEFAULT_START = datetime.datetime.strptime(backtest_params["backtest_start"], "%Y-%m-%d").date()
-    DEFAULT_END = datetime.datetime.strptime(backtest_params["backtest_end"], "%Y-%m-%d").date()
+    MAX_START = datetime.strptime(backtest_params["max_start"], "%Y-%m-%d").date()
+    MAX_END = datetime.strptime(backtest_params["max_end"], "%Y-%m-%d").date()
+    DEFAULT_START = datetime.strptime(backtest_params["backtest_start"], "%Y-%m-%d").date()
+    DEFAULT_END = datetime.strptime(backtest_params["backtest_end"], "%Y-%m-%d").date()
     STEP = 1
 
     backtest_dates = DateRangeSlider(width = WIDGET_WIDTH, 
@@ -198,78 +215,78 @@ def build_widgets_wb(stock_list, metrics):
     controls_wb = widgetbox(select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt, width=300)
 
     # CODE SECTION: setup table, widgetbox name = metrics_wb
+    master_wb = None
+    if metrics is not None:
+        metric_source = ColumnDataSource(metrics)
+        metric_columns = [
+            TableColumn(field="Metrics", title="Metrics"),
+            TableColumn(field="Value", title="Performance"),
+        ]
 
-    metric_source = ColumnDataSource(metrics)
-    metric_columns = [
-        TableColumn(field="Metrics", title="Metrics"),
-        TableColumn(field="Value", title="Performance"),
-    ]
-
-    metric_table = DataTable(source=metric_source, columns=metric_columns, width=300)
-
-    # return the master widgetbox
-    master_wb = row(controls_wb, widgetbox(metric_table))
+        metric_table = DataTable(source=metric_source, columns=metric_columns, width=300)
+        master_wb = row(controls_wb, widgetbox(metric_table))
+        
+    else:
+        logging.info("creating controls without table")
+        master_wb = row(controls_wb)
     return master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt
 
-output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
-execution_command = """
-python ./jupyter_py/backtest_pair.py \
---strategy_type {} \
---output_dir {} \
---backtest_start {} \
---backtest_end {} \
---stk0 {} \
---stk1 {}  
-"""
-# if backtest_params["strategy_type"] == "kalman":
-#     execution_command += " --kalman_estimation_length 200"
-if backtest_params["strategy_type"] == "cointegration":
-    execution_command += " --lookback 76"
-elif backtest_params["strategy_type"] == "distance":
-    execution_command += " --lookback 70"
+if FIRST_ITER[0]:
+    output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
+    execution_command = """
+    python ./jupyter_py/backtest_pair.py \
+    --strategy_type {} \
+    --output_dir {} \
+    --backtest_start {} \
+    --backtest_end {} \
+    --stk0 {} \
+    --stk1 {}  
+    """
+    # if backtest_params["strategy_type"] == "kalman":
+    #     execution_command += " --kalman_estimation_length 200"
+    if backtest_params["strategy_type"] == "cointegration":
+        execution_command += " --lookback 76"
+    elif backtest_params["strategy_type"] == "distance":
+        execution_command += " --lookback 70"
 
-execution_command = execution_command.format(backtest_params["strategy_type"], 
-                                            output_dir,
-                                            backtest_params["backtest_start"],
-                                            backtest_params["backtest_end"],
-                                            backtest_params["stk_0"],
-                                            backtest_params["stk_1"])
+    execution_command = execution_command.format(backtest_params["strategy_type"], 
+                                                output_dir,
+                                                backtest_params["backtest_start"],
+                                                backtest_params["backtest_end"],
+                                                backtest_params["stk_0"],
+                                                backtest_params["stk_1"])
 
-os.system(execution_command)
+    os.system(execution_command)
 
-stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
-for i, file in enumerate(stock_list):
-    stock_list[i] = os.path.basename(file)[:-4]
+    stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
+    for i, file in enumerate(stock_list):
+        stock_list[i] = os.path.basename(file)[:-4]
 
-# get results from log file
-backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
-metrics_dict = Decoder.get_strategy_performance(str(output_dir))
-metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
-metrics_pd.columns = ['Metrics', 'Value']
+    # get results from log file
+    backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
+    metrics_dict = Decoder.get_strategy_performance(str(output_dir))
+    metrics_pd = pd.DataFrame.from_dict(metrics_dict, orient='index', columns=['Value']).reset_index()
+    metrics_pd.columns = ['Metrics', 'Value']
 
-# build figures
-spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
-pv_fig = build_pv_fig(backtest_df)
-master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list, metrics_pd)
-
-def update_stk_1(attrname, old, new):
-    backtest_params['stk_0'] = select_stk_1.value
+    # build figures
+    spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
+    pv_fig = build_pv_fig(backtest_df)
+    master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list, metrics_pd)
+    FIRST_ITER[0] = False
     
-def update_stk_2(attrname, old, new):
-    backtest_params['stk_1'] = select_stk_2.value
-    
-def update_strategy(attrname, old, new):
-    backtest_params['strategy_type'] = select_strategy.value
-
-def update_dates(attrname, old, new):
-    val = list(backtest_dates.value)
-    # backtest_params['backtest_start'] = str(datetime.datetime.fromtimestamp(val[0]).date())
-    # backtest_params['backtest_end'] = str(datetime.datetime.fromtimestamp(val[1]).date())
+def _run_backtest():
+    run_backtest()
 
 def run_backtest():
+    logging.info("received signal")
     backtest_df, trades_df = None, None
+    metrics_pd = None
     
-    if backtest_params["strategy_type"] in ["cointegration", "distance", "kalman"]:
+    stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
+    for i, file in enumerate(stock_list):
+        stock_list[i] = os.path.basename(file)[:-4]
+    
+    if backtest_params["strategy_type"] in set(["cointegration", "distance", "kalman"]):
         output_dir = "./jupyter_py/output/backtest-" + str(get_current_time())
         execution_command = """
         python ./jupyter_py/backtest_pair.py \
@@ -293,12 +310,7 @@ def run_backtest():
                                                     backtest_params["backtest_end"],
                                                     backtest_params["stk_0"],
                                                     backtest_params["stk_1"])
-
         os.system(execution_command)
-
-        stock_list = glob.glob("./data/nyse-daily-tech/*.csv")
-        for i, file in enumerate(stock_list):
-            stock_list[i] = os.path.basename(file)[:-4]
 
         # get results from log file
         backtest_df, trades_df = Decoder.get_strategy_status(output_dir)
@@ -308,28 +320,72 @@ def run_backtest():
         
     else:
         # perform RL backtest
-        pass
-
+        backtest_df, trades_df = run_rl_backtest(backtest_params["stk_0"], backtest_params["stk_1"], RL_period_idx)
+        logging.info("done RL")
+        metrics_ls = [{'Metrics': 'Sharpe Ratio', 'Value': None}]
+        metrics_pd = pd.DataFrame(metrics_ls)
+        metrics_pd.columns = ['Metrics', 'Value']
+    
+    logging.info("{}".format(backtest_df.columns))
+    logging.info("{}".format(trades_df.columns))
+    
     # build figures
     spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
     pv_fig = build_pv_fig(backtest_df)
     master_wb, select_stk_1, select_stk_2, select_strategy, backtest_dates, start_bt = build_widgets_wb(stock_list, metrics_pd)
     
+    def update_stk_1(attrname, old, new):
+        backtest_params['stk_0'] = select_stk_1.value
+    
+    def update_stk_2(attrname, old, new):
+        backtest_params['stk_1'] = select_stk_2.value
+
+    def update_strategy(attrname, old, new):
+        backtest_params['strategy_type'] = select_strategy.value
+
+    def update_dates(attrname, old, new):
+        val = list(backtest_dates.value)
+    
+    select_stk_1.on_change('value', update_stk_1)
+    select_stk_2.on_change('value', update_stk_2)
+    select_strategy.on_change('value', update_strategy)
+    backtest_dates.on_change('value', update_dates)
+    start_bt.on_click(_run_backtest)
+    
     left = column(master_wb, pv_fig)
     grid = row(left, spread_fig)
     curdoc().clear()
     curdoc().add_root(grid)
+    logging.info("really done all")
+    logging.info("FIRST_ITER: {}".format(FIRST_ITER))
+    logging.info("Frid: {}".format(grid))
 
-# behavior
-select_stk_1.on_change('value', update_stk_1)
-select_stk_2.on_change('value', update_stk_2)
-select_strategy.on_change('value', update_strategy)
-backtest_dates.on_change('value', update_dates)
-start_bt.on_click(run_backtest)
+if FIRST_ITER[1]:
+    def update_stk_1(attrname, old, new):
+        backtest_params['stk_0'] = select_stk_1.value
+    
+    def update_stk_2(attrname, old, new):
+        backtest_params['stk_1'] = select_stk_2.value
 
-# build_final_gridplot
-left = column(master_wb, pv_fig)
-grid = row(left, spread_fig)
-curdoc().add_root(grid)
+    def update_strategy(attrname, old, new):
+        backtest_params['strategy_type'] = select_strategy.value
+
+    def update_dates(attrname, old, new):
+        val = list(backtest_dates.value)
+        # backtest_params['backtest_start'] = str(datetime.datetime.fromtimestamp(val[0]).date())
+        # backtest_params['backtest_end'] = str(datetime.datetime.fromtimestamp(val[1]).date())
+    
+    # behavior
+    select_stk_1.on_change('value', update_stk_1)
+    select_stk_2.on_change('value', update_stk_2)
+    select_strategy.on_change('value', update_strategy)
+    backtest_dates.on_change('value', update_dates)
+    start_bt.on_click(run_backtest)
+
+    # build_final_gridplot
+    left = column(master_wb, pv_fig)
+    grid = row(left, spread_fig)
+    curdoc().add_root(grid)
+    FIRST_ITER[1] = False
 
 
