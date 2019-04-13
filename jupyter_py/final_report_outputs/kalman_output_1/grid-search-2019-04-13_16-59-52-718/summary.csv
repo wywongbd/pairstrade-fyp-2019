@@ -1,0 +1,2 @@
+enter_threshold_size,exit_threshold_size,loss_limit,avg_sharpe_ratio,median_sharpe_ratio,avg_overall_return,median_overall_return,overall_return_std,uuid
+2.0,0.5,-0.2,-0.36047209723662715,-0.5323504473137618,0.0028643070892647466,0.0,0.07986695998942353,88e1dcc8-308c-4722-8909-a2675b4ef403
