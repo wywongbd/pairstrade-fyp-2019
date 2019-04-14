@@ -3,6 +3,9 @@ from os.path import isfile, join, splitext
 import time
 import pandas as pd
 import logging
+import sys
+
+sys.path.append("./model")
 
 import rl_constants
 import process_raw_prices

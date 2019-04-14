@@ -2,6 +2,9 @@ import random
 import numpy as np
 import tensorflow as tf
 import logging
+import sys
+
+sys.path.append("./model")
 
 import rl_load_data
 import rl_constants

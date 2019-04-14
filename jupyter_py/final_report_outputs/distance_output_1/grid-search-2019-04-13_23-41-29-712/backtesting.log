@@ -1,0 +1,1613 @@
+2019-04-13 23:41:29,714 INFO - log_helper - Finished configuring logger
+2019-04-13 23:41:29,714 INFO - __main__ - Grid search parameters: {'data_path': '../data/nyse-daily-tech/', 'strategy_type': 'distance', 'start_date': '2015-01-01', 'end_date': '2019-01-05', 'pair_selection_start_date': '2017-01-01', 'pair_selection_end_date': '2017-03-19', 'kalman_estimation_length': 200, 'backtest_start': '2017-03-20', 'backtest_end': '2018-01-02', 'pct': 0.02, 'lookback_values': [70, 60, 50, 40], 'enter_thresholds': [2.0], 'exit_thresholds': [0.5], 'loss_limits': [-0.5]}
+2019-04-13 23:41:33,971 INFO - __main__ - Length of close_df before dropping NaN columns: 1009
+2019-04-13 23:41:33,972 INFO - __main__ - Length of close_df after dropping NaN columns: 1009
+2019-04-13 23:41:39,924 INFO - __main__ - The selected pairs are: [('AER', 'AL'), ('ATHM', 'VMW'), ('LDOS', 'SAIC'), ('LEAF', 'RHT'), ('CRM', 'VMW'), ('LEAF', 'STM'), ('LDOS', 'NOK'), ('KFY', 'TBI'), ('KFY', 'NSP'), ('LLL', 'RHT'), ('ATHM', 'CRM'), ('LLL', 'STM'), ('JBL', 'SAP'), ('JBL', 'RHT'), ('CRM', 'STM'), ('JBL', 'ORCL'), ('CRM', 'SAP'), ('JBL', 'NSP'), ('JBL', 'LLL'), ('ITW', 'STM'), ('ITW', 'SAP'), ('MAN', 'RXN'), ('MAN', 'SAP'), ('ITW', 'RNG'), ('CRM', 'RHT'), ('ITW', 'RHT'), ('MAN', 'STM'), ('ITW', 'QTWO'), ('ITW', 'ORCL'), ('MODN', 'RHT'), ('MODN', 'XRX'), ('MODN', 'ZEN'), ('IBM', 'TGH'), ('MXL', 'VMW'), ('HUBS', 'ZEN'), ('CRM', 'MAN'), ('NOK', 'NSP'), ('ANET', 'NOK'), ('HUBS', 'RHT'), ('ANET', 'LDOS'), ('ANET', 'HPQ'), ('HUBS', 'JBL'), ('TRTN', 'VMW'), ('ANET', 'EPAM'), ('ANET', 'CLGX'), ('HPQ', 'RNG'), ('NOW', 'TRTN'), ('HPQ', 'ORCL'), ('HPQ', 'NOK'), ('CRM', 'ITW'), ('TGH', 'VMW'), ('HPQ', 'LDOS'), ('HPQ', 'ITW'), ('NSP', 'PAYC'), ('TGH', 'TRTN'), ('TDC', 'ZEN'), ('AMN', 'SAIC'), ('AMN', 'NOK'), ('TDC', 'VMW'), ('GWRE', 'NSP'), ('AMN', 'LDOS'), ('AMN', 'KFY'), ('NSP', 'WUBA'), ('GWRE', 'ITW'), ('ORCL', 'QTWO'), ('ORCL', 'RHT'), ('ORCL', 'RNG'), ('ORCL', 'SAP'), ('AMN', 'CLGX'), ('CRM', 'ETN'), ('AMN', 'ANET'), ('FDS', 'ZEN'), ('FDS', 'VMW'), ('FDS', 'TGH'), ('FDS', 'TDC'), ('PAYC', 'WUBA'), ('FDS', 'RHT'), ('QTWO', 'RHT'), ('QTWO', 'RNG'), ('CLGX', 'ELLI'), ('ETN', 'STM'), ('CLGX', 'HPQ'), ('RHT', 'SAP'), ('AL', 'ZEN'), ('RHT', 'STM'), ('CLGX', 'JBL'), ('RHT', 'TDC'), ('AL', 'TDC'), ('CLGX', 'LDOS'), ('RHT', 'VMW'), ('RHT', 'ZEN'), ('AL', 'RHT'), ('CLGX', 'NOK'), ('RNG', 'SAP'), ('CLGX', 'NSP'), ('AL', 'LLL'), ('STM', 'VMW'), ('AL', 'FDS'), ('AL', 'ETN'), ('RXN', 'SAP'), ('ETN', 'ITW'), ('AL', 'AYR'), ('SAP', 'STM'), ('EPAM', 'PAYC'), ('EPAM', 'LDOS'), ('EPAM', 'HPQ'), ('CLS', 'TRTN'), ('ELLI', 'GWRE'), ('CLS', 'VMW'), ('ELLI', 'NSP'), ('ELLI', 'LLL'), ('LEAF', 'LLL'), ('AL', 'XRX'), ('TGH', 'URI'), ('NOK', 'WUBA'), ('ELLI', 'JBL'), ('JBL', 'TBI'), ('ETN', 'RHT'), ('GWRE', 'JBL'), ('GWRE', 'SAP'), ('HPQ', 'NSP'), ('RHT', 'RNG'), ('ITW', 'LLL'), ('LLL', 'TDC'), ('ELLI', 'HPQ'), ('EPAM', 'UMC'), ('AL', 'LEAF'), ('ETN', 'VMW'), ('HPQ', 'JBL'), ('ELLI', 'WUBA'), ('CRM', 'LLL'), ('GWRE', 'RNG'), ('AL', 'ELLI')]
+2019-04-13 23:41:39,924 INFO - __main__ - Running parameter combination 1/4
+2019-04-13 23:41:39,924 INFO - __main__ - Backtesting all pairs using parameters: {'lookback': 70, 'enter_threshold': 2.0, 'exit_threshold': 0.5, 'loss_limit': -0.5}
+2019-04-13 23:41:39,928 INFO - __main__ - Running pair 1/133
+2019-04-13 23:41:40,084 INFO - ptstrategy - -
+2019-04-13 23:41:40,085 INFO - __main__ - Performance of this pair: {'pair': 'AER-AL', 'sharperatio': -6.882423818686905, 'returnstd': 2761.697615015763, 'startcash': 1000000, 'endcash': 1004253.3618506151, 'profit': 0.004253361850615125}
+2019-04-13 23:41:40,085 INFO - __main__ - Running pair 2/133
+2019-04-13 23:41:40,171 INFO - ptstrategy - -
+2019-04-13 23:41:40,172 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-VMW', 'sharperatio': -0.37663443762147675, 'returnstd': 19104.776148088797, 'startcash': 1000000, 'endcash': 921273.8652054833, 'profit': -0.07872613479451672}
+2019-04-13 23:41:40,172 INFO - __main__ - Running pair 3/133
+2019-04-13 23:41:40,234 INFO - ptstrategy - -
+2019-04-13 23:41:40,235 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-SAIC', 'sharperatio': -0.7139256128546463, 'returnstd': 12178.32682833472, 'startcash': 1000000, 'endcash': 859924.2036893917, 'profit': -0.14007579631060826}
+2019-04-13 23:41:40,235 INFO - __main__ - Running pair 4/133
+2019-04-13 23:41:40,321 INFO - ptstrategy - -
+2019-04-13 23:41:40,322 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-RHT', 'sharperatio': -1.5495523245639584, 'returnstd': 13788.107823324033, 'startcash': 1000000, 'endcash': 882928.7147400053, 'profit': -0.11707128525999468}
+2019-04-13 23:41:40,322 INFO - __main__ - Running pair 5/133
+2019-04-13 23:41:40,417 INFO - ptstrategy - -
+2019-04-13 23:41:40,417 INFO - __main__ - Performance of this pair: {'pair': 'CRM-VMW', 'sharperatio': -1.2747174153173333, 'returnstd': 8109.487880971355, 'startcash': 1000000, 'endcash': 970417.6388001058, 'profit': -0.02958236119989422}
+2019-04-13 23:41:40,418 INFO - __main__ - Running pair 6/133
+2019-04-13 23:41:40,515 INFO - ptstrategy - -
+2019-04-13 23:41:40,516 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-STM', 'sharperatio': 0.03722793937152411, 'returnstd': 17869.292158133547, 'startcash': 1000000, 'endcash': 1031693.564054115, 'profit': 0.03169356405411498}
+2019-04-13 23:41:40,516 INFO - __main__ - Running pair 7/133
+2019-04-13 23:41:40,620 INFO - ptstrategy - -
+2019-04-13 23:41:40,621 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-NOK', 'sharperatio': -0.7001258168040289, 'returnstd': 11264.052247943846, 'startcash': 1000000, 'endcash': 736456.2836573267, 'profit': -0.26354371634267326}
+2019-04-13 23:41:40,621 INFO - __main__ - Running pair 8/133
+2019-04-13 23:41:40,699 INFO - ptstrategy - -
+2019-04-13 23:41:40,700 INFO - __main__ - Performance of this pair: {'pair': 'KFY-TBI', 'sharperatio': -0.7664700580571796, 'returnstd': 11798.887197774975, 'startcash': 1000000, 'endcash': 886571.870958565, 'profit': -0.11342812904143497}
+2019-04-13 23:41:40,700 INFO - __main__ - Running pair 9/133
+2019-04-13 23:41:40,819 INFO - ptstrategy - -
+2019-04-13 23:41:40,820 INFO - __main__ - Performance of this pair: {'pair': 'KFY-NSP', 'sharperatio': -1.1340481697810931, 'returnstd': 9974.523253432339, 'startcash': 1000000, 'endcash': 934971.4109422935, 'profit': -0.06502858905770653}
+2019-04-13 23:41:40,820 INFO - __main__ - Running pair 10/133
+2019-04-13 23:41:40,926 INFO - ptstrategy - -
+2019-04-13 23:41:40,926 INFO - __main__ - Performance of this pair: {'pair': 'LLL-RHT', 'sharperatio': 0.49777758030418284, 'returnstd': 9071.387130652702, 'startcash': 1000000, 'endcash': 1101338.9596204378, 'profit': 0.10133895962043782}
+2019-04-13 23:41:40,927 INFO - __main__ - Running pair 11/133
+2019-04-13 23:41:41,012 INFO - ptstrategy - -
+2019-04-13 23:41:41,013 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-CRM', 'sharperatio': 0.41927363284069363, 'returnstd': 20497.57725646438, 'startcash': 1000000, 'endcash': 1073699.6539749033, 'profit': 0.07369965397490329}
+2019-04-13 23:41:41,013 INFO - __main__ - Running pair 12/133
+2019-04-13 23:41:41,115 INFO - ptstrategy - -
+2019-04-13 23:41:41,115 INFO - __main__ - Performance of this pair: {'pair': 'LLL-STM', 'sharperatio': 0.6884162534419743, 'returnstd': 13753.313318681363, 'startcash': 1000000, 'endcash': 1167185.6926190392, 'profit': 0.1671856926190392}
+2019-04-13 23:41:41,115 INFO - __main__ - Running pair 13/133
+2019-04-13 23:41:41,186 INFO - ptstrategy - -
+2019-04-13 23:41:41,187 INFO - __main__ - Performance of this pair: {'pair': 'JBL-SAP', 'sharperatio': -0.7674728291611244, 'returnstd': 10061.633569637548, 'startcash': 1000000, 'endcash': 869855.6672208301, 'profit': -0.1301443327791699}
+2019-04-13 23:41:41,187 INFO - __main__ - Running pair 14/133
+2019-04-13 23:41:41,280 INFO - ptstrategy - -
+2019-04-13 23:41:41,280 INFO - __main__ - Performance of this pair: {'pair': 'JBL-RHT', 'sharperatio': -0.7770302250672327, 'returnstd': 10501.053824142777, 'startcash': 1000000, 'endcash': 788524.9564386931, 'profit': -0.2114750435613069}
+2019-04-13 23:41:41,281 INFO - __main__ - Running pair 15/133
+2019-04-13 23:41:41,354 INFO - ptstrategy - -
+2019-04-13 23:41:41,355 INFO - __main__ - Performance of this pair: {'pair': 'CRM-STM', 'sharperatio': 0.5879902030620286, 'returnstd': 13633.204584158355, 'startcash': 1000000, 'endcash': 1132458.3508458189, 'profit': 0.13245835084581886}
+2019-04-13 23:41:41,355 INFO - __main__ - Running pair 16/133
+2019-04-13 23:41:41,443 INFO - ptstrategy - -
+2019-04-13 23:41:41,444 INFO - __main__ - Performance of this pair: {'pair': 'JBL-ORCL', 'sharperatio': -0.6462348929621385, 'returnstd': 11310.422557487267, 'startcash': 1000000, 'endcash': 967836.9691472877, 'profit': -0.03216303085271234}
+2019-04-13 23:41:41,444 INFO - __main__ - Running pair 17/133
+2019-04-13 23:41:41,568 INFO - ptstrategy - -
+2019-04-13 23:41:41,569 INFO - __main__ - Performance of this pair: {'pair': 'CRM-SAP', 'sharperatio': 0.3080899105308322, 'returnstd': 4372.308923859632, 'startcash': 1000000, 'endcash': 1067841.1931359284, 'profit': 0.06784119313592836}
+2019-04-13 23:41:41,569 INFO - __main__ - Running pair 18/133
+2019-04-13 23:41:41,670 INFO - ptstrategy - -
+2019-04-13 23:41:41,671 INFO - __main__ - Performance of this pair: {'pair': 'JBL-NSP', 'sharperatio': -0.6812398225660028, 'returnstd': 13734.842515258924, 'startcash': 1000000, 'endcash': 738592.9929441779, 'profit': -0.26140700705582204}
+2019-04-13 23:41:41,671 INFO - __main__ - Running pair 19/133
+2019-04-13 23:41:41,769 INFO - ptstrategy - -
+2019-04-13 23:41:41,770 INFO - __main__ - Performance of this pair: {'pair': 'JBL-LLL', 'sharperatio': -0.7718312327286136, 'returnstd': 8987.335127686, 'startcash': 1000000, 'endcash': 853765.6603210982, 'profit': -0.14623433967890184}
+2019-04-13 23:41:41,770 INFO - __main__ - Running pair 20/133
+2019-04-13 23:41:41,840 INFO - ptstrategy - -
+2019-04-13 23:41:41,841 INFO - __main__ - Performance of this pair: {'pair': 'ITW-STM', 'sharperatio': 0.7727249385008281, 'returnstd': 16015.240275729191, 'startcash': 1000000, 'endcash': 1147148.0162630775, 'profit': 0.1471480162630775}
+2019-04-13 23:41:41,841 INFO - __main__ - Running pair 21/133
+2019-04-13 23:41:41,973 INFO - ptstrategy - -
+2019-04-13 23:41:41,973 INFO - __main__ - Performance of this pair: {'pair': 'ITW-SAP', 'sharperatio': -1.6374714862992343, 'returnstd': 4665.991180634221, 'startcash': 1000000, 'endcash': 1000380.6327096575, 'profit': 0.0003806327096575405}
+2019-04-13 23:41:41,974 INFO - __main__ - Running pair 22/133
+2019-04-13 23:41:42,062 INFO - ptstrategy - -
+2019-04-13 23:41:42,063 INFO - __main__ - Performance of this pair: {'pair': 'MAN-RXN', 'sharperatio': -2.7065340468947334, 'returnstd': 9636.351873386679, 'startcash': 1000000, 'endcash': 978345.1874088345, 'profit': -0.021654812591165536}
+2019-04-13 23:41:42,063 INFO - __main__ - Running pair 23/133
+2019-04-13 23:41:42,197 INFO - ptstrategy - -
+2019-04-13 23:41:42,198 INFO - __main__ - Performance of this pair: {'pair': 'MAN-SAP', 'sharperatio': 0.5283938435645446, 'returnstd': 6992.372851011719, 'startcash': 1000000, 'endcash': 1118699.8754419484, 'profit': 0.11869987544194842}
+2019-04-13 23:41:42,198 INFO - __main__ - Running pair 24/133
+2019-04-13 23:41:42,319 INFO - ptstrategy - -
+2019-04-13 23:41:42,320 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RNG', 'sharperatio': 0.585826505333683, 'returnstd': 11784.755203722809, 'startcash': 1000000, 'endcash': 1197438.135981915, 'profit': 0.19743813598191506}
+2019-04-13 23:41:42,320 INFO - __main__ - Running pair 25/133
+2019-04-13 23:41:42,414 INFO - ptstrategy - -
+2019-04-13 23:41:42,414 INFO - __main__ - Performance of this pair: {'pair': 'CRM-RHT', 'sharperatio': -1.2103543221469595, 'returnstd': 6701.27083566349, 'startcash': 1000000, 'endcash': 1002868.6695250686, 'profit': 0.0028686695250686027}
+2019-04-13 23:41:42,415 INFO - __main__ - Running pair 26/133
+2019-04-13 23:41:42,509 INFO - ptstrategy - -
+2019-04-13 23:41:42,510 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RHT', 'sharperatio': 0.3215675968989839, 'returnstd': 10490.028726485625, 'startcash': 1000000, 'endcash': 1071685.1019897382, 'profit': 0.07168510198973818}
+2019-04-13 23:41:42,510 INFO - __main__ - Running pair 27/133
+2019-04-13 23:41:42,589 INFO - ptstrategy - -
+2019-04-13 23:41:42,589 INFO - __main__ - Performance of this pair: {'pair': 'MAN-STM', 'sharperatio': 0.6920295799093751, 'returnstd': 17765.353818180447, 'startcash': 1000000, 'endcash': 1271940.1338388685, 'profit': 0.27194013383886845}
+2019-04-13 23:41:42,589 INFO - __main__ - Running pair 28/133
+2019-04-13 23:41:42,687 INFO - ptstrategy - -
+2019-04-13 23:41:42,687 INFO - __main__ - Performance of this pair: {'pair': 'ITW-QTWO', 'sharperatio': -0.49229233803946487, 'returnstd': 9451.697650486978, 'startcash': 1000000, 'endcash': 977519.0189198623, 'profit': -0.022480981080137658}
+2019-04-13 23:41:42,688 INFO - __main__ - Running pair 29/133
+2019-04-13 23:41:42,790 INFO - ptstrategy - -
+2019-04-13 23:41:42,790 INFO - __main__ - Performance of this pair: {'pair': 'ITW-ORCL', 'sharperatio': -3.6619243946646995, 'returnstd': 7897.764117545981, 'startcash': 1000000, 'endcash': 989041.0515344118, 'profit': -0.010958948465588153}
+2019-04-13 23:41:42,790 INFO - __main__ - Running pair 30/133
+2019-04-13 23:41:42,884 INFO - ptstrategy - -
+2019-04-13 23:41:42,884 INFO - __main__ - Performance of this pair: {'pair': 'MODN-RHT', 'sharperatio': -1.9583747138266023, 'returnstd': 10291.277214844795, 'startcash': 1000000, 'endcash': 954057.4464386933, 'profit': -0.04594255356130667}
+2019-04-13 23:41:42,884 INFO - __main__ - Running pair 31/133
+2019-04-13 23:41:42,953 INFO - ptstrategy - -
+2019-04-13 23:41:42,954 INFO - __main__ - Performance of this pair: {'pair': 'MODN-XRX', 'sharperatio': -0.5333469543492998, 'returnstd': 12794.702255503551, 'startcash': 1000000, 'endcash': 965706.8640426355, 'profit': -0.03429313595736446}
+2019-04-13 23:41:42,954 INFO - __main__ - Running pair 32/133
+2019-04-13 23:41:43,071 INFO - ptstrategy - -
+2019-04-13 23:41:43,072 INFO - __main__ - Performance of this pair: {'pair': 'MODN-ZEN', 'sharperatio': 0.35379892977431593, 'returnstd': 9711.863562193597, 'startcash': 1000000, 'endcash': 1096681.6854453404, 'profit': 0.09668168544534035}
+2019-04-13 23:41:43,072 INFO - __main__ - Running pair 33/133
+2019-04-13 23:41:43,138 INFO - ptstrategy - -
+2019-04-13 23:41:43,139 INFO - __main__ - Performance of this pair: {'pair': 'IBM-TGH', 'sharperatio': -0.9369133413467631, 'returnstd': 21744.15317829614, 'startcash': 1000000, 'endcash': 686720.7689095787, 'profit': -0.31327923109042133}
+2019-04-13 23:41:43,139 INFO - __main__ - Running pair 34/133
+2019-04-13 23:41:43,233 INFO - ptstrategy - -
+2019-04-13 23:41:43,234 INFO - __main__ - Performance of this pair: {'pair': 'MXL-VMW', 'sharperatio': -1.4401612199266058, 'returnstd': 14976.626633339607, 'startcash': 1000000, 'endcash': 1009267.6229234949, 'profit': 0.009267622923494898}
+2019-04-13 23:41:43,234 INFO - __main__ - Running pair 35/133
+2019-04-13 23:41:43,309 INFO - ptstrategy - -
+2019-04-13 23:41:43,310 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-ZEN', 'sharperatio': -1.0791730929829502, 'returnstd': 14105.445741354488, 'startcash': 1000000, 'endcash': 919443.4602275727, 'profit': -0.08055653977242729}
+2019-04-13 23:41:43,310 INFO - __main__ - Running pair 36/133
+2019-04-13 23:41:43,462 INFO - ptstrategy - -
+2019-04-13 23:41:43,462 INFO - __main__ - Performance of this pair: {'pair': 'CRM-MAN', 'sharperatio': 0.5986866028434232, 'returnstd': 6957.151552531741, 'startcash': 1000000, 'endcash': 1195657.3375895182, 'profit': 0.19565733758951817}
+2019-04-13 23:41:43,462 INFO - __main__ - Running pair 37/133
+2019-04-13 23:41:43,568 INFO - ptstrategy - -
+2019-04-13 23:41:43,568 INFO - __main__ - Performance of this pair: {'pair': 'NOK-NSP', 'sharperatio': -0.6849950486026711, 'returnstd': 15930.436403527929, 'startcash': 1000000, 'endcash': 699411.9386609967, 'profit': -0.3005880613390033}
+2019-04-13 23:41:43,568 INFO - __main__ - Running pair 38/133
+2019-04-13 23:41:43,657 INFO - ptstrategy - -
+2019-04-13 23:41:43,657 INFO - __main__ - Performance of this pair: {'pair': 'ANET-NOK', 'sharperatio': -0.6941136040247756, 'returnstd': 18510.095770032167, 'startcash': 1000000, 'endcash': 503448.24203972414, 'profit': -0.49655175796027584}
+2019-04-13 23:41:43,657 INFO - __main__ - Running pair 39/133
+2019-04-13 23:41:43,729 INFO - ptstrategy - -
+2019-04-13 23:41:43,729 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-RHT', 'sharperatio': 0.5985926569733019, 'returnstd': 14784.359632201964, 'startcash': 1000000, 'endcash': 1161297.5703699258, 'profit': 0.1612975703699258}
+2019-04-13 23:41:43,729 INFO - __main__ - Running pair 40/133
+2019-04-13 23:41:43,819 INFO - ptstrategy - -
+2019-04-13 23:41:43,820 INFO - __main__ - Performance of this pair: {'pair': 'ANET-LDOS', 'sharperatio': -0.7367312800698714, 'returnstd': 15685.457004044154, 'startcash': 1000000, 'endcash': 793679.1445278793, 'profit': -0.2063208554721207}
+2019-04-13 23:41:43,820 INFO - __main__ - Running pair 41/133
+2019-04-13 23:41:43,908 INFO - ptstrategy - -
+2019-04-13 23:41:43,908 INFO - __main__ - Performance of this pair: {'pair': 'ANET-HPQ', 'sharperatio': -0.6913551680254129, 'returnstd': 15677.093223486912, 'startcash': 1000000, 'endcash': 789132.0320098619, 'profit': -0.2108679679901381}
+2019-04-13 23:41:43,909 INFO - __main__ - Running pair 42/133
+2019-04-13 23:41:44,013 INFO - ptstrategy - -
+2019-04-13 23:41:44,014 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-JBL', 'sharperatio': -0.8344698900167772, 'returnstd': 13341.419279276408, 'startcash': 1000000, 'endcash': 839905.4976695257, 'profit': -0.16009450233047431}
+2019-04-13 23:41:44,014 INFO - __main__ - Running pair 43/133
+2019-04-13 23:41:44,099 INFO - ptstrategy - -
+2019-04-13 23:41:44,100 INFO - __main__ - Performance of this pair: {'pair': 'TRTN-VMW', 'sharperatio': 0.5332672439425911, 'returnstd': 16729.66826222021, 'startcash': 1000000, 'endcash': 1051970.1467216406, 'profit': 0.0519701467216406}
+2019-04-13 23:41:44,100 INFO - __main__ - Running pair 44/133
+2019-04-13 23:41:44,165 INFO - ptstrategy - -
+2019-04-13 23:41:44,165 INFO - __main__ - Performance of this pair: {'pair': 'ANET-EPAM', 'sharperatio': -0.597745839304711, 'returnstd': 22460.922836617538, 'startcash': 1000000, 'endcash': 661599.8117470883, 'profit': -0.3384001882529117}
+2019-04-13 23:41:44,165 INFO - __main__ - Running pair 45/133
+2019-04-13 23:41:44,254 INFO - ptstrategy - -
+2019-04-13 23:41:44,255 INFO - __main__ - Performance of this pair: {'pair': 'ANET-CLGX', 'sharperatio': -0.7718786874260696, 'returnstd': 15664.650647418883, 'startcash': 1000000, 'endcash': 851669.4772568066, 'profit': -0.14833052274319344}
+2019-04-13 23:41:44,255 INFO - __main__ - Running pair 46/133
+2019-04-13 23:41:44,328 INFO - ptstrategy - -
+2019-04-13 23:41:44,329 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-RNG', 'sharperatio': -0.7071283355695106, 'returnstd': 16832.83018351241, 'startcash': 1000000, 'endcash': 733057.9150989745, 'profit': -0.2669420849010255}
+2019-04-13 23:41:44,329 INFO - __main__ - Running pair 47/133
+2019-04-13 23:41:44,400 INFO - ptstrategy - -
+2019-04-13 23:41:44,401 INFO - __main__ - Performance of this pair: {'pair': 'NOW-TRTN', 'sharperatio': 0.3934854566985652, 'returnstd': 19009.534249439803, 'startcash': 1000000, 'endcash': 1044257.570758469, 'profit': 0.044257570758469054}
+2019-04-13 23:41:44,401 INFO - __main__ - Running pair 48/133
+2019-04-13 23:41:44,558 INFO - ptstrategy - -
+2019-04-13 23:41:44,558 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ORCL', 'sharperatio': 0.5588140338087596, 'returnstd': 7776.7203408824535, 'startcash': 1000000, 'endcash': 1247333.4328045524, 'profit': 0.24733343280455236}
+2019-04-13 23:41:44,559 INFO - __main__ - Running pair 49/133
+2019-04-13 23:41:44,680 INFO - ptstrategy - -
+2019-04-13 23:41:44,681 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NOK', 'sharperatio': -0.8865886604514084, 'returnstd': 12435.798387277388, 'startcash': 1000000, 'endcash': 882860.7714421221, 'profit': -0.11713922855787794}
+2019-04-13 23:41:44,681 INFO - __main__ - Running pair 50/133
+2019-04-13 23:41:44,810 INFO - ptstrategy - -
+2019-04-13 23:41:44,811 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ITW', 'sharperatio': 0.7008992928015261, 'returnstd': 5580.086377372575, 'startcash': 1000000, 'endcash': 1133483.1162026331, 'profit': 0.13348311620263312}
+2019-04-13 23:41:44,811 INFO - __main__ - Running pair 51/133
+2019-04-13 23:41:44,893 INFO - ptstrategy - -
+2019-04-13 23:41:44,893 INFO - __main__ - Performance of this pair: {'pair': 'TGH-VMW', 'sharperatio': 0.6272045721372268, 'returnstd': 21925.769709249686, 'startcash': 1000000, 'endcash': 1084209.9482094864, 'profit': 0.08420994820948643}
+2019-04-13 23:41:44,893 INFO - __main__ - Running pair 52/133
+2019-04-13 23:41:45,003 INFO - ptstrategy - -
+2019-04-13 23:41:45,004 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-LDOS', 'sharperatio': -0.6677154200089468, 'returnstd': 6784.559015907988, 'startcash': 1000000, 'endcash': 1009697.7056065409, 'profit': 0.009697705606540898}
+2019-04-13 23:41:45,004 INFO - __main__ - Running pair 53/133
+2019-04-13 23:41:45,075 INFO - ptstrategy - -
+2019-04-13 23:41:45,075 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ITW', 'sharperatio': -0.6755434679290816, 'returnstd': 8703.567676423494, 'startcash': 1000000, 'endcash': 972874.9562630772, 'profit': -0.027125043736922788}
+2019-04-13 23:41:45,075 INFO - __main__ - Running pair 54/133
+2019-04-13 23:41:45,149 INFO - ptstrategy - -
+2019-04-13 23:41:45,150 INFO - __main__ - Performance of this pair: {'pair': 'NSP-PAYC', 'sharperatio': -3.8196505504728844, 'returnstd': 15634.937737660859, 'startcash': 1000000, 'endcash': 985217.1095789664, 'profit': -0.014782890421033604}
+2019-04-13 23:41:45,150 INFO - __main__ - Running pair 55/133
+2019-04-13 23:41:45,241 INFO - ptstrategy - -
+2019-04-13 23:41:45,242 INFO - __main__ - Performance of this pair: {'pair': 'TGH-TRTN', 'sharperatio': -0.8770917453252104, 'returnstd': 15017.900287635397, 'startcash': 1000000, 'endcash': 875205.412766437, 'profit': -0.12479458723356296}
+2019-04-13 23:41:45,242 INFO - __main__ - Running pair 56/133
+2019-04-13 23:41:45,356 INFO - ptstrategy - -
+2019-04-13 23:41:45,357 INFO - __main__ - Performance of this pair: {'pair': 'TDC-ZEN', 'sharperatio': 0.6475230181139252, 'returnstd': 12713.900322023625, 'startcash': 1000000, 'endcash': 1356023.2241414709, 'profit': 0.35602322414147086}
+2019-04-13 23:41:45,357 INFO - __main__ - Running pair 57/133
+2019-04-13 23:41:45,455 INFO - ptstrategy - -
+2019-04-13 23:41:45,455 INFO - __main__ - Performance of this pair: {'pair': 'AMN-SAIC', 'sharperatio': 0.5920445700773977, 'returnstd': 15270.719570373118, 'startcash': 1000000, 'endcash': 1139012.2304503792, 'profit': 0.1390122304503792}
+2019-04-13 23:41:45,455 INFO - __main__ - Running pair 58/133
+2019-04-13 23:41:45,539 INFO - ptstrategy - -
+2019-04-13 23:41:45,539 INFO - __main__ - Performance of this pair: {'pair': 'AMN-NOK', 'sharperatio': -0.776702905603363, 'returnstd': 17886.370967305855, 'startcash': 1000000, 'endcash': 821154.152281854, 'profit': -0.17884584771814604}
+2019-04-13 23:41:45,539 INFO - __main__ - Running pair 59/133
+2019-04-13 23:41:45,637 INFO - ptstrategy - -
+2019-04-13 23:41:45,638 INFO - __main__ - Performance of this pair: {'pair': 'TDC-VMW', 'sharperatio': 0.1619249678686426, 'returnstd': 13168.435251574268, 'startcash': 1000000, 'endcash': 1044106.121436361, 'profit': 0.044106121436360994}
+2019-04-13 23:41:45,638 INFO - __main__ - Running pair 60/133
+2019-04-13 23:41:45,715 INFO - ptstrategy - -
+2019-04-13 23:41:45,716 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-NSP', 'sharperatio': 0.6348301615366791, 'returnstd': 14841.691431960937, 'startcash': 1000000, 'endcash': 1181359.418128432, 'profit': 0.181359418128432}
+2019-04-13 23:41:45,716 INFO - __main__ - Running pair 61/133
+2019-04-13 23:41:45,849 INFO - ptstrategy - -
+2019-04-13 23:41:45,850 INFO - __main__ - Performance of this pair: {'pair': 'AMN-LDOS', 'sharperatio': 0.4576232602921348, 'returnstd': 8386.406553405748, 'startcash': 1000000, 'endcash': 1110483.830472842, 'profit': 0.11048383047284209}
+2019-04-13 23:41:45,850 INFO - __main__ - Running pair 62/133
+2019-04-13 23:41:45,925 INFO - ptstrategy - -
+2019-04-13 23:41:45,926 INFO - __main__ - Performance of this pair: {'pair': 'AMN-KFY', 'sharperatio': -0.018673855305694567, 'returnstd': 13472.428476200253, 'startcash': 1000000, 'endcash': 1029788.8616213996, 'profit': 0.029788861621399643}
+2019-04-13 23:41:45,926 INFO - __main__ - Running pair 63/133
+2019-04-13 23:41:46,003 INFO - ptstrategy - -
+2019-04-13 23:41:46,004 INFO - __main__ - Performance of this pair: {'pair': 'NSP-WUBA', 'sharperatio': -0.5976831809216471, 'returnstd': 19137.09285152273, 'startcash': 1000000, 'endcash': 739693.0496642799, 'profit': -0.2603069503357201}
+2019-04-13 23:41:46,004 INFO - __main__ - Running pair 64/133
+2019-04-13 23:41:46,111 INFO - ptstrategy - -
+2019-04-13 23:41:46,111 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-ITW', 'sharperatio': -1.0129538755440624, 'returnstd': 9187.512827361325, 'startcash': 1000000, 'endcash': 984953.1718272559, 'profit': -0.015046828172744135}
+2019-04-13 23:41:46,112 INFO - __main__ - Running pair 65/133
+2019-04-13 23:41:46,219 INFO - ptstrategy - -
+2019-04-13 23:41:46,220 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-QTWO', 'sharperatio': 0.7629214652219387, 'returnstd': 9776.177405175416, 'startcash': 1000000, 'endcash': 1234402.9360850684, 'profit': 0.23440293608506838}
+2019-04-13 23:41:46,220 INFO - __main__ - Running pair 66/133
+2019-04-13 23:41:46,306 INFO - ptstrategy - -
+2019-04-13 23:41:46,307 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RHT', 'sharperatio': -0.9419031274052214, 'returnstd': 10938.263284489654, 'startcash': 1000000, 'endcash': 796798.2647400054, 'profit': -0.20320173525999463}
+2019-04-13 23:41:46,307 INFO - __main__ - Running pair 67/133
+2019-04-13 23:41:46,375 INFO - ptstrategy - -
+2019-04-13 23:41:46,376 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RNG', 'sharperatio': -0.7642447851760759, 'returnstd': 15457.623610212811, 'startcash': 1000000, 'endcash': 642442.2617410887, 'profit': -0.3575577382589113}
+2019-04-13 23:41:46,376 INFO - __main__ - Running pair 68/133
+2019-04-13 23:41:46,468 INFO - ptstrategy - -
+2019-04-13 23:41:46,469 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-SAP', 'sharperatio': 0.07279498207906893, 'returnstd': 7068.513750010312, 'startcash': 1000000, 'endcash': 1034761.9074211678, 'profit': 0.034761907421167824}
+2019-04-13 23:41:46,469 INFO - __main__ - Running pair 69/133
+2019-04-13 23:41:46,537 INFO - ptstrategy - -
+2019-04-13 23:41:46,537 INFO - __main__ - Performance of this pair: {'pair': 'AMN-CLGX', 'sharperatio': 0.12875934549111767, 'returnstd': 14180.595106110772, 'startcash': 1000000, 'endcash': 1040938.4676315419, 'profit': 0.040938467631541894}
+2019-04-13 23:41:46,538 INFO - __main__ - Running pair 70/133
+2019-04-13 23:41:46,639 INFO - ptstrategy - -
+2019-04-13 23:41:46,640 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ETN', 'sharperatio': -2.540775021618342, 'returnstd': 6919.594859952791, 'startcash': 1000000, 'endcash': 962861.944919857, 'profit': -0.037138055080143034}
+2019-04-13 23:41:46,640 INFO - __main__ - Running pair 71/133
+2019-04-13 23:41:46,728 INFO - ptstrategy - -
+2019-04-13 23:41:46,729 INFO - __main__ - Performance of this pair: {'pair': 'AMN-ANET', 'sharperatio': -0.7325842411167871, 'returnstd': 17736.451869182645, 'startcash': 1000000, 'endcash': 867746.8973120525, 'profit': -0.13225310268794746}
+2019-04-13 23:41:46,729 INFO - __main__ - Running pair 72/133
+2019-04-13 23:41:46,792 INFO - ptstrategy - -
+2019-04-13 23:41:46,792 INFO - __main__ - Performance of this pair: {'pair': 'FDS-ZEN', 'sharperatio': 0.6083552567590702, 'returnstd': 15836.251386709715, 'startcash': 1000000, 'endcash': 1142116.4632969915, 'profit': 0.14211646329699154}
+2019-04-13 23:41:46,792 INFO - __main__ - Running pair 73/133
+2019-04-13 23:41:46,860 INFO - ptstrategy - -
+2019-04-13 23:41:46,860 INFO - __main__ - Performance of this pair: {'pair': 'FDS-VMW', 'sharperatio': 0.444061429278602, 'returnstd': 12356.81017846904, 'startcash': 1000000, 'endcash': 1080644.6617730777, 'profit': 0.08064466177307768}
+2019-04-13 23:41:46,860 INFO - __main__ - Running pair 74/133
+2019-04-13 23:41:46,923 INFO - ptstrategy - -
+2019-04-13 23:41:46,923 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TGH', 'sharperatio': 0.8115255879373933, 'returnstd': 22756.639980996264, 'startcash': 1000000, 'endcash': 1118655.8725708874, 'profit': 0.11865587257088744}
+2019-04-13 23:41:46,924 INFO - __main__ - Running pair 75/133
+2019-04-13 23:41:47,009 INFO - ptstrategy - -
+2019-04-13 23:41:47,010 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TDC', 'sharperatio': 0.5712328885833835, 'returnstd': 11219.242044012819, 'startcash': 1000000, 'endcash': 1130602.2208989118, 'profit': 0.13060222089891182}
+2019-04-13 23:41:47,010 INFO - __main__ - Running pair 76/133
+2019-04-13 23:41:47,111 INFO - ptstrategy - -
+2019-04-13 23:41:47,111 INFO - __main__ - Performance of this pair: {'pair': 'PAYC-WUBA', 'sharperatio': 0.1038122039620514, 'returnstd': 14203.943903906918, 'startcash': 1000000, 'endcash': 1044240.0895320642, 'profit': 0.04424008953206416}
+2019-04-13 23:41:47,111 INFO - __main__ - Running pair 77/133
+2019-04-13 23:41:47,172 INFO - ptstrategy - -
+2019-04-13 23:41:47,173 INFO - __main__ - Performance of this pair: {'pair': 'FDS-RHT', 'sharperatio': -0.9601160313458049, 'returnstd': 13022.715872566232, 'startcash': 1000000, 'endcash': 845905.8530323207, 'profit': -0.15409414696767926}
+2019-04-13 23:41:47,173 INFO - __main__ - Running pair 78/133
+2019-04-13 23:41:47,244 INFO - ptstrategy - -
+2019-04-13 23:41:47,244 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RHT', 'sharperatio': -0.692285232324947, 'returnstd': 10750.38742826739, 'startcash': 1000000, 'endcash': 932715.778351974, 'profit': -0.06728422164802603}
+2019-04-13 23:41:47,244 INFO - __main__ - Running pair 79/133
+2019-04-13 23:41:47,318 INFO - ptstrategy - -
+2019-04-13 23:41:47,319 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RNG', 'sharperatio': -0.666199809387027, 'returnstd': 15775.551012391588, 'startcash': 1000000, 'endcash': 699542.7888732809, 'profit': -0.30045721112671914}
+2019-04-13 23:41:47,319 INFO - __main__ - Running pair 80/133
+2019-04-13 23:41:47,414 INFO - ptstrategy - -
+2019-04-13 23:41:47,415 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-ELLI', 'sharperatio': 0.6557743388455911, 'returnstd': 8568.108970274427, 'startcash': 1000000, 'endcash': 1088294.88767717, 'profit': 0.0882948876771701}
+2019-04-13 23:41:47,415 INFO - __main__ - Running pair 81/133
+2019-04-13 23:41:47,479 INFO - ptstrategy - -
+2019-04-13 23:41:47,479 INFO - __main__ - Performance of this pair: {'pair': 'ETN-STM', 'sharperatio': -1.6033128341012743, 'returnstd': 16063.245456043536, 'startcash': 1000000, 'endcash': 916622.6312840356, 'profit': -0.08337736871596438}
+2019-04-13 23:41:47,480 INFO - __main__ - Running pair 82/133
+2019-04-13 23:41:47,564 INFO - ptstrategy - -
+2019-04-13 23:41:47,565 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-HPQ', 'sharperatio': 0.6067917936892195, 'returnstd': 9041.825134866724, 'startcash': 1000000, 'endcash': 1211465.943074174, 'profit': 0.211465943074174}
+2019-04-13 23:41:47,565 INFO - __main__ - Running pair 83/133
+2019-04-13 23:41:47,645 INFO - ptstrategy - -
+2019-04-13 23:41:47,646 INFO - __main__ - Performance of this pair: {'pair': 'RHT-SAP', 'sharperatio': -1.521374657100286, 'returnstd': 8938.715125447474, 'startcash': 1000000, 'endcash': 957090.5221502974, 'profit': -0.04290947784970258}
+2019-04-13 23:41:47,646 INFO - __main__ - Running pair 84/133
+2019-04-13 23:41:47,777 INFO - ptstrategy - -
+2019-04-13 23:41:47,777 INFO - __main__ - Performance of this pair: {'pair': 'AL-ZEN', 'sharperatio': 0.6187453990053106, 'returnstd': 10072.036950239577, 'startcash': 1000000, 'endcash': 1240073.2414086314, 'profit': 0.24007324140863143}
+2019-04-13 23:41:47,777 INFO - __main__ - Running pair 85/133
+2019-04-13 23:41:47,864 INFO - ptstrategy - -
+2019-04-13 23:41:47,865 INFO - __main__ - Performance of this pair: {'pair': 'RHT-STM', 'sharperatio': -0.03373123197291616, 'returnstd': 13418.128613652183, 'startcash': 1000000, 'endcash': 1029510.7325205486, 'profit': 0.029510732520548626}
+2019-04-13 23:41:47,865 INFO - __main__ - Running pair 86/133
+2019-04-13 23:41:47,965 INFO - ptstrategy - -
+2019-04-13 23:41:47,966 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-JBL', 'sharperatio': -0.6580581795159861, 'returnstd': 8543.419380606783, 'startcash': 1000000, 'endcash': 953458.6779583935, 'profit': -0.046541322041606534}
+2019-04-13 23:41:47,966 INFO - __main__ - Running pair 87/133
+2019-04-13 23:41:48,039 INFO - ptstrategy - -
+2019-04-13 23:41:48,041 INFO - __main__ - Performance of this pair: {'pair': 'RHT-TDC', 'sharperatio': -1.6582254168985513, 'returnstd': 13982.174392502555, 'startcash': 1000000, 'endcash': 962077.8926506754, 'profit': -0.03792210734932462}
+2019-04-13 23:41:48,041 INFO - __main__ - Running pair 88/133
+2019-04-13 23:41:48,173 INFO - ptstrategy - -
+2019-04-13 23:41:48,174 INFO - __main__ - Performance of this pair: {'pair': 'AL-TDC', 'sharperatio': 0.6252849986739178, 'returnstd': 7740.517532945118, 'startcash': 1000000, 'endcash': 1259261.0767471613, 'profit': 0.2592610767471613}
+2019-04-13 23:41:48,174 INFO - __main__ - Running pair 89/133
+2019-04-13 23:41:48,238 INFO - ptstrategy - -
+2019-04-13 23:41:48,239 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-LDOS', 'sharperatio': -1.2601476085209997, 'returnstd': 8651.215456650312, 'startcash': 1000000, 'endcash': 947293.1030553099, 'profit': -0.05270689694469015}
+2019-04-13 23:41:48,239 INFO - __main__ - Running pair 90/133
+2019-04-13 23:41:48,308 INFO - ptstrategy - -
+2019-04-13 23:41:48,309 INFO - __main__ - Performance of this pair: {'pair': 'RHT-VMW', 'sharperatio': -0.08530981063600065, 'returnstd': 10139.55747508669, 'startcash': 1000000, 'endcash': 1025646.1620384955, 'profit': 0.02564616203849553}
+2019-04-13 23:41:48,309 INFO - __main__ - Running pair 91/133
+2019-04-13 23:41:48,385 INFO - ptstrategy - -
+2019-04-13 23:41:48,386 INFO - __main__ - Performance of this pair: {'pair': 'RHT-ZEN', 'sharperatio': -1.0478784787948632, 'returnstd': 14304.711740915409, 'startcash': 1000000, 'endcash': 929823.5772050669, 'profit': -0.07017642279493308}
+2019-04-13 23:41:48,386 INFO - __main__ - Running pair 92/133
+2019-04-13 23:41:48,467 INFO - ptstrategy - -
+2019-04-13 23:41:48,467 INFO - __main__ - Performance of this pair: {'pair': 'AL-RHT', 'sharperatio': -0.8224899822127368, 'returnstd': 12556.41157695245, 'startcash': 1000000, 'endcash': 816149.9832997221, 'profit': -0.18385001670027792}
+2019-04-13 23:41:48,468 INFO - __main__ - Running pair 93/133
+2019-04-13 23:41:48,574 INFO - ptstrategy - -
+2019-04-13 23:41:48,575 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NOK', 'sharperatio': -0.6793735321608304, 'returnstd': 11614.817233102292, 'startcash': 1000000, 'endcash': 830115.3892662699, 'profit': -0.16988461073373012}
+2019-04-13 23:41:48,575 INFO - __main__ - Running pair 94/133
+2019-04-13 23:41:48,720 INFO - ptstrategy - -
+2019-04-13 23:41:48,721 INFO - __main__ - Performance of this pair: {'pair': 'RNG-SAP', 'sharperatio': 0.6138853462517991, 'returnstd': 9354.454654881232, 'startcash': 1000000, 'endcash': 1227557.1433806499, 'profit': 0.22755714338064986}
+2019-04-13 23:41:48,721 INFO - __main__ - Running pair 95/133
+2019-04-13 23:41:48,798 INFO - ptstrategy - -
+2019-04-13 23:41:48,799 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NSP', 'sharperatio': -2.3478897476190346, 'returnstd': 12963.538494499222, 'startcash': 1000000, 'endcash': 981008.074630027, 'profit': -0.018991925369972944}
+2019-04-13 23:41:48,799 INFO - __main__ - Running pair 96/133
+2019-04-13 23:41:48,904 INFO - ptstrategy - -
+2019-04-13 23:41:48,904 INFO - __main__ - Performance of this pair: {'pair': 'AL-LLL', 'sharperatio': 0.37006699415396, 'returnstd': 8022.069552709143, 'startcash': 1000000, 'endcash': 1066711.4239752092, 'profit': 0.06671142397520924}
+2019-04-13 23:41:48,904 INFO - __main__ - Running pair 97/133
+2019-04-13 23:41:49,006 INFO - ptstrategy - -
+2019-04-13 23:41:49,006 INFO - __main__ - Performance of this pair: {'pair': 'STM-VMW', 'sharperatio': 0.40033817977041264, 'returnstd': 14002.046413692284, 'startcash': 1000000, 'endcash': 1054014.5861073672, 'profit': 0.05401458610736718}
+2019-04-13 23:41:49,006 INFO - __main__ - Running pair 98/133
+2019-04-13 23:41:49,069 INFO - ptstrategy - -
+2019-04-13 23:41:49,070 INFO - __main__ - Performance of this pair: {'pair': 'AL-FDS', 'sharperatio': 0.45606186271547144, 'returnstd': 11285.964244098132, 'startcash': 1000000, 'endcash': 1077053.9128065691, 'profit': 0.07705391280656913}
+2019-04-13 23:41:49,070 INFO - __main__ - Running pair 99/133
+2019-04-13 23:41:49,164 INFO - ptstrategy - -
+2019-04-13 23:41:49,165 INFO - __main__ - Performance of this pair: {'pair': 'AL-ETN', 'sharperatio': 0.5303464490158479, 'returnstd': 8676.704603221542, 'startcash': 1000000, 'endcash': 1123829.6099469506, 'profit': 0.12382960994695057}
+2019-04-13 23:41:49,165 INFO - __main__ - Running pair 100/133
+2019-04-13 23:41:49,224 INFO - ptstrategy - -
+2019-04-13 23:41:49,225 INFO - __main__ - Performance of this pair: {'pair': 'RXN-SAP', 'sharperatio': -5.6937389116419554, 'returnstd': 10573.635931931984, 'startcash': 1000000, 'endcash': 993044.4613339086, 'profit': -0.006955538666091394}
+2019-04-13 23:41:49,225 INFO - __main__ - Running pair 101/133
+2019-04-13 23:41:49,329 INFO - ptstrategy - -
+2019-04-13 23:41:49,330 INFO - __main__ - Performance of this pair: {'pair': 'ETN-ITW', 'sharperatio': -1.124678365715622, 'returnstd': 5515.593713589052, 'startcash': 1000000, 'endcash': 974520.323105512, 'profit': -0.025479676894488046}
+2019-04-13 23:41:49,330 INFO - __main__ - Running pair 102/133
+2019-04-13 23:41:49,418 INFO - ptstrategy - -
+2019-04-13 23:41:49,419 INFO - __main__ - Performance of this pair: {'pair': 'AL-AYR', 'sharperatio': -0.8958235403777672, 'returnstd': 7120.159369242854, 'startcash': 1000000, 'endcash': 893394.752496959, 'profit': -0.10660524750304105}
+2019-04-13 23:41:49,419 INFO - __main__ - Running pair 103/133
+2019-04-13 23:41:49,476 INFO - ptstrategy - -
+2019-04-13 23:41:49,477 INFO - __main__ - Performance of this pair: {'pair': 'SAP-STM', 'sharperatio': 0.7015976737865168, 'returnstd': 14400.346706871043, 'startcash': 1000000, 'endcash': 1230389.4189859494, 'profit': 0.23038941898594936}
+2019-04-13 23:41:49,477 INFO - __main__ - Running pair 104/133
+2019-04-13 23:41:49,594 INFO - ptstrategy - -
+2019-04-13 23:41:49,595 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-PAYC', 'sharperatio': -1.5447780941783813, 'returnstd': 7056.94626473701, 'startcash': 1000000, 'endcash': 960020.5916079136, 'profit': -0.03997940839208639}
+2019-04-13 23:41:49,595 INFO - __main__ - Running pair 105/133
+2019-04-13 23:41:49,657 INFO - ptstrategy - -
+2019-04-13 23:41:49,658 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-LDOS', 'sharperatio': -1.089791057626763, 'returnstd': 12293.18797820243, 'startcash': 1000000, 'endcash': 878761.6134291186, 'profit': -0.12123838657088136}
+2019-04-13 23:41:49,658 INFO - __main__ - Running pair 106/133
+2019-04-13 23:41:49,739 INFO - ptstrategy - -
+2019-04-13 23:41:49,740 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-HPQ', 'sharperatio': -0.8327435893780886, 'returnstd': 11022.477527909974, 'startcash': 1000000, 'endcash': 870957.8243972533, 'profit': -0.12904217560274667}
+2019-04-13 23:41:49,740 INFO - __main__ - Running pair 107/133
+2019-04-13 23:41:49,821 INFO - ptstrategy - -
+2019-04-13 23:41:49,822 INFO - __main__ - Performance of this pair: {'pair': 'CLS-TRTN', 'sharperatio': -0.9810881924514604, 'returnstd': 17652.1513655331, 'startcash': 1000000, 'endcash': 743625.2979901654, 'profit': -0.2563747020098346}
+2019-04-13 23:41:49,822 INFO - __main__ - Running pair 108/133
+2019-04-13 23:41:49,886 INFO - ptstrategy - -
+2019-04-13 23:41:49,887 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-GWRE', 'sharperatio': -0.9159142986361165, 'returnstd': 15284.470331915372, 'startcash': 1000000, 'endcash': 931620.2667229214, 'profit': -0.06837973327707861}
+2019-04-13 23:41:49,887 INFO - __main__ - Running pair 109/133
+2019-04-13 23:41:49,974 INFO - ptstrategy - -
+2019-04-13 23:41:49,975 INFO - __main__ - Performance of this pair: {'pair': 'CLS-VMW', 'sharperatio': -0.8613124550647061, 'returnstd': 13127.639850088668, 'startcash': 1000000, 'endcash': 802672.5019811642, 'profit': -0.19732749801883578}
+2019-04-13 23:41:49,975 INFO - __main__ - Running pair 110/133
+2019-04-13 23:41:50,041 INFO - ptstrategy - -
+2019-04-13 23:41:50,042 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-NSP', 'sharperatio': -0.7314842052170987, 'returnstd': 17064.13894691673, 'startcash': 1000000, 'endcash': 817465.9131248002, 'profit': -0.1825340868751998}
+2019-04-13 23:41:50,042 INFO - __main__ - Running pair 111/133
+2019-04-13 23:41:50,117 INFO - ptstrategy - -
+2019-04-13 23:41:50,118 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-LLL', 'sharperatio': -1.3635831465736896, 'returnstd': 10871.136074733438, 'startcash': 1000000, 'endcash': 993183.3522355461, 'profit': -0.006816647764453897}
+2019-04-13 23:41:50,118 INFO - __main__ - Running pair 112/133
+2019-04-13 23:41:50,220 INFO - ptstrategy - -
+2019-04-13 23:41:50,221 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-LLL', 'sharperatio': 0.3605525953630136, 'returnstd': 11898.733312759185, 'startcash': 1000000, 'endcash': 1111002.3275425336, 'profit': 0.11100232754253363}
+2019-04-13 23:41:50,221 INFO - __main__ - Running pair 113/133
+2019-04-13 23:41:50,352 INFO - ptstrategy - -
+2019-04-13 23:41:50,353 INFO - __main__ - Performance of this pair: {'pair': 'AL-XRX', 'sharperatio': -1.2450985147437081, 'returnstd': 8125.839494848956, 'startcash': 1000000, 'endcash': 982458.7333552705, 'profit': -0.017541266644729533}
+2019-04-13 23:41:50,353 INFO - __main__ - Running pair 114/133
+2019-04-13 23:41:50,443 INFO - ptstrategy - -
+2019-04-13 23:41:50,444 INFO - __main__ - Performance of this pair: {'pair': 'TGH-URI', 'sharperatio': -0.5356186820345058, 'returnstd': 20199.61830872775, 'startcash': 1000000, 'endcash': 1000461.6823614353, 'profit': 0.00046168236143526154}
+2019-04-13 23:41:50,444 INFO - __main__ - Running pair 115/133
+2019-04-13 23:41:50,523 INFO - ptstrategy - -
+2019-04-13 23:41:50,524 INFO - __main__ - Performance of this pair: {'pair': 'NOK-WUBA', 'sharperatio': -0.8569367609670271, 'returnstd': 17549.274262822244, 'startcash': 1000000, 'endcash': 485124.36364660057, 'profit': -0.5148756363533994}
+2019-04-13 23:41:50,524 INFO - __main__ - Running pair 116/133
+2019-04-13 23:41:50,596 INFO - ptstrategy - -
+2019-04-13 23:41:50,597 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-JBL', 'sharperatio': 0.6297511273833414, 'returnstd': 14904.475643541335, 'startcash': 1000000, 'endcash': 1285502.7136137602, 'profit': 0.2855027136137602}
+2019-04-13 23:41:50,597 INFO - __main__ - Running pair 117/133
+2019-04-13 23:41:50,675 INFO - ptstrategy - -
+2019-04-13 23:41:50,676 INFO - __main__ - Performance of this pair: {'pair': 'JBL-TBI', 'sharperatio': -0.33758809079444274, 'returnstd': 13223.560151213236, 'startcash': 1000000, 'endcash': 1020305.6452219117, 'profit': 0.02030564522191172}
+2019-04-13 23:41:50,676 INFO - __main__ - Running pair 118/133
+2019-04-13 23:41:50,765 INFO - ptstrategy - -
+2019-04-13 23:41:50,765 INFO - __main__ - Performance of this pair: {'pair': 'ETN-RHT', 'sharperatio': -1.1120004015629477, 'returnstd': 9071.664746119593, 'startcash': 1000000, 'endcash': 913408.227879182, 'profit': -0.08659177212081803}
+2019-04-13 23:41:50,765 INFO - __main__ - Running pair 119/133
+2019-04-13 23:41:50,838 INFO - ptstrategy - -
+2019-04-13 23:41:50,839 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-JBL', 'sharperatio': -0.761186632250904, 'returnstd': 13071.737993210902, 'startcash': 1000000, 'endcash': 797257.5537460224, 'profit': -0.2027424462539776}
+2019-04-13 23:41:50,839 INFO - __main__ - Running pair 120/133
+2019-04-13 23:41:50,931 INFO - ptstrategy - -
+2019-04-13 23:41:50,932 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-SAP', 'sharperatio': 0.44734659381913516, 'returnstd': 9078.209759077185, 'startcash': 1000000, 'endcash': 1075934.2895499321, 'profit': 0.07593428954993212}
+2019-04-13 23:41:50,932 INFO - __main__ - Running pair 121/133
+2019-04-13 23:41:51,037 INFO - ptstrategy - -
+2019-04-13 23:41:51,037 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NSP', 'sharperatio': -0.6888787159740862, 'returnstd': 13054.380533641024, 'startcash': 1000000, 'endcash': 904045.7811141461, 'profit': -0.09595421888585388}
+2019-04-13 23:41:51,037 INFO - __main__ - Running pair 122/133
+2019-04-13 23:41:51,125 INFO - ptstrategy - -
+2019-04-13 23:41:51,126 INFO - __main__ - Performance of this pair: {'pair': 'RHT-RNG', 'sharperatio': 0.31310237753958853, 'returnstd': 14458.883187176667, 'startcash': 1000000, 'endcash': 1073383.4055657554, 'profit': 0.07338340556575544}
+2019-04-13 23:41:51,126 INFO - __main__ - Running pair 123/133
+2019-04-13 23:41:51,229 INFO - ptstrategy - -
+2019-04-13 23:41:51,230 INFO - __main__ - Performance of this pair: {'pair': 'ITW-LLL', 'sharperatio': 0.38090812727618184, 'returnstd': 5584.5103719037115, 'startcash': 1000000, 'endcash': 1065031.548049936, 'profit': 0.06503154804993608}
+2019-04-13 23:41:51,230 INFO - __main__ - Running pair 124/133
+2019-04-13 23:41:51,332 INFO - ptstrategy - -
+2019-04-13 23:41:51,332 INFO - __main__ - Performance of this pair: {'pair': 'LLL-TDC', 'sharperatio': 0.5562426711041137, 'returnstd': 9742.002670260104, 'startcash': 1000000, 'endcash': 1145625.5326471266, 'profit': 0.14562553264712658}
+2019-04-13 23:41:51,333 INFO - __main__ - Running pair 125/133
+2019-04-13 23:41:51,405 INFO - ptstrategy - -
+2019-04-13 23:41:51,406 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-HPQ', 'sharperatio': 0.4666454857597143, 'returnstd': 14238.861734456288, 'startcash': 1000000, 'endcash': 1094240.4016378005, 'profit': 0.09424040163780051}
+2019-04-13 23:41:51,406 INFO - __main__ - Running pair 126/133
+2019-04-13 23:41:51,488 INFO - ptstrategy - -
+2019-04-13 23:41:51,489 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-UMC', 'sharperatio': -0.8696849843005142, 'returnstd': 14547.904103305847, 'startcash': 1000000, 'endcash': 920619.3604279413, 'profit': -0.07938063957205868}
+2019-04-13 23:41:51,489 INFO - __main__ - Running pair 127/133
+2019-04-13 23:41:51,583 INFO - ptstrategy - -
+2019-04-13 23:41:51,583 INFO - __main__ - Performance of this pair: {'pair': 'AL-LEAF', 'sharperatio': 0.3348651319653498, 'returnstd': 13218.579239237342, 'startcash': 1000000, 'endcash': 1098748.5779695807, 'profit': 0.09874857796958066}
+2019-04-13 23:41:51,583 INFO - __main__ - Running pair 128/133
+2019-04-13 23:41:51,678 INFO - ptstrategy - -
+2019-04-13 23:41:51,679 INFO - __main__ - Performance of this pair: {'pair': 'ETN-VMW', 'sharperatio': -1.2537248558672638, 'returnstd': 10421.900623665642, 'startcash': 1000000, 'endcash': 905026.8146245135, 'profit': -0.0949731853754865}
+2019-04-13 23:41:51,679 INFO - __main__ - Running pair 129/133
+2019-04-13 23:41:51,738 INFO - ptstrategy - -
+2019-04-13 23:41:51,739 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-JBL', 'sharperatio': -3.463262069335525, 'returnstd': 12280.58966970064, 'startcash': 1000000, 'endcash': 1005608.3450213616, 'profit': 0.0056083450213616015}
+2019-04-13 23:41:51,739 INFO - __main__ - Running pair 130/133
+2019-04-13 23:41:51,821 INFO - ptstrategy - -
+2019-04-13 23:41:51,821 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-WUBA', 'sharperatio': -0.776135141498818, 'returnstd': 24800.465795537642, 'startcash': 1000000, 'endcash': 692688.5798875681, 'profit': -0.30731142011243184}
+2019-04-13 23:41:51,821 INFO - __main__ - Running pair 131/133
+2019-04-13 23:41:51,936 INFO - ptstrategy - -
+2019-04-13 23:41:51,936 INFO - __main__ - Performance of this pair: {'pair': 'CRM-LLL', 'sharperatio': 0.6077217124122702, 'returnstd': 6165.725214005417, 'startcash': 1000000, 'endcash': 1213444.5716768152, 'profit': 0.21344457167681516}
+2019-04-13 23:41:51,936 INFO - __main__ - Running pair 132/133
+2019-04-13 23:41:52,022 INFO - ptstrategy - -
+2019-04-13 23:41:52,023 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-RNG', 'sharperatio': 0.6477779572279976, 'returnstd': 14388.349565542285, 'startcash': 1000000, 'endcash': 1166424.264830683, 'profit': 0.1664242648306829}
+2019-04-13 23:41:52,023 INFO - __main__ - Running pair 133/133
+2019-04-13 23:41:52,088 INFO - ptstrategy - -
+2019-04-13 23:41:52,089 INFO - __main__ - Performance of this pair: {'pair': 'AL-ELLI', 'sharperatio': -1.1189594236316596, 'returnstd': 16882.059208784147, 'startcash': 1000000, 'endcash': 1001587.1889169222, 'profit': 0.0015871889169221977}
+2019-04-13 23:41:52,097 INFO - __main__ - Performance of this set of parameters: (70, 2.0, 0.5, -0.5, -0.524014294836717, -0.6755434679290816, -0.017909029434764367, -0.010958948465588153, 0.1599161943850203, '0488b7fc-45be-4c75-89c6-31607169e130')
+2019-04-13 23:41:52,097 INFO - __main__ - Running parameter combination 2/4
+2019-04-13 23:41:52,097 INFO - __main__ - Backtesting all pairs using parameters: {'lookback': 60, 'enter_threshold': 2.0, 'exit_threshold': 0.5, 'loss_limit': -0.5}
+2019-04-13 23:41:52,103 INFO - __main__ - Running pair 1/133
+2019-04-13 23:41:52,258 INFO - ptstrategy - -
+2019-04-13 23:41:52,259 INFO - __main__ - Performance of this pair: {'pair': 'AER-AL', 'sharperatio': -1.1633978354314904, 'returnstd': 3381.873874959801, 'startcash': 1000000, 'endcash': 958135.7025765768, 'profit': -0.04186429742342315}
+2019-04-13 23:41:52,259 INFO - __main__ - Running pair 2/133
+2019-04-13 23:41:52,346 INFO - ptstrategy - -
+2019-04-13 23:41:52,346 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-VMW', 'sharperatio': -0.4513095820200468, 'returnstd': 17541.507685225326, 'startcash': 1000000, 'endcash': 867504.7853377117, 'profit': -0.1324952146622883}
+2019-04-13 23:41:52,346 INFO - __main__ - Running pair 3/133
+2019-04-13 23:41:52,409 INFO - ptstrategy - -
+2019-04-13 23:41:52,409 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-SAIC', 'sharperatio': -0.7139256128546463, 'returnstd': 12178.32682833472, 'startcash': 1000000, 'endcash': 859924.2036893917, 'profit': -0.14007579631060826}
+2019-04-13 23:41:52,409 INFO - __main__ - Running pair 4/133
+2019-04-13 23:41:52,495 INFO - ptstrategy - -
+2019-04-13 23:41:52,496 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-RHT', 'sharperatio': -1.5495523245639584, 'returnstd': 13788.107823324033, 'startcash': 1000000, 'endcash': 882928.7147400053, 'profit': -0.11707128525999468}
+2019-04-13 23:41:52,496 INFO - __main__ - Running pair 5/133
+2019-04-13 23:41:52,581 INFO - ptstrategy - -
+2019-04-13 23:41:52,582 INFO - __main__ - Performance of this pair: {'pair': 'CRM-VMW', 'sharperatio': -1.0118466174964698, 'returnstd': 8409.783162555046, 'startcash': 1000000, 'endcash': 941181.4569045862, 'profit': -0.05881854309541383}
+2019-04-13 23:41:52,582 INFO - __main__ - Running pair 6/133
+2019-04-13 23:41:52,703 INFO - ptstrategy - -
+2019-04-13 23:41:52,704 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-STM', 'sharperatio': 0.4371568663430537, 'returnstd': 15197.840206562934, 'startcash': 1000000, 'endcash': 1189189.7098619507, 'profit': 0.18918970986195072}
+2019-04-13 23:41:52,704 INFO - __main__ - Running pair 7/133
+2019-04-13 23:41:52,809 INFO - ptstrategy - -
+2019-04-13 23:41:52,809 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-NOK', 'sharperatio': -0.7001258168040289, 'returnstd': 11264.052247943846, 'startcash': 1000000, 'endcash': 736456.2836573267, 'profit': -0.26354371634267326}
+2019-04-13 23:41:52,809 INFO - __main__ - Running pair 8/133
+2019-04-13 23:41:52,890 INFO - ptstrategy - -
+2019-04-13 23:41:52,891 INFO - __main__ - Performance of this pair: {'pair': 'KFY-TBI', 'sharperatio': -0.7603538306582408, 'returnstd': 11932.515539994325, 'startcash': 1000000, 'endcash': 876391.777192294, 'profit': -0.12360822280770599}
+2019-04-13 23:41:52,891 INFO - __main__ - Running pair 9/133
+2019-04-13 23:41:52,969 INFO - ptstrategy - -
+2019-04-13 23:41:52,969 INFO - __main__ - Performance of this pair: {'pair': 'KFY-NSP', 'sharperatio': -1.200460261389639, 'returnstd': 12358.322856162404, 'startcash': 1000000, 'endcash': 943034.6876382141, 'profit': -0.05696531236178591}
+2019-04-13 23:41:52,969 INFO - __main__ - Running pair 10/133
+2019-04-13 23:41:53,073 INFO - ptstrategy - -
+2019-04-13 23:41:53,073 INFO - __main__ - Performance of this pair: {'pair': 'LLL-RHT', 'sharperatio': 0.5335960384453511, 'returnstd': 9147.778879706813, 'startcash': 1000000, 'endcash': 1106635.7133742096, 'profit': 0.10663571337420959}
+2019-04-13 23:41:53,074 INFO - __main__ - Running pair 11/133
+2019-04-13 23:41:53,158 INFO - ptstrategy - -
+2019-04-13 23:41:53,159 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-CRM', 'sharperatio': 0.5074301475282259, 'returnstd': 20942.93908798373, 'startcash': 1000000, 'endcash': 1106237.785798691, 'profit': 0.10623778579869098}
+2019-04-13 23:41:53,159 INFO - __main__ - Running pair 12/133
+2019-04-13 23:41:53,260 INFO - ptstrategy - -
+2019-04-13 23:41:53,260 INFO - __main__ - Performance of this pair: {'pair': 'LLL-STM', 'sharperatio': 0.6920262072719774, 'returnstd': 14163.235606660795, 'startcash': 1000000, 'endcash': 1194120.9890472917, 'profit': 0.1941209890472917}
+2019-04-13 23:41:53,261 INFO - __main__ - Running pair 13/133
+2019-04-13 23:41:53,331 INFO - ptstrategy - -
+2019-04-13 23:41:53,332 INFO - __main__ - Performance of this pair: {'pair': 'JBL-SAP', 'sharperatio': -0.7674728291611244, 'returnstd': 10061.633569637548, 'startcash': 1000000, 'endcash': 869855.6672208301, 'profit': -0.1301443327791699}
+2019-04-13 23:41:53,332 INFO - __main__ - Running pair 14/133
+2019-04-13 23:41:53,425 INFO - ptstrategy - -
+2019-04-13 23:41:53,426 INFO - __main__ - Performance of this pair: {'pair': 'JBL-RHT', 'sharperatio': -0.7770302250672327, 'returnstd': 10501.053824142777, 'startcash': 1000000, 'endcash': 788524.9564386931, 'profit': -0.2114750435613069}
+2019-04-13 23:41:53,426 INFO - __main__ - Running pair 15/133
+2019-04-13 23:41:53,490 INFO - ptstrategy - -
+2019-04-13 23:41:53,491 INFO - __main__ - Performance of this pair: {'pair': 'CRM-STM', 'sharperatio': 0.6090825027057256, 'returnstd': 14528.497460890036, 'startcash': 1000000, 'endcash': 1156090.815390333, 'profit': 0.15609081539033307}
+2019-04-13 23:41:53,491 INFO - __main__ - Running pair 16/133
+2019-04-13 23:41:53,579 INFO - ptstrategy - -
+2019-04-13 23:41:53,580 INFO - __main__ - Performance of this pair: {'pair': 'JBL-ORCL', 'sharperatio': -0.6462348929621385, 'returnstd': 11310.422557487267, 'startcash': 1000000, 'endcash': 967836.9691472877, 'profit': -0.03216303085271234}
+2019-04-13 23:41:53,580 INFO - __main__ - Running pair 17/133
+2019-04-13 23:41:53,699 INFO - ptstrategy - -
+2019-04-13 23:41:53,700 INFO - __main__ - Performance of this pair: {'pair': 'CRM-SAP', 'sharperatio': 0.3727641091536673, 'returnstd': 4548.665294447341, 'startcash': 1000000, 'endcash': 1084335.416065038, 'profit': 0.08433541606503794}
+2019-04-13 23:41:53,700 INFO - __main__ - Running pair 18/133
+2019-04-13 23:41:53,779 INFO - ptstrategy - -
+2019-04-13 23:41:53,780 INFO - __main__ - Performance of this pair: {'pair': 'JBL-NSP', 'sharperatio': -0.6859043617475155, 'returnstd': 14337.707934812195, 'startcash': 1000000, 'endcash': 790663.1148873246, 'profit': -0.20933688511267537}
+2019-04-13 23:41:53,780 INFO - __main__ - Running pair 19/133
+2019-04-13 23:41:53,881 INFO - ptstrategy - -
+2019-04-13 23:41:53,882 INFO - __main__ - Performance of this pair: {'pair': 'JBL-LLL', 'sharperatio': -0.7745517874802562, 'returnstd': 8658.119427562804, 'startcash': 1000000, 'endcash': 860411.9054041713, 'profit': -0.1395880945958287}
+2019-04-13 23:41:53,882 INFO - __main__ - Running pair 20/133
+2019-04-13 23:41:53,953 INFO - ptstrategy - -
+2019-04-13 23:41:53,953 INFO - __main__ - Performance of this pair: {'pair': 'ITW-STM', 'sharperatio': 0.7727249385008281, 'returnstd': 16015.240275729191, 'startcash': 1000000, 'endcash': 1147148.0162630775, 'profit': 0.1471480162630775}
+2019-04-13 23:41:53,953 INFO - __main__ - Running pair 21/133
+2019-04-13 23:41:54,085 INFO - ptstrategy - -
+2019-04-13 23:41:54,086 INFO - __main__ - Performance of this pair: {'pair': 'ITW-SAP', 'sharperatio': -1.6374714862992343, 'returnstd': 4665.991180634221, 'startcash': 1000000, 'endcash': 1000380.6327096575, 'profit': 0.0003806327096575405}
+2019-04-13 23:41:54,086 INFO - __main__ - Running pair 22/133
+2019-04-13 23:41:54,175 INFO - ptstrategy - -
+2019-04-13 23:41:54,176 INFO - __main__ - Performance of this pair: {'pair': 'MAN-RXN', 'sharperatio': -4.018563159098395, 'returnstd': 9566.2800587872, 'startcash': 1000000, 'endcash': 984943.1903730795, 'profit': -0.015056809626920497}
+2019-04-13 23:41:54,176 INFO - __main__ - Running pair 23/133
+2019-04-13 23:41:54,318 INFO - ptstrategy - -
+2019-04-13 23:41:54,318 INFO - __main__ - Performance of this pair: {'pair': 'MAN-SAP', 'sharperatio': 0.5539276807998297, 'returnstd': 6796.753162528545, 'startcash': 1000000, 'endcash': 1138486.2777104797, 'profit': 0.1384862777104797}
+2019-04-13 23:41:54,318 INFO - __main__ - Running pair 24/133
+2019-04-13 23:41:54,440 INFO - ptstrategy - -
+2019-04-13 23:41:54,440 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RNG', 'sharperatio': 0.5866926669893991, 'returnstd': 11882.289117035554, 'startcash': 1000000, 'endcash': 1198886.4779071542, 'profit': 0.19888647790715425}
+2019-04-13 23:41:54,440 INFO - __main__ - Running pair 25/133
+2019-04-13 23:41:54,532 INFO - ptstrategy - -
+2019-04-13 23:41:54,533 INFO - __main__ - Performance of this pair: {'pair': 'CRM-RHT', 'sharperatio': -1.2351387777144964, 'returnstd': 6742.481081256597, 'startcash': 1000000, 'endcash': 1004283.8889522904, 'profit': 0.004283888952290407}
+2019-04-13 23:41:54,533 INFO - __main__ - Running pair 26/133
+2019-04-13 23:41:54,627 INFO - ptstrategy - -
+2019-04-13 23:41:54,627 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RHT', 'sharperatio': 0.24960799541086737, 'returnstd': 10552.169628786523, 'startcash': 1000000, 'endcash': 1057278.7098000052, 'profit': 0.05727870980000519}
+2019-04-13 23:41:54,627 INFO - __main__ - Running pair 27/133
+2019-04-13 23:41:54,716 INFO - ptstrategy - -
+2019-04-13 23:41:54,716 INFO - __main__ - Performance of this pair: {'pair': 'MAN-STM', 'sharperatio': 0.6898202105714845, 'returnstd': 16459.39044270587, 'startcash': 1000000, 'endcash': 1260115.5283300723, 'profit': 0.2601155283300723}
+2019-04-13 23:41:54,716 INFO - __main__ - Running pair 28/133
+2019-04-13 23:41:54,813 INFO - ptstrategy - -
+2019-04-13 23:41:54,814 INFO - __main__ - Performance of this pair: {'pair': 'ITW-QTWO', 'sharperatio': -0.4380735555848183, 'returnstd': 9708.53493517507, 'startcash': 1000000, 'endcash': 990837.0766510906, 'profit': -0.00916292334890936}
+2019-04-13 23:41:54,814 INFO - __main__ - Running pair 29/133
+2019-04-13 23:41:54,907 INFO - ptstrategy - -
+2019-04-13 23:41:54,908 INFO - __main__ - Performance of this pair: {'pair': 'ITW-ORCL', 'sharperatio': -1.6343393162326447, 'returnstd': 8060.410723019978, 'startcash': 1000000, 'endcash': 972000.4675526349, 'profit': -0.027999532447365114}
+2019-04-13 23:41:54,908 INFO - __main__ - Running pair 30/133
+2019-04-13 23:41:55,001 INFO - ptstrategy - -
+2019-04-13 23:41:55,002 INFO - __main__ - Performance of this pair: {'pair': 'MODN-RHT', 'sharperatio': -1.9583747138266023, 'returnstd': 10291.277214844795, 'startcash': 1000000, 'endcash': 954057.4464386933, 'profit': -0.04594255356130667}
+2019-04-13 23:41:55,002 INFO - __main__ - Running pair 31/133
+2019-04-13 23:41:55,070 INFO - ptstrategy - -
+2019-04-13 23:41:55,071 INFO - __main__ - Performance of this pair: {'pair': 'MODN-XRX', 'sharperatio': -0.5756735374083324, 'returnstd': 12664.959594980677, 'startcash': 1000000, 'endcash': 942505.0324364795, 'profit': -0.05749496756352054}
+2019-04-13 23:41:55,071 INFO - __main__ - Running pair 32/133
+2019-04-13 23:41:55,182 INFO - ptstrategy - -
+2019-04-13 23:41:55,183 INFO - __main__ - Performance of this pair: {'pair': 'MODN-ZEN', 'sharperatio': 0.36802182827126695, 'returnstd': 12894.77242379364, 'startcash': 1000000, 'endcash': 1106066.057305783, 'profit': 0.10606605730578303}
+2019-04-13 23:41:55,183 INFO - __main__ - Running pair 33/133
+2019-04-13 23:41:55,249 INFO - ptstrategy - -
+2019-04-13 23:41:55,249 INFO - __main__ - Performance of this pair: {'pair': 'IBM-TGH', 'sharperatio': -0.9312480140152645, 'returnstd': 21299.810514984492, 'startcash': 1000000, 'endcash': 683913.2284000055, 'profit': -0.3160867715999945}
+2019-04-13 23:41:55,249 INFO - __main__ - Running pair 34/133
+2019-04-13 23:41:55,338 INFO - ptstrategy - -
+2019-04-13 23:41:55,339 INFO - __main__ - Performance of this pair: {'pair': 'MXL-VMW', 'sharperatio': -1.0011940982189476, 'returnstd': 16133.067896924658, 'startcash': 1000000, 'endcash': 975453.747422431, 'profit': -0.024546252577568987}
+2019-04-13 23:41:55,339 INFO - __main__ - Running pair 35/133
+2019-04-13 23:41:55,413 INFO - ptstrategy - -
+2019-04-13 23:41:55,414 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-ZEN', 'sharperatio': -0.9872524647980557, 'returnstd': 15343.695581773307, 'startcash': 1000000, 'endcash': 891267.2462294506, 'profit': -0.10873275377054943}
+2019-04-13 23:41:55,414 INFO - __main__ - Running pair 36/133
+2019-04-13 23:41:55,562 INFO - ptstrategy - -
+2019-04-13 23:41:55,563 INFO - __main__ - Performance of this pair: {'pair': 'CRM-MAN', 'sharperatio': 0.5856744077388072, 'returnstd': 7525.331696401239, 'startcash': 1000000, 'endcash': 1174691.499748424, 'profit': 0.17469149974842393}
+2019-04-13 23:41:55,563 INFO - __main__ - Running pair 37/133
+2019-04-13 23:41:55,641 INFO - ptstrategy - -
+2019-04-13 23:41:55,641 INFO - __main__ - Performance of this pair: {'pair': 'NOK-NSP', 'sharperatio': -0.679677454655528, 'returnstd': 15719.612514348706, 'startcash': 1000000, 'endcash': 569555.4532542508, 'profit': -0.43044454674574917}
+2019-04-13 23:41:55,642 INFO - __main__ - Running pair 38/133
+2019-04-13 23:41:55,732 INFO - ptstrategy - -
+2019-04-13 23:41:55,733 INFO - __main__ - Performance of this pair: {'pair': 'ANET-NOK', 'sharperatio': -0.6941136040247756, 'returnstd': 18510.095770032167, 'startcash': 1000000, 'endcash': 503448.24203972414, 'profit': -0.49655175796027584}
+2019-04-13 23:41:55,733 INFO - __main__ - Running pair 39/133
+2019-04-13 23:41:55,804 INFO - ptstrategy - -
+2019-04-13 23:41:55,805 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-RHT', 'sharperatio': 0.6025124573372286, 'returnstd': 14851.9201726174, 'startcash': 1000000, 'endcash': 1167092.3729590822, 'profit': 0.16709237295908225}
+2019-04-13 23:41:55,805 INFO - __main__ - Running pair 40/133
+2019-04-13 23:41:55,894 INFO - ptstrategy - -
+2019-04-13 23:41:55,894 INFO - __main__ - Performance of this pair: {'pair': 'ANET-LDOS', 'sharperatio': -0.7395480122097625, 'returnstd': 16122.308167670437, 'startcash': 1000000, 'endcash': 814152.5288978723, 'profit': -0.18584747110212768}
+2019-04-13 23:41:55,894 INFO - __main__ - Running pair 41/133
+2019-04-13 23:41:55,982 INFO - ptstrategy - -
+2019-04-13 23:41:55,983 INFO - __main__ - Performance of this pair: {'pair': 'ANET-HPQ', 'sharperatio': -0.6932743317110811, 'returnstd': 15893.630942504939, 'startcash': 1000000, 'endcash': 759453.3989823969, 'profit': -0.24054660101760306}
+2019-04-13 23:41:55,983 INFO - __main__ - Running pair 42/133
+2019-04-13 23:41:56,089 INFO - ptstrategy - -
+2019-04-13 23:41:56,089 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-JBL', 'sharperatio': -0.8366861071672528, 'returnstd': 13156.706700478806, 'startcash': 1000000, 'endcash': 842185.3362258581, 'profit': -0.15781466377414194}
+2019-04-13 23:41:56,089 INFO - __main__ - Running pair 43/133
+2019-04-13 23:41:56,172 INFO - ptstrategy - -
+2019-04-13 23:41:56,173 INFO - __main__ - Performance of this pair: {'pair': 'TRTN-VMW', 'sharperatio': -0.14840850797808783, 'returnstd': 17395.675359520774, 'startcash': 1000000, 'endcash': 1026454.3454682771, 'profit': 0.026454345468277112}
+2019-04-13 23:41:56,173 INFO - __main__ - Running pair 44/133
+2019-04-13 23:41:56,262 INFO - ptstrategy - -
+2019-04-13 23:41:56,263 INFO - __main__ - Performance of this pair: {'pair': 'ANET-EPAM', 'sharperatio': 0.5092984211397145, 'returnstd': 15717.010613020542, 'startcash': 1000000, 'endcash': 1047841.6215885021, 'profit': 0.04784162158850208}
+2019-04-13 23:41:56,263 INFO - __main__ - Running pair 45/133
+2019-04-13 23:41:56,351 INFO - ptstrategy - -
+2019-04-13 23:41:56,352 INFO - __main__ - Performance of this pair: {'pair': 'ANET-CLGX', 'sharperatio': -0.7708716573862427, 'returnstd': 15641.258570647153, 'startcash': 1000000, 'endcash': 848977.0245453351, 'profit': -0.1510229754546649}
+2019-04-13 23:41:56,352 INFO - __main__ - Running pair 46/133
+2019-04-13 23:41:56,434 INFO - ptstrategy - -
+2019-04-13 23:41:56,435 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-RNG', 'sharperatio': -0.7076120180264185, 'returnstd': 14948.292844997193, 'startcash': 1000000, 'endcash': 702776.6405996516, 'profit': -0.2972233594003484}
+2019-04-13 23:41:56,435 INFO - __main__ - Running pair 47/133
+2019-04-13 23:41:56,500 INFO - ptstrategy - -
+2019-04-13 23:41:56,501 INFO - __main__ - Performance of this pair: {'pair': 'NOW-TRTN', 'sharperatio': -0.5710962540742741, 'returnstd': 18233.266386094783, 'startcash': 1000000, 'endcash': 958163.0184699608, 'profit': -0.04183698153003922}
+2019-04-13 23:41:56,501 INFO - __main__ - Running pair 48/133
+2019-04-13 23:41:56,585 INFO - ptstrategy - -
+2019-04-13 23:41:56,585 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ORCL', 'sharperatio': 0.48524785663104725, 'returnstd': 10394.954581500866, 'startcash': 1000000, 'endcash': 1156260.6611068896, 'profit': 0.1562606611068896}
+2019-04-13 23:41:56,585 INFO - __main__ - Running pair 49/133
+2019-04-13 23:41:56,706 INFO - ptstrategy - -
+2019-04-13 23:41:56,707 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NOK', 'sharperatio': -0.8838005482464331, 'returnstd': 12554.974066756371, 'startcash': 1000000, 'endcash': 879422.1445060236, 'profit': -0.12057785549397639}
+2019-04-13 23:41:56,707 INFO - __main__ - Running pair 50/133
+2019-04-13 23:41:56,832 INFO - ptstrategy - -
+2019-04-13 23:41:56,832 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ITW', 'sharperatio': 0.700992844918165, 'returnstd': 5868.074557293259, 'startcash': 1000000, 'endcash': 1136919.2713927398, 'profit': 0.13691927139273985}
+2019-04-13 23:41:56,832 INFO - __main__ - Running pair 51/133
+2019-04-13 23:41:56,912 INFO - ptstrategy - -
+2019-04-13 23:41:56,913 INFO - __main__ - Performance of this pair: {'pair': 'TGH-VMW', 'sharperatio': 0.6462027606776761, 'returnstd': 22662.52586464841, 'startcash': 1000000, 'endcash': 1091748.1582310633, 'profit': 0.09174815823106328}
+2019-04-13 23:41:56,913 INFO - __main__ - Running pair 52/133
+2019-04-13 23:41:57,014 INFO - ptstrategy - -
+2019-04-13 23:41:57,015 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-LDOS', 'sharperatio': -0.3033905387903288, 'returnstd': 7416.00832099512, 'startcash': 1000000, 'endcash': 1023785.1461120864, 'profit': 0.023785146112086368}
+2019-04-13 23:41:57,015 INFO - __main__ - Running pair 53/133
+2019-04-13 23:41:57,124 INFO - ptstrategy - -
+2019-04-13 23:41:57,124 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ITW', 'sharperatio': 0.5995524983245617, 'returnstd': 6168.287117740174, 'startcash': 1000000, 'endcash': 1072651.7192863328, 'profit': 0.07265171928633284}
+2019-04-13 23:41:57,125 INFO - __main__ - Running pair 54/133
+2019-04-13 23:41:57,198 INFO - ptstrategy - -
+2019-04-13 23:41:57,199 INFO - __main__ - Performance of this pair: {'pair': 'NSP-PAYC', 'sharperatio': -3.8196505504728844, 'returnstd': 15634.937737660859, 'startcash': 1000000, 'endcash': 985217.1095789664, 'profit': -0.014782890421033604}
+2019-04-13 23:41:57,199 INFO - __main__ - Running pair 55/133
+2019-04-13 23:41:57,285 INFO - ptstrategy - -
+2019-04-13 23:41:57,286 INFO - __main__ - Performance of this pair: {'pair': 'TGH-TRTN', 'sharperatio': -0.8113706775566106, 'returnstd': 14555.25054712304, 'startcash': 1000000, 'endcash': 796543.154686023, 'profit': -0.20345684531397698}
+2019-04-13 23:41:57,286 INFO - __main__ - Running pair 56/133
+2019-04-13 23:41:57,406 INFO - ptstrategy - -
+2019-04-13 23:41:57,407 INFO - __main__ - Performance of this pair: {'pair': 'TDC-ZEN', 'sharperatio': 0.6454676637841545, 'returnstd': 12038.28088081801, 'startcash': 1000000, 'endcash': 1344151.6415154394, 'profit': 0.34415164151543937}
+2019-04-13 23:41:57,407 INFO - __main__ - Running pair 57/133
+2019-04-13 23:41:57,504 INFO - ptstrategy - -
+2019-04-13 23:41:57,505 INFO - __main__ - Performance of this pair: {'pair': 'AMN-SAIC', 'sharperatio': 0.5675351240778042, 'returnstd': 14906.371483793644, 'startcash': 1000000, 'endcash': 1116271.7279568554, 'profit': 0.11627172795685543}
+2019-04-13 23:41:57,505 INFO - __main__ - Running pair 58/133
+2019-04-13 23:41:57,582 INFO - ptstrategy - -
+2019-04-13 23:41:57,583 INFO - __main__ - Performance of this pair: {'pair': 'AMN-NOK', 'sharperatio': -0.7619754236187221, 'returnstd': 17427.85662843583, 'startcash': 1000000, 'endcash': 773325.793491641, 'profit': -0.22667420650835907}
+2019-04-13 23:41:57,583 INFO - __main__ - Running pair 59/133
+2019-04-13 23:41:57,682 INFO - ptstrategy - -
+2019-04-13 23:41:57,683 INFO - __main__ - Performance of this pair: {'pair': 'TDC-VMW', 'sharperatio': 0.1619249678686426, 'returnstd': 13168.435251574268, 'startcash': 1000000, 'endcash': 1044106.121436361, 'profit': 0.044106121436360994}
+2019-04-13 23:41:57,683 INFO - __main__ - Running pair 60/133
+2019-04-13 23:41:57,759 INFO - ptstrategy - -
+2019-04-13 23:41:57,759 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-NSP', 'sharperatio': 0.6278912765777743, 'returnstd': 15049.154050122479, 'startcash': 1000000, 'endcash': 1164813.1467376295, 'profit': 0.16481314673762953}
+2019-04-13 23:41:57,759 INFO - __main__ - Running pair 61/133
+2019-04-13 23:41:57,849 INFO - ptstrategy - -
+2019-04-13 23:41:57,849 INFO - __main__ - Performance of this pair: {'pair': 'AMN-LDOS', 'sharperatio': 0.5172948230251884, 'returnstd': 13600.82382385479, 'startcash': 1000000, 'endcash': 1111759.0463798023, 'profit': 0.11175904637980229}
+2019-04-13 23:41:57,849 INFO - __main__ - Running pair 62/133
+2019-04-13 23:41:57,925 INFO - ptstrategy - -
+2019-04-13 23:41:57,925 INFO - __main__ - Performance of this pair: {'pair': 'AMN-KFY', 'sharperatio': -0.17166829288385674, 'returnstd': 13119.577002878857, 'startcash': 1000000, 'endcash': 1026372.2467293754, 'profit': 0.026372246729375444}
+2019-04-13 23:41:57,926 INFO - __main__ - Running pair 63/133
+2019-04-13 23:41:58,013 INFO - ptstrategy - -
+2019-04-13 23:41:58,013 INFO - __main__ - Performance of this pair: {'pair': 'NSP-WUBA', 'sharperatio': -0.7824501237204327, 'returnstd': 18434.089057816036, 'startcash': 1000000, 'endcash': 718446.2127353062, 'profit': -0.28155378726469377}
+2019-04-13 23:41:58,013 INFO - __main__ - Running pair 64/133
+2019-04-13 23:41:58,121 INFO - ptstrategy - -
+2019-04-13 23:41:58,121 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-ITW', 'sharperatio': -1.0129538755440624, 'returnstd': 9187.512827361325, 'startcash': 1000000, 'endcash': 984953.1718272559, 'profit': -0.015046828172744135}
+2019-04-13 23:41:58,122 INFO - __main__ - Running pair 65/133
+2019-04-13 23:41:58,209 INFO - ptstrategy - -
+2019-04-13 23:41:58,209 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-QTWO', 'sharperatio': 0.7493374326097832, 'returnstd': 11307.659068213025, 'startcash': 1000000, 'endcash': 1305189.8474800028, 'profit': 0.3051898474800028}
+2019-04-13 23:41:58,209 INFO - __main__ - Running pair 66/133
+2019-04-13 23:41:58,302 INFO - ptstrategy - -
+2019-04-13 23:41:58,303 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RHT', 'sharperatio': -0.9368189327382122, 'returnstd': 8829.906399153053, 'startcash': 1000000, 'endcash': 796987.6364386932, 'profit': -0.20301236356130684}
+2019-04-13 23:41:58,303 INFO - __main__ - Running pair 67/133
+2019-04-13 23:41:58,395 INFO - ptstrategy - -
+2019-04-13 23:41:58,396 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RNG', 'sharperatio': -0.8358386556148056, 'returnstd': 13916.674649203283, 'startcash': 1000000, 'endcash': 848867.5148965741, 'profit': -0.15113248510342592}
+2019-04-13 23:41:58,396 INFO - __main__ - Running pair 68/133
+2019-04-13 23:41:58,457 INFO - ptstrategy - -
+2019-04-13 23:41:58,458 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-SAP', 'sharperatio': -1.3599945759552348, 'returnstd': 9051.52880593788, 'startcash': 1000000, 'endcash': 935975.6443112267, 'profit': -0.06402435568877334}
+2019-04-13 23:41:58,458 INFO - __main__ - Running pair 69/133
+2019-04-13 23:41:58,525 INFO - ptstrategy - -
+2019-04-13 23:41:58,526 INFO - __main__ - Performance of this pair: {'pair': 'AMN-CLGX', 'sharperatio': 0.143319031955826, 'returnstd': 14202.259262538004, 'startcash': 1000000, 'endcash': 1042572.452903415, 'profit': 0.04257245290341496}
+2019-04-13 23:41:58,526 INFO - __main__ - Running pair 70/133
+2019-04-13 23:41:58,629 INFO - ptstrategy - -
+2019-04-13 23:41:58,630 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ETN', 'sharperatio': -2.540775021618342, 'returnstd': 6919.594859952791, 'startcash': 1000000, 'endcash': 962861.944919857, 'profit': -0.037138055080143034}
+2019-04-13 23:41:58,630 INFO - __main__ - Running pair 71/133
+2019-04-13 23:41:58,718 INFO - ptstrategy - -
+2019-04-13 23:41:58,719 INFO - __main__ - Performance of this pair: {'pair': 'AMN-ANET', 'sharperatio': -0.7325842411167871, 'returnstd': 17736.451869182645, 'startcash': 1000000, 'endcash': 867746.8973120525, 'profit': -0.13225310268794746}
+2019-04-13 23:41:58,719 INFO - __main__ - Running pair 72/133
+2019-04-13 23:41:58,781 INFO - ptstrategy - -
+2019-04-13 23:41:58,782 INFO - __main__ - Performance of this pair: {'pair': 'FDS-ZEN', 'sharperatio': 0.6083552567590702, 'returnstd': 15836.251386709715, 'startcash': 1000000, 'endcash': 1142116.4632969915, 'profit': 0.14211646329699154}
+2019-04-13 23:41:58,782 INFO - __main__ - Running pair 73/133
+2019-04-13 23:41:58,850 INFO - ptstrategy - -
+2019-04-13 23:41:58,850 INFO - __main__ - Performance of this pair: {'pair': 'FDS-VMW', 'sharperatio': 0.444061429278602, 'returnstd': 12356.81017846904, 'startcash': 1000000, 'endcash': 1080644.6617730777, 'profit': 0.08064466177307768}
+2019-04-13 23:41:58,851 INFO - __main__ - Running pair 74/133
+2019-04-13 23:41:58,913 INFO - ptstrategy - -
+2019-04-13 23:41:58,914 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TGH', 'sharperatio': 0.8115255879373933, 'returnstd': 22756.639980996264, 'startcash': 1000000, 'endcash': 1118655.8725708874, 'profit': 0.11865587257088744}
+2019-04-13 23:41:58,914 INFO - __main__ - Running pair 75/133
+2019-04-13 23:41:58,976 INFO - ptstrategy - -
+2019-04-13 23:41:58,977 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TDC', 'sharperatio': 0.3161029608992154, 'returnstd': 12016.32286484851, 'startcash': 1000000, 'endcash': 1049472.9879783567, 'profit': 0.049472987978356656}
+2019-04-13 23:41:58,977 INFO - __main__ - Running pair 76/133
+2019-04-13 23:41:59,083 INFO - ptstrategy - -
+2019-04-13 23:41:59,083 INFO - __main__ - Performance of this pair: {'pair': 'PAYC-WUBA', 'sharperatio': 0.13541349086387164, 'returnstd': 13716.115659154682, 'startcash': 1000000, 'endcash': 1050977.6622826704, 'profit': 0.05097766228267038}
+2019-04-13 23:41:59,084 INFO - __main__ - Running pair 77/133
+2019-04-13 23:41:59,145 INFO - ptstrategy - -
+2019-04-13 23:41:59,145 INFO - __main__ - Performance of this pair: {'pair': 'FDS-RHT', 'sharperatio': -0.9601160313458049, 'returnstd': 13022.715872566232, 'startcash': 1000000, 'endcash': 845905.8530323207, 'profit': -0.15409414696767926}
+2019-04-13 23:41:59,146 INFO - __main__ - Running pair 78/133
+2019-04-13 23:41:59,217 INFO - ptstrategy - -
+2019-04-13 23:41:59,217 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RHT', 'sharperatio': -0.6884850942279132, 'returnstd': 10840.869785053783, 'startcash': 1000000, 'endcash': 944756.1481518542, 'profit': -0.05524385184814583}
+2019-04-13 23:41:59,217 INFO - __main__ - Running pair 79/133
+2019-04-13 23:41:59,291 INFO - ptstrategy - -
+2019-04-13 23:41:59,291 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RNG', 'sharperatio': -0.666199809387027, 'returnstd': 15775.551012391588, 'startcash': 1000000, 'endcash': 699542.7888732809, 'profit': -0.30045721112671914}
+2019-04-13 23:41:59,292 INFO - __main__ - Running pair 80/133
+2019-04-13 23:41:59,396 INFO - ptstrategy - -
+2019-04-13 23:41:59,397 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-ELLI', 'sharperatio': 0.6716318444728666, 'returnstd': 8522.943963940486, 'startcash': 1000000, 'endcash': 1106937.0520097646, 'profit': 0.1069370520097646}
+2019-04-13 23:41:59,397 INFO - __main__ - Running pair 81/133
+2019-04-13 23:41:59,464 INFO - ptstrategy - -
+2019-04-13 23:41:59,464 INFO - __main__ - Performance of this pair: {'pair': 'ETN-STM', 'sharperatio': -1.8727157607004363, 'returnstd': 16288.466266156196, 'startcash': 1000000, 'endcash': 931672.8152189158, 'profit': -0.06832718478108418}
+2019-04-13 23:41:59,464 INFO - __main__ - Running pair 82/133
+2019-04-13 23:41:59,550 INFO - ptstrategy - -
+2019-04-13 23:41:59,550 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-HPQ', 'sharperatio': 0.6069456580446932, 'returnstd': 9043.968785478675, 'startcash': 1000000, 'endcash': 1211790.7903803457, 'profit': 0.21179079038034565}
+2019-04-13 23:41:59,550 INFO - __main__ - Running pair 83/133
+2019-04-13 23:41:59,631 INFO - ptstrategy - -
+2019-04-13 23:41:59,632 INFO - __main__ - Performance of this pair: {'pair': 'RHT-SAP', 'sharperatio': -1.521374657100286, 'returnstd': 8938.715125447474, 'startcash': 1000000, 'endcash': 957090.5221502974, 'profit': -0.04290947784970258}
+2019-04-13 23:41:59,632 INFO - __main__ - Running pair 84/133
+2019-04-13 23:41:59,762 INFO - ptstrategy - -
+2019-04-13 23:41:59,762 INFO - __main__ - Performance of this pair: {'pair': 'AL-ZEN', 'sharperatio': 0.6147515142126933, 'returnstd': 10225.892281278022, 'startcash': 1000000, 'endcash': 1229691.3227656183, 'profit': 0.22969132276561832}
+2019-04-13 23:41:59,762 INFO - __main__ - Running pair 85/133
+2019-04-13 23:41:59,849 INFO - ptstrategy - -
+2019-04-13 23:41:59,850 INFO - __main__ - Performance of this pair: {'pair': 'RHT-STM', 'sharperatio': -0.03373123197291616, 'returnstd': 13418.128613652183, 'startcash': 1000000, 'endcash': 1029510.7325205486, 'profit': 0.029510732520548626}
+2019-04-13 23:41:59,850 INFO - __main__ - Running pair 86/133
+2019-04-13 23:41:59,950 INFO - ptstrategy - -
+2019-04-13 23:41:59,951 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-JBL', 'sharperatio': -0.6628737466200225, 'returnstd': 8512.046744776295, 'startcash': 1000000, 'endcash': 947057.3257021566, 'profit': -0.05294267429784336}
+2019-04-13 23:41:59,951 INFO - __main__ - Running pair 87/133
+2019-04-13 23:42:00,023 INFO - ptstrategy - -
+2019-04-13 23:42:00,024 INFO - __main__ - Performance of this pair: {'pair': 'RHT-TDC', 'sharperatio': -1.6582254168985513, 'returnstd': 13982.174392502555, 'startcash': 1000000, 'endcash': 962077.8926506754, 'profit': -0.03792210734932462}
+2019-04-13 23:42:00,024 INFO - __main__ - Running pair 88/133
+2019-04-13 23:42:00,160 INFO - ptstrategy - -
+2019-04-13 23:42:00,161 INFO - __main__ - Performance of this pair: {'pair': 'AL-TDC', 'sharperatio': 0.6338183535798485, 'returnstd': 7252.886512468911, 'startcash': 1000000, 'endcash': 1289448.1997817822, 'profit': 0.2894481997817822}
+2019-04-13 23:42:00,161 INFO - __main__ - Running pair 89/133
+2019-04-13 23:42:00,253 INFO - ptstrategy - -
+2019-04-13 23:42:00,254 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-LDOS', 'sharperatio': -1.5309200760311956, 'returnstd': 7833.456967270931, 'startcash': 1000000, 'endcash': 962557.4581085319, 'profit': -0.037442541891468104}
+2019-04-13 23:42:00,254 INFO - __main__ - Running pair 90/133
+2019-04-13 23:42:00,322 INFO - ptstrategy - -
+2019-04-13 23:42:00,322 INFO - __main__ - Performance of this pair: {'pair': 'RHT-VMW', 'sharperatio': 0.0684681935057177, 'returnstd': 10247.096691852068, 'startcash': 1000000, 'endcash': 1033927.9050678802, 'profit': 0.033927905067880175}
+2019-04-13 23:42:00,323 INFO - __main__ - Running pair 91/133
+2019-04-13 23:42:00,385 INFO - ptstrategy - -
+2019-04-13 23:42:00,385 INFO - __main__ - Performance of this pair: {'pair': 'RHT-ZEN', 'sharperatio': -0.9193350120438529, 'returnstd': 15003.540496476957, 'startcash': 1000000, 'endcash': 886543.883032321, 'profit': -0.113456116967679}
+2019-04-13 23:42:00,386 INFO - __main__ - Running pair 92/133
+2019-04-13 23:42:00,446 INFO - ptstrategy - -
+2019-04-13 23:42:00,447 INFO - __main__ - Performance of this pair: {'pair': 'AL-RHT', 'sharperatio': -1.0550072840094722, 'returnstd': 13882.215681733222, 'startcash': 1000000, 'endcash': 901620.6830323208, 'profit': -0.09837931696767918}
+2019-04-13 23:42:00,447 INFO - __main__ - Running pair 93/133
+2019-04-13 23:42:00,546 INFO - ptstrategy - -
+2019-04-13 23:42:00,547 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NOK', 'sharperatio': -0.6652863564836579, 'returnstd': 12780.345325721135, 'startcash': 1000000, 'endcash': 892464.3262318189, 'profit': -0.10753567376818111}
+2019-04-13 23:42:00,547 INFO - __main__ - Running pair 94/133
+2019-04-13 23:42:00,698 INFO - ptstrategy - -
+2019-04-13 23:42:00,699 INFO - __main__ - Performance of this pair: {'pair': 'RNG-SAP', 'sharperatio': 0.6220689411641818, 'returnstd': 7913.409864949552, 'startcash': 1000000, 'endcash': 1249456.0472140072, 'profit': 0.24945604721400724}
+2019-04-13 23:42:00,699 INFO - __main__ - Running pair 95/133
+2019-04-13 23:42:00,775 INFO - ptstrategy - -
+2019-04-13 23:42:00,776 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NSP', 'sharperatio': -1.3623200664403163, 'returnstd': 12818.073402516007, 'startcash': 1000000, 'endcash': 958570.4223877047, 'profit': -0.04142957761229528}
+2019-04-13 23:42:00,776 INFO - __main__ - Running pair 96/133
+2019-04-13 23:42:00,877 INFO - ptstrategy - -
+2019-04-13 23:42:00,878 INFO - __main__ - Performance of this pair: {'pair': 'AL-LLL', 'sharperatio': 0.41026101840440815, 'returnstd': 8186.009712658605, 'startcash': 1000000, 'endcash': 1076224.4230410936, 'profit': 0.07622442304109363}
+2019-04-13 23:42:00,878 INFO - __main__ - Running pair 97/133
+2019-04-13 23:42:00,962 INFO - ptstrategy - -
+2019-04-13 23:42:00,963 INFO - __main__ - Performance of this pair: {'pair': 'STM-VMW', 'sharperatio': -0.9580604593618415, 'returnstd': 19206.968594163358, 'startcash': 1000000, 'endcash': 628407.6391630343, 'profit': -0.37159236083696573}
+2019-04-13 23:42:00,963 INFO - __main__ - Running pair 98/133
+2019-04-13 23:42:01,026 INFO - ptstrategy - -
+2019-04-13 23:42:01,026 INFO - __main__ - Performance of this pair: {'pair': 'AL-FDS', 'sharperatio': 0.45606186271547144, 'returnstd': 11285.964244098132, 'startcash': 1000000, 'endcash': 1077053.9128065691, 'profit': 0.07705391280656913}
+2019-04-13 23:42:01,026 INFO - __main__ - Running pair 99/133
+2019-04-13 23:42:01,089 INFO - ptstrategy - -
+2019-04-13 23:42:01,090 INFO - __main__ - Performance of this pair: {'pair': 'AL-ETN', 'sharperatio': -0.41391050199696383, 'returnstd': 9834.56976128736, 'startcash': 1000000, 'endcash': 1018408.127515896, 'profit': 0.01840812751589599}
+2019-04-13 23:42:01,090 INFO - __main__ - Running pair 100/133
+2019-04-13 23:42:01,148 INFO - ptstrategy - -
+2019-04-13 23:42:01,148 INFO - __main__ - Performance of this pair: {'pair': 'RXN-SAP', 'sharperatio': -1.3790460960955628, 'returnstd': 10396.497463855589, 'startcash': 1000000, 'endcash': 963138.8789859494, 'profit': -0.036861121014050556}
+2019-04-13 23:42:01,148 INFO - __main__ - Running pair 101/133
+2019-04-13 23:42:01,254 INFO - ptstrategy - -
+2019-04-13 23:42:01,255 INFO - __main__ - Performance of this pair: {'pair': 'ETN-ITW', 'sharperatio': -0.9561121024694587, 'returnstd': 5491.143461779794, 'startcash': 1000000, 'endcash': 951353.3228647953, 'profit': -0.048646677135204666}
+2019-04-13 23:42:01,255 INFO - __main__ - Running pair 102/133
+2019-04-13 23:42:01,344 INFO - ptstrategy - -
+2019-04-13 23:42:01,345 INFO - __main__ - Performance of this pair: {'pair': 'AL-AYR', 'sharperatio': -0.8958235403777672, 'returnstd': 7120.159369242854, 'startcash': 1000000, 'endcash': 893394.752496959, 'profit': -0.10660524750304105}
+2019-04-13 23:42:01,345 INFO - __main__ - Running pair 103/133
+2019-04-13 23:42:01,402 INFO - ptstrategy - -
+2019-04-13 23:42:01,403 INFO - __main__ - Performance of this pair: {'pair': 'SAP-STM', 'sharperatio': 0.7015976737865168, 'returnstd': 14400.346706871043, 'startcash': 1000000, 'endcash': 1230389.4189859494, 'profit': 0.23038941898594936}
+2019-04-13 23:42:01,403 INFO - __main__ - Running pair 104/133
+2019-04-13 23:42:01,522 INFO - ptstrategy - -
+2019-04-13 23:42:01,522 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-PAYC', 'sharperatio': -4.397989328843678, 'returnstd': 7258.671076144255, 'startcash': 1000000, 'endcash': 986608.9449718494, 'profit': -0.013391055028150557}
+2019-04-13 23:42:01,522 INFO - __main__ - Running pair 105/133
+2019-04-13 23:42:01,584 INFO - ptstrategy - -
+2019-04-13 23:42:01,584 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-LDOS', 'sharperatio': -1.0276394801078705, 'returnstd': 12458.043389419692, 'startcash': 1000000, 'endcash': 857053.9816526053, 'profit': -0.14294601834739465}
+2019-04-13 23:42:01,585 INFO - __main__ - Running pair 106/133
+2019-04-13 23:42:01,660 INFO - ptstrategy - -
+2019-04-13 23:42:01,660 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-HPQ', 'sharperatio': -0.8179523568589457, 'returnstd': 11336.401637252507, 'startcash': 1000000, 'endcash': 853130.4436306813, 'profit': -0.14686955636931875}
+2019-04-13 23:42:01,661 INFO - __main__ - Running pair 107/133
+2019-04-13 23:42:01,742 INFO - ptstrategy - -
+2019-04-13 23:42:01,743 INFO - __main__ - Performance of this pair: {'pair': 'CLS-TRTN', 'sharperatio': -0.963306038865907, 'returnstd': 17535.189333003473, 'startcash': 1000000, 'endcash': 728841.1841215339, 'profit': -0.27115881587846613}
+2019-04-13 23:42:01,743 INFO - __main__ - Running pair 108/133
+2019-04-13 23:42:01,839 INFO - ptstrategy - -
+2019-04-13 23:42:01,840 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-GWRE', 'sharperatio': -0.7928940017412988, 'returnstd': 12966.293703046824, 'startcash': 1000000, 'endcash': 824113.015153692, 'profit': -0.17588698484630802}
+2019-04-13 23:42:01,840 INFO - __main__ - Running pair 109/133
+2019-04-13 23:42:01,924 INFO - ptstrategy - -
+2019-04-13 23:42:01,925 INFO - __main__ - Performance of this pair: {'pair': 'CLS-VMW', 'sharperatio': -0.8559744832018006, 'returnstd': 13043.410776942941, 'startcash': 1000000, 'endcash': 795959.9737533997, 'profit': -0.2040400262466003}
+2019-04-13 23:42:01,925 INFO - __main__ - Running pair 110/133
+2019-04-13 23:42:01,991 INFO - ptstrategy - -
+2019-04-13 23:42:01,992 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-NSP', 'sharperatio': -0.7314842052170987, 'returnstd': 17064.13894691673, 'startcash': 1000000, 'endcash': 817465.9131248002, 'profit': -0.1825340868751998}
+2019-04-13 23:42:01,992 INFO - __main__ - Running pair 111/133
+2019-04-13 23:42:02,069 INFO - ptstrategy - -
+2019-04-13 23:42:02,070 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-LLL', 'sharperatio': -0.7888086706448194, 'returnstd': 13278.659307185986, 'startcash': 1000000, 'endcash': 839809.6500558223, 'profit': -0.16019034994417766}
+2019-04-13 23:42:02,070 INFO - __main__ - Running pair 112/133
+2019-04-13 23:42:02,171 INFO - ptstrategy - -
+2019-04-13 23:42:02,171 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-LLL', 'sharperatio': 0.44768470888679096, 'returnstd': 12637.304619035653, 'startcash': 1000000, 'endcash': 1164719.626549933, 'profit': 0.1647196265499331}
+2019-04-13 23:42:02,171 INFO - __main__ - Running pair 113/133
+2019-04-13 23:42:02,304 INFO - ptstrategy - -
+2019-04-13 23:42:02,305 INFO - __main__ - Performance of this pair: {'pair': 'AL-XRX', 'sharperatio': -0.944566512531597, 'returnstd': 7578.776226569349, 'startcash': 1000000, 'endcash': 947030.4256482206, 'profit': -0.05296957435177942}
+2019-04-13 23:42:02,305 INFO - __main__ - Running pair 114/133
+2019-04-13 23:42:02,377 INFO - ptstrategy - -
+2019-04-13 23:42:02,377 INFO - __main__ - Performance of this pair: {'pair': 'TGH-URI', 'sharperatio': -0.6439716710365831, 'returnstd': 21504.408832330897, 'startcash': 1000000, 'endcash': 974701.0418058817, 'profit': -0.025298958194118343}
+2019-04-13 23:42:02,377 INFO - __main__ - Running pair 115/133
+2019-04-13 23:42:02,456 INFO - ptstrategy - -
+2019-04-13 23:42:02,457 INFO - __main__ - Performance of this pair: {'pair': 'NOK-WUBA', 'sharperatio': -0.8564661083995025, 'returnstd': 17984.91810605784, 'startcash': 1000000, 'endcash': 465570.2058131776, 'profit': -0.5344297941868223}
+2019-04-13 23:42:02,457 INFO - __main__ - Running pair 116/133
+2019-04-13 23:42:02,564 INFO - ptstrategy - -
+2019-04-13 23:42:02,565 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-JBL', 'sharperatio': 0.5533003222679886, 'returnstd': 10188.407433805622, 'startcash': 1000000, 'endcash': 1144404.2810301706, 'profit': 0.1444042810301706}
+2019-04-13 23:42:02,565 INFO - __main__ - Running pair 117/133
+2019-04-13 23:42:02,643 INFO - ptstrategy - -
+2019-04-13 23:42:02,643 INFO - __main__ - Performance of this pair: {'pair': 'JBL-TBI', 'sharperatio': -0.33758809079444274, 'returnstd': 13223.560151213236, 'startcash': 1000000, 'endcash': 1020305.6452219117, 'profit': 0.02030564522191172}
+2019-04-13 23:42:02,644 INFO - __main__ - Running pair 118/133
+2019-04-13 23:42:02,733 INFO - ptstrategy - -
+2019-04-13 23:42:02,733 INFO - __main__ - Performance of this pair: {'pair': 'ETN-RHT', 'sharperatio': -1.0929331545014713, 'returnstd': 9038.158052647632, 'startcash': 1000000, 'endcash': 909705.8855928435, 'profit': -0.09029411440715648}
+2019-04-13 23:42:02,733 INFO - __main__ - Running pair 119/133
+2019-04-13 23:42:02,816 INFO - ptstrategy - -
+2019-04-13 23:42:02,817 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-JBL', 'sharperatio': -0.777715060815042, 'returnstd': 12352.247056040273, 'startcash': 1000000, 'endcash': 842642.3683539745, 'profit': -0.15735763164602545}
+2019-04-13 23:42:02,817 INFO - __main__ - Running pair 120/133
+2019-04-13 23:42:02,908 INFO - ptstrategy - -
+2019-04-13 23:42:02,909 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-SAP', 'sharperatio': 0.4185626181802325, 'returnstd': 9010.296448738365, 'startcash': 1000000, 'endcash': 1068705.8728919174, 'profit': 0.06870587289191736}
+2019-04-13 23:42:02,909 INFO - __main__ - Running pair 121/133
+2019-04-13 23:42:03,010 INFO - ptstrategy - -
+2019-04-13 23:42:03,010 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NSP', 'sharperatio': -0.6905488048696478, 'returnstd': 12965.49895088943, 'startcash': 1000000, 'endcash': 902290.2374453112, 'profit': -0.09770976255468884}
+2019-04-13 23:42:03,010 INFO - __main__ - Running pair 122/133
+2019-04-13 23:42:03,099 INFO - ptstrategy - -
+2019-04-13 23:42:03,100 INFO - __main__ - Performance of this pair: {'pair': 'RHT-RNG', 'sharperatio': -0.062463147087287396, 'returnstd': 13229.31543310747, 'startcash': 1000000, 'endcash': 1024638.3300892048, 'profit': 0.024638330089204828}
+2019-04-13 23:42:03,100 INFO - __main__ - Running pair 123/133
+2019-04-13 23:42:03,195 INFO - ptstrategy - -
+2019-04-13 23:42:03,196 INFO - __main__ - Performance of this pair: {'pair': 'ITW-LLL', 'sharperatio': 0.4479690403546422, 'returnstd': 5820.135600178655, 'startcash': 1000000, 'endcash': 1081860.7253713645, 'profit': 0.0818607253713645}
+2019-04-13 23:42:03,196 INFO - __main__ - Running pair 124/133
+2019-04-13 23:42:03,299 INFO - ptstrategy - -
+2019-04-13 23:42:03,300 INFO - __main__ - Performance of this pair: {'pair': 'LLL-TDC', 'sharperatio': 0.5562426711041137, 'returnstd': 9742.002670260104, 'startcash': 1000000, 'endcash': 1145625.5326471266, 'profit': 0.14562553264712658}
+2019-04-13 23:42:03,300 INFO - __main__ - Running pair 125/133
+2019-04-13 23:42:03,385 INFO - ptstrategy - -
+2019-04-13 23:42:03,386 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-HPQ', 'sharperatio': 0.4083967163266897, 'returnstd': 14980.27752297357, 'startcash': 1000000, 'endcash': 1106470.9772029244, 'profit': 0.10647097720292444}
+2019-04-13 23:42:03,386 INFO - __main__ - Running pair 126/133
+2019-04-13 23:42:03,463 INFO - ptstrategy - -
+2019-04-13 23:42:03,464 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-UMC', 'sharperatio': -0.858434433361268, 'returnstd': 14916.251075091624, 'startcash': 1000000, 'endcash': 913902.8336306813, 'profit': -0.08609716636931873}
+2019-04-13 23:42:03,464 INFO - __main__ - Running pair 127/133
+2019-04-13 23:42:03,559 INFO - ptstrategy - -
+2019-04-13 23:42:03,560 INFO - __main__ - Performance of this pair: {'pair': 'AL-LEAF', 'sharperatio': 0.43602412696180576, 'returnstd': 13135.502444826378, 'startcash': 1000000, 'endcash': 1151623.108761846, 'profit': 0.1516231087618461}
+2019-04-13 23:42:03,560 INFO - __main__ - Running pair 128/133
+2019-04-13 23:42:03,655 INFO - ptstrategy - -
+2019-04-13 23:42:03,656 INFO - __main__ - Performance of this pair: {'pair': 'ETN-VMW', 'sharperatio': -1.2537248558672638, 'returnstd': 10421.900623665642, 'startcash': 1000000, 'endcash': 905026.8146245135, 'profit': -0.0949731853754865}
+2019-04-13 23:42:03,656 INFO - __main__ - Running pair 129/133
+2019-04-13 23:42:03,760 INFO - ptstrategy - -
+2019-04-13 23:42:03,761 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-JBL', 'sharperatio': -1.4187118086869273, 'returnstd': 9934.528715819053, 'startcash': 1000000, 'endcash': 968927.6114678336, 'profit': -0.03107238853216637}
+2019-04-13 23:42:03,761 INFO - __main__ - Running pair 130/133
+2019-04-13 23:42:03,840 INFO - ptstrategy - -
+2019-04-13 23:42:03,841 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-WUBA', 'sharperatio': -0.7728266397227401, 'returnstd': 24767.152252465323, 'startcash': 1000000, 'endcash': 677217.7556664384, 'profit': -0.3227822443335616}
+2019-04-13 23:42:03,841 INFO - __main__ - Running pair 131/133
+2019-04-13 23:42:03,945 INFO - ptstrategy - -
+2019-04-13 23:42:03,945 INFO - __main__ - Performance of this pair: {'pair': 'CRM-LLL', 'sharperatio': 0.5652498997462526, 'returnstd': 6877.394178820193, 'startcash': 1000000, 'endcash': 1149539.4740122263, 'profit': 0.14953947401222634}
+2019-04-13 23:42:03,945 INFO - __main__ - Running pair 132/133
+2019-04-13 23:42:04,077 INFO - ptstrategy - -
+2019-04-13 23:42:04,078 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-RNG', 'sharperatio': -0.797170889751815, 'returnstd': 7759.189480404148, 'startcash': 1000000, 'endcash': 1017693.6747296889, 'profit': 0.01769367472968891}
+2019-04-13 23:42:04,078 INFO - __main__ - Running pair 133/133
+2019-04-13 23:42:04,150 INFO - ptstrategy - -
+2019-04-13 23:42:04,151 INFO - __main__ - Performance of this pair: {'pair': 'AL-ELLI', 'sharperatio': 0.3307117317684669, 'returnstd': 16567.337548709227, 'startcash': 1000000, 'endcash': 1043510.1029847991, 'profit': 0.04351010298479907}
+2019-04-13 23:42:04,159 INFO - __main__ - Performance of this set of parameters: (60, 2.0, 0.5, -0.5, -0.45350721137243744, -0.6859043617475155, -0.0245204548595037, -0.027999532447365114, 0.1616796823520096, '40afa95b-3eeb-4d63-b190-a357c008bda1')
+2019-04-13 23:42:04,159 INFO - __main__ - Running parameter combination 3/4
+2019-04-13 23:42:04,159 INFO - __main__ - Backtesting all pairs using parameters: {'lookback': 50, 'enter_threshold': 2.0, 'exit_threshold': 0.5, 'loss_limit': -0.5}
+2019-04-13 23:42:04,165 INFO - __main__ - Running pair 1/133
+2019-04-13 23:42:04,323 INFO - ptstrategy - -
+2019-04-13 23:42:04,323 INFO - __main__ - Performance of this pair: {'pair': 'AER-AL', 'sharperatio': -1.144842750168573, 'returnstd': 3369.1947683939634, 'startcash': 1000000, 'endcash': 956282.0374886985, 'profit': -0.04371796251130151}
+2019-04-13 23:42:04,323 INFO - __main__ - Running pair 2/133
+2019-04-13 23:42:04,417 INFO - ptstrategy - -
+2019-04-13 23:42:04,418 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-VMW', 'sharperatio': -0.5103794024807762, 'returnstd': 16276.332588431502, 'startcash': 1000000, 'endcash': 797396.5594487606, 'profit': -0.2026034405512394}
+2019-04-13 23:42:04,418 INFO - __main__ - Running pair 3/133
+2019-04-13 23:42:04,481 INFO - ptstrategy - -
+2019-04-13 23:42:04,481 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-SAIC', 'sharperatio': -0.7139256128546463, 'returnstd': 12178.32682833472, 'startcash': 1000000, 'endcash': 859924.2036893917, 'profit': -0.14007579631060826}
+2019-04-13 23:42:04,481 INFO - __main__ - Running pair 4/133
+2019-04-13 23:42:04,571 INFO - ptstrategy - -
+2019-04-13 23:42:04,572 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-RHT', 'sharperatio': -0.6951525023010775, 'returnstd': 12950.581458559367, 'startcash': 1000000, 'endcash': 979072.0799055491, 'profit': -0.020927920094450936}
+2019-04-13 23:42:04,572 INFO - __main__ - Running pair 5/133
+2019-04-13 23:42:04,658 INFO - ptstrategy - -
+2019-04-13 23:42:04,658 INFO - __main__ - Performance of this pair: {'pair': 'CRM-VMW', 'sharperatio': -1.0870797831551415, 'returnstd': 8556.847792147137, 'startcash': 1000000, 'endcash': 953500.887547427, 'profit': -0.04649911245257303}
+2019-04-13 23:42:04,659 INFO - __main__ - Running pair 6/133
+2019-04-13 23:42:04,777 INFO - ptstrategy - -
+2019-04-13 23:42:04,778 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-STM', 'sharperatio': 0.47999707774666883, 'returnstd': 16056.719427150516, 'startcash': 1000000, 'endcash': 1237917.9728137385, 'profit': 0.2379179728137385}
+2019-04-13 23:42:04,778 INFO - __main__ - Running pair 7/133
+2019-04-13 23:42:04,886 INFO - ptstrategy - -
+2019-04-13 23:42:04,887 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-NOK', 'sharperatio': -0.7014762526312199, 'returnstd': 11488.37526751747, 'startcash': 1000000, 'endcash': 764796.675277807, 'profit': -0.23520332472219294}
+2019-04-13 23:42:04,887 INFO - __main__ - Running pair 8/133
+2019-04-13 23:42:04,966 INFO - ptstrategy - -
+2019-04-13 23:42:04,967 INFO - __main__ - Performance of this pair: {'pair': 'KFY-TBI', 'sharperatio': -0.7603538306582408, 'returnstd': 11932.515539994325, 'startcash': 1000000, 'endcash': 876391.777192294, 'profit': -0.12360822280770599}
+2019-04-13 23:42:04,967 INFO - __main__ - Running pair 9/133
+2019-04-13 23:42:05,044 INFO - ptstrategy - -
+2019-04-13 23:42:05,044 INFO - __main__ - Performance of this pair: {'pair': 'KFY-NSP', 'sharperatio': -1.04382478336981, 'returnstd': 12223.135813147806, 'startcash': 1000000, 'endcash': 919126.3216494502, 'profit': -0.08087367835054977}
+2019-04-13 23:42:05,044 INFO - __main__ - Running pair 10/133
+2019-04-13 23:42:05,152 INFO - ptstrategy - -
+2019-04-13 23:42:05,153 INFO - __main__ - Performance of this pair: {'pair': 'LLL-RHT', 'sharperatio': 0.5872792975648041, 'returnstd': 7523.252167298063, 'startcash': 1000000, 'endcash': 1152011.1394301772, 'profit': 0.15201113943017716}
+2019-04-13 23:42:05,153 INFO - __main__ - Running pair 11/133
+2019-04-13 23:42:05,240 INFO - ptstrategy - -
+2019-04-13 23:42:05,240 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-CRM', 'sharperatio': 0.4786857825693414, 'returnstd': 20887.153528364863, 'startcash': 1000000, 'endcash': 1092868.8849274584, 'profit': 0.09286888492745836}
+2019-04-13 23:42:05,240 INFO - __main__ - Running pair 12/133
+2019-04-13 23:42:05,342 INFO - ptstrategy - -
+2019-04-13 23:42:05,343 INFO - __main__ - Performance of this pair: {'pair': 'LLL-STM', 'sharperatio': 0.6929947903414656, 'returnstd': 14259.836151698024, 'startcash': 1000000, 'endcash': 1203592.2515638326, 'profit': 0.20359225156383262}
+2019-04-13 23:42:05,343 INFO - __main__ - Running pair 13/133
+2019-04-13 23:42:05,414 INFO - ptstrategy - -
+2019-04-13 23:42:05,415 INFO - __main__ - Performance of this pair: {'pair': 'JBL-SAP', 'sharperatio': -0.7674728291611244, 'returnstd': 10061.633569637548, 'startcash': 1000000, 'endcash': 869855.6672208301, 'profit': -0.1301443327791699}
+2019-04-13 23:42:05,415 INFO - __main__ - Running pair 14/133
+2019-04-13 23:42:05,508 INFO - ptstrategy - -
+2019-04-13 23:42:05,509 INFO - __main__ - Performance of this pair: {'pair': 'JBL-RHT', 'sharperatio': -0.7770302250672327, 'returnstd': 10501.053824142777, 'startcash': 1000000, 'endcash': 788524.9564386931, 'profit': -0.2114750435613069}
+2019-04-13 23:42:05,509 INFO - __main__ - Running pair 15/133
+2019-04-13 23:42:05,573 INFO - ptstrategy - -
+2019-04-13 23:42:05,574 INFO - __main__ - Performance of this pair: {'pair': 'CRM-STM', 'sharperatio': 0.6090825027057256, 'returnstd': 14528.497460890036, 'startcash': 1000000, 'endcash': 1156090.815390333, 'profit': 0.15609081539033307}
+2019-04-13 23:42:05,574 INFO - __main__ - Running pair 16/133
+2019-04-13 23:42:05,661 INFO - ptstrategy - -
+2019-04-13 23:42:05,662 INFO - __main__ - Performance of this pair: {'pair': 'JBL-ORCL', 'sharperatio': 0.42478720706940754, 'returnstd': 12786.178690378954, 'startcash': 1000000, 'endcash': 1073950.401238571, 'profit': 0.07395040123857093}
+2019-04-13 23:42:05,662 INFO - __main__ - Running pair 17/133
+2019-04-13 23:42:05,786 INFO - ptstrategy - -
+2019-04-13 23:42:05,787 INFO - __main__ - Performance of this pair: {'pair': 'CRM-SAP', 'sharperatio': 0.3988130053355096, 'returnstd': 4549.936285471547, 'startcash': 1000000, 'endcash': 1093572.1000383582, 'profit': 0.09357210003835824}
+2019-04-13 23:42:05,787 INFO - __main__ - Running pair 18/133
+2019-04-13 23:42:05,865 INFO - ptstrategy - -
+2019-04-13 23:42:05,865 INFO - __main__ - Performance of this pair: {'pair': 'JBL-NSP', 'sharperatio': -0.6798865588566542, 'returnstd': 14665.324629154835, 'startcash': 1000000, 'endcash': 749466.2874617757, 'profit': -0.2505337125382243}
+2019-04-13 23:42:05,865 INFO - __main__ - Running pair 19/133
+2019-04-13 23:42:05,967 INFO - ptstrategy - -
+2019-04-13 23:42:05,968 INFO - __main__ - Performance of this pair: {'pair': 'JBL-LLL', 'sharperatio': -0.7723043589521509, 'returnstd': 8590.291497710554, 'startcash': 1000000, 'endcash': 854960.4206686694, 'profit': -0.1450395793313306}
+2019-04-13 23:42:05,968 INFO - __main__ - Running pair 20/133
+2019-04-13 23:42:06,038 INFO - ptstrategy - -
+2019-04-13 23:42:06,039 INFO - __main__ - Performance of this pair: {'pair': 'ITW-STM', 'sharperatio': 0.7727249385008281, 'returnstd': 16015.240275729191, 'startcash': 1000000, 'endcash': 1147148.0162630775, 'profit': 0.1471480162630775}
+2019-04-13 23:42:06,039 INFO - __main__ - Running pair 21/133
+2019-04-13 23:42:06,171 INFO - ptstrategy - -
+2019-04-13 23:42:06,171 INFO - __main__ - Performance of this pair: {'pair': 'ITW-SAP', 'sharperatio': -1.6374714862992343, 'returnstd': 4665.991180634221, 'startcash': 1000000, 'endcash': 1000380.6327096575, 'profit': 0.0003806327096575405}
+2019-04-13 23:42:06,172 INFO - __main__ - Running pair 22/133
+2019-04-13 23:42:06,262 INFO - ptstrategy - -
+2019-04-13 23:42:06,263 INFO - __main__ - Performance of this pair: {'pair': 'MAN-RXN', 'sharperatio': -4.99596088163189, 'returnstd': 9516.003984964515, 'startcash': 1000000, 'endcash': 992043.5366904859, 'profit': -0.007956463309514104}
+2019-04-13 23:42:06,263 INFO - __main__ - Running pair 23/133
+2019-04-13 23:42:06,372 INFO - ptstrategy - -
+2019-04-13 23:42:06,372 INFO - __main__ - Performance of this pair: {'pair': 'MAN-SAP', 'sharperatio': 0.4136529584117928, 'returnstd': 8532.121007676806, 'startcash': 1000000, 'endcash': 1080065.2124009621, 'profit': 0.08006521240096214}
+2019-04-13 23:42:06,372 INFO - __main__ - Running pair 24/133
+2019-04-13 23:42:06,493 INFO - ptstrategy - -
+2019-04-13 23:42:06,493 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RNG', 'sharperatio': 0.5791717484042532, 'returnstd': 11744.185184903312, 'startcash': 1000000, 'endcash': 1186922.2062872264, 'profit': 0.18692220628722642}
+2019-04-13 23:42:06,493 INFO - __main__ - Running pair 25/133
+2019-04-13 23:42:06,581 INFO - ptstrategy - -
+2019-04-13 23:42:06,581 INFO - __main__ - Performance of this pair: {'pair': 'CRM-RHT', 'sharperatio': -0.10643901000739851, 'returnstd': 7012.886182209244, 'startcash': 1000000, 'endcash': 1027922.2474661622, 'profit': 0.027922247466162196}
+2019-04-13 23:42:06,581 INFO - __main__ - Running pair 26/133
+2019-04-13 23:42:06,677 INFO - ptstrategy - -
+2019-04-13 23:42:06,678 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RHT', 'sharperatio': 0.2530991114247299, 'returnstd': 10407.727693837307, 'startcash': 1000000, 'endcash': 1057910.0707851013, 'profit': 0.05791007078510127}
+2019-04-13 23:42:06,678 INFO - __main__ - Running pair 27/133
+2019-04-13 23:42:06,765 INFO - ptstrategy - -
+2019-04-13 23:42:06,766 INFO - __main__ - Performance of this pair: {'pair': 'MAN-STM', 'sharperatio': 0.6943453382862339, 'returnstd': 17666.75523123488, 'startcash': 1000000, 'endcash': 1337617.6115065897, 'profit': 0.3376176115065897}
+2019-04-13 23:42:06,766 INFO - __main__ - Running pair 28/133
+2019-04-13 23:42:06,876 INFO - ptstrategy - -
+2019-04-13 23:42:06,877 INFO - __main__ - Performance of this pair: {'pair': 'ITW-QTWO', 'sharperatio': -0.04696626661027877, 'returnstd': 8361.301751913004, 'startcash': 1000000, 'endcash': 1027999.026190272, 'profit': 0.02799902619027195}
+2019-04-13 23:42:06,877 INFO - __main__ - Running pair 29/133
+2019-04-13 23:42:06,971 INFO - ptstrategy - -
+2019-04-13 23:42:06,971 INFO - __main__ - Performance of this pair: {'pair': 'ITW-ORCL', 'sharperatio': -1.6093639468820478, 'returnstd': 8061.08360427471, 'startcash': 1000000, 'endcash': 971611.6231435289, 'profit': -0.028388376856471064}
+2019-04-13 23:42:06,972 INFO - __main__ - Running pair 30/133
+2019-04-13 23:42:07,065 INFO - ptstrategy - -
+2019-04-13 23:42:07,066 INFO - __main__ - Performance of this pair: {'pair': 'MODN-RHT', 'sharperatio': -1.9583747138266023, 'returnstd': 10291.277214844795, 'startcash': 1000000, 'endcash': 954057.4464386933, 'profit': -0.04594255356130667}
+2019-04-13 23:42:07,066 INFO - __main__ - Running pair 31/133
+2019-04-13 23:42:07,134 INFO - ptstrategy - -
+2019-04-13 23:42:07,135 INFO - __main__ - Performance of this pair: {'pair': 'MODN-XRX', 'sharperatio': -0.5747073815261939, 'returnstd': 12603.442786062453, 'startcash': 1000000, 'endcash': 943190.7161919483, 'profit': -0.056809283808051725}
+2019-04-13 23:42:07,135 INFO - __main__ - Running pair 32/133
+2019-04-13 23:42:07,241 INFO - ptstrategy - -
+2019-04-13 23:42:07,242 INFO - __main__ - Performance of this pair: {'pair': 'MODN-ZEN', 'sharperatio': 0.5180247328865594, 'returnstd': 14936.852154680359, 'startcash': 1000000, 'endcash': 1222242.3509806865, 'profit': 0.22224235098068648}
+2019-04-13 23:42:07,242 INFO - __main__ - Running pair 33/133
+2019-04-13 23:42:07,308 INFO - ptstrategy - -
+2019-04-13 23:42:07,308 INFO - __main__ - Performance of this pair: {'pair': 'IBM-TGH', 'sharperatio': -0.9312480140152645, 'returnstd': 21299.810514984492, 'startcash': 1000000, 'endcash': 683913.2284000055, 'profit': -0.3160867715999945}
+2019-04-13 23:42:07,309 INFO - __main__ - Running pair 34/133
+2019-04-13 23:42:07,401 INFO - ptstrategy - -
+2019-04-13 23:42:07,402 INFO - __main__ - Performance of this pair: {'pair': 'MXL-VMW', 'sharperatio': -0.2613680916588814, 'returnstd': 15448.057761482989, 'startcash': 1000000, 'endcash': 1025213.614007128, 'profit': 0.025213614007128054}
+2019-04-13 23:42:07,402 INFO - __main__ - Running pair 35/133
+2019-04-13 23:42:07,477 INFO - ptstrategy - -
+2019-04-13 23:42:07,478 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-ZEN', 'sharperatio': -1.0791730929829502, 'returnstd': 14105.445741354488, 'startcash': 1000000, 'endcash': 919443.4602275727, 'profit': -0.08055653977242729}
+2019-04-13 23:42:07,478 INFO - __main__ - Running pair 36/133
+2019-04-13 23:42:07,608 INFO - ptstrategy - -
+2019-04-13 23:42:07,609 INFO - __main__ - Performance of this pair: {'pair': 'CRM-MAN', 'sharperatio': 0.6203788262701444, 'returnstd': 8522.054873438958, 'startcash': 1000000, 'endcash': 1244594.7613551337, 'profit': 0.24459476135513372}
+2019-04-13 23:42:07,609 INFO - __main__ - Running pair 37/133
+2019-04-13 23:42:07,685 INFO - ptstrategy - -
+2019-04-13 23:42:07,686 INFO - __main__ - Performance of this pair: {'pair': 'NOK-NSP', 'sharperatio': -0.6771887499366053, 'returnstd': 16924.805305656013, 'startcash': 1000000, 'endcash': 598870.9414716458, 'profit': -0.4011290585283542}
+2019-04-13 23:42:07,686 INFO - __main__ - Running pair 38/133
+2019-04-13 23:42:07,775 INFO - ptstrategy - -
+2019-04-13 23:42:07,775 INFO - __main__ - Performance of this pair: {'pair': 'ANET-NOK', 'sharperatio': -0.6353226633074291, 'returnstd': 17686.04828570315, 'startcash': 1000000, 'endcash': 635028.6556044959, 'profit': -0.3649713443955041}
+2019-04-13 23:42:07,776 INFO - __main__ - Running pair 39/133
+2019-04-13 23:42:07,846 INFO - ptstrategy - -
+2019-04-13 23:42:07,847 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-RHT', 'sharperatio': 0.6025124573372286, 'returnstd': 14851.9201726174, 'startcash': 1000000, 'endcash': 1167092.3729590822, 'profit': 0.16709237295908225}
+2019-04-13 23:42:07,847 INFO - __main__ - Running pair 40/133
+2019-04-13 23:42:07,937 INFO - ptstrategy - -
+2019-04-13 23:42:07,937 INFO - __main__ - Performance of this pair: {'pair': 'ANET-LDOS', 'sharperatio': -0.7387241684514726, 'returnstd': 16103.450330697025, 'startcash': 1000000, 'endcash': 808526.6823593806, 'profit': -0.19147331764061934}
+2019-04-13 23:42:07,937 INFO - __main__ - Running pair 41/133
+2019-04-13 23:42:08,025 INFO - ptstrategy - -
+2019-04-13 23:42:08,026 INFO - __main__ - Performance of this pair: {'pair': 'ANET-HPQ', 'sharperatio': -0.5875426682794851, 'returnstd': 14381.098456591946, 'startcash': 1000000, 'endcash': 901700.9499568462, 'profit': -0.09829905004315381}
+2019-04-13 23:42:08,026 INFO - __main__ - Running pair 42/133
+2019-04-13 23:42:08,133 INFO - ptstrategy - -
+2019-04-13 23:42:08,133 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-JBL', 'sharperatio': -0.8344698900167772, 'returnstd': 13341.419279276408, 'startcash': 1000000, 'endcash': 839905.4976695257, 'profit': -0.16009450233047431}
+2019-04-13 23:42:08,133 INFO - __main__ - Running pair 43/133
+2019-04-13 23:42:08,215 INFO - ptstrategy - -
+2019-04-13 23:42:08,216 INFO - __main__ - Performance of this pair: {'pair': 'TRTN-VMW', 'sharperatio': -0.672227540077275, 'returnstd': 17553.626100352845, 'startcash': 1000000, 'endcash': 983171.0326816768, 'profit': -0.01682896731832321}
+2019-04-13 23:42:08,216 INFO - __main__ - Running pair 44/133
+2019-04-13 23:42:08,315 INFO - ptstrategy - -
+2019-04-13 23:42:08,316 INFO - __main__ - Performance of this pair: {'pair': 'ANET-EPAM', 'sharperatio': 0.7445603901957201, 'returnstd': 19024.29841444395, 'startcash': 1000000, 'endcash': 1161633.9683458135, 'profit': 0.16163396834581345}
+2019-04-13 23:42:08,316 INFO - __main__ - Running pair 45/133
+2019-04-13 23:42:08,396 INFO - ptstrategy - -
+2019-04-13 23:42:08,397 INFO - __main__ - Performance of this pair: {'pair': 'ANET-CLGX', 'sharperatio': -0.6587376271591349, 'returnstd': 21537.68879708529, 'startcash': 1000000, 'endcash': 670841.9290867101, 'profit': -0.3291580709132899}
+2019-04-13 23:42:08,397 INFO - __main__ - Running pair 46/133
+2019-04-13 23:42:08,484 INFO - ptstrategy - -
+2019-04-13 23:42:08,485 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-RNG', 'sharperatio': -0.7969990124910042, 'returnstd': 16392.21408426107, 'startcash': 1000000, 'endcash': 764015.1642943509, 'profit': -0.2359848357056491}
+2019-04-13 23:42:08,485 INFO - __main__ - Running pair 47/133
+2019-04-13 23:42:08,547 INFO - ptstrategy - -
+2019-04-13 23:42:08,549 INFO - __main__ - Performance of this pair: {'pair': 'NOW-TRTN', 'sharperatio': -0.6381973786434686, 'returnstd': 17789.689381707343, 'startcash': 1000000, 'endcash': 873151.7076359589, 'profit': -0.12684829236404108}
+2019-04-13 23:42:08,549 INFO - __main__ - Running pair 48/133
+2019-04-13 23:42:08,648 INFO - ptstrategy - -
+2019-04-13 23:42:08,648 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ORCL', 'sharperatio': 0.5667713264048817, 'returnstd': 10043.913709287473, 'startcash': 1000000, 'endcash': 1151160.6847221893, 'profit': 0.15116068472218933}
+2019-04-13 23:42:08,648 INFO - __main__ - Running pair 49/133
+2019-04-13 23:42:08,762 INFO - ptstrategy - -
+2019-04-13 23:42:08,762 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NOK', 'sharperatio': -0.861132618854189, 'returnstd': 12380.287278127227, 'startcash': 1000000, 'endcash': 856711.6415266127, 'profit': -0.1432883584733873}
+2019-04-13 23:42:08,762 INFO - __main__ - Running pair 50/133
+2019-04-13 23:42:08,888 INFO - ptstrategy - -
+2019-04-13 23:42:08,889 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ITW', 'sharperatio': 0.7021523111619057, 'returnstd': 5879.530541974906, 'startcash': 1000000, 'endcash': 1145747.2663269164, 'profit': 0.1457472663269164}
+2019-04-13 23:42:08,889 INFO - __main__ - Running pair 51/133
+2019-04-13 23:42:08,987 INFO - ptstrategy - -
+2019-04-13 23:42:08,987 INFO - __main__ - Performance of this pair: {'pair': 'TGH-VMW', 'sharperatio': -0.7422681711742688, 'returnstd': 19117.151479089647, 'startcash': 1000000, 'endcash': 966480.7867747953, 'profit': -0.03351921322520473}
+2019-04-13 23:42:08,988 INFO - __main__ - Running pair 52/133
+2019-04-13 23:42:09,091 INFO - ptstrategy - -
+2019-04-13 23:42:09,092 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-LDOS', 'sharperatio': -0.5236598236392669, 'returnstd': 7494.6894261968455, 'startcash': 1000000, 'endcash': 1017790.1449800377, 'profit': 0.0177901449800377}
+2019-04-13 23:42:09,092 INFO - __main__ - Running pair 53/133
+2019-04-13 23:42:09,294 INFO - ptstrategy - -
+2019-04-13 23:42:09,295 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ITW', 'sharperatio': 0.4434595951776308, 'returnstd': 5418.06208042601, 'startcash': 1000000, 'endcash': 1046553.1381046548, 'profit': 0.04655313810465485}
+2019-04-13 23:42:09,295 INFO - __main__ - Running pair 54/133
+2019-04-13 23:42:09,369 INFO - ptstrategy - -
+2019-04-13 23:42:09,369 INFO - __main__ - Performance of this pair: {'pair': 'NSP-PAYC', 'sharperatio': -3.8196505504728844, 'returnstd': 15634.937737660859, 'startcash': 1000000, 'endcash': 985217.1095789664, 'profit': -0.014782890421033604}
+2019-04-13 23:42:09,370 INFO - __main__ - Running pair 55/133
+2019-04-13 23:42:09,456 INFO - ptstrategy - -
+2019-04-13 23:42:09,456 INFO - __main__ - Performance of this pair: {'pair': 'TGH-TRTN', 'sharperatio': -0.8113706775566106, 'returnstd': 14555.25054712304, 'startcash': 1000000, 'endcash': 796543.154686023, 'profit': -0.20345684531397698}
+2019-04-13 23:42:09,456 INFO - __main__ - Running pair 56/133
+2019-04-13 23:42:09,568 INFO - ptstrategy - -
+2019-04-13 23:42:09,569 INFO - __main__ - Performance of this pair: {'pair': 'TDC-ZEN', 'sharperatio': 0.6469142066042587, 'returnstd': 11918.636785827759, 'startcash': 1000000, 'endcash': 1294111.7777791067, 'profit': 0.29411177777910674}
+2019-04-13 23:42:09,569 INFO - __main__ - Running pair 57/133
+2019-04-13 23:42:09,665 INFO - ptstrategy - -
+2019-04-13 23:42:09,666 INFO - __main__ - Performance of this pair: {'pair': 'AMN-SAIC', 'sharperatio': 0.6394300024629641, 'returnstd': 18088.139462719802, 'startcash': 1000000, 'endcash': 1231107.5608693422, 'profit': 0.23110756086934217}
+2019-04-13 23:42:09,666 INFO - __main__ - Running pair 58/133
+2019-04-13 23:42:09,743 INFO - ptstrategy - -
+2019-04-13 23:42:09,743 INFO - __main__ - Performance of this pair: {'pair': 'AMN-NOK', 'sharperatio': -0.7619754236187221, 'returnstd': 17427.85662843583, 'startcash': 1000000, 'endcash': 773325.793491641, 'profit': -0.22667420650835907}
+2019-04-13 23:42:09,743 INFO - __main__ - Running pair 59/133
+2019-04-13 23:42:09,838 INFO - ptstrategy - -
+2019-04-13 23:42:09,838 INFO - __main__ - Performance of this pair: {'pair': 'TDC-VMW', 'sharperatio': -1.9161967064594074, 'returnstd': 13247.802283207686, 'startcash': 1000000, 'endcash': 988946.7640267151, 'profit': -0.01105323597328493}
+2019-04-13 23:42:09,838 INFO - __main__ - Running pair 60/133
+2019-04-13 23:42:09,913 INFO - ptstrategy - -
+2019-04-13 23:42:09,914 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-NSP', 'sharperatio': 0.6142669361678103, 'returnstd': 14881.386623685916, 'startcash': 1000000, 'endcash': 1142792.7289309963, 'profit': 0.14279272893099626}
+2019-04-13 23:42:09,914 INFO - __main__ - Running pair 61/133
+2019-04-13 23:42:10,003 INFO - ptstrategy - -
+2019-04-13 23:42:10,004 INFO - __main__ - Performance of this pair: {'pair': 'AMN-LDOS', 'sharperatio': 0.5386055841327496, 'returnstd': 13735.307370451465, 'startcash': 1000000, 'endcash': 1125893.4880374982, 'profit': 0.1258934880374982}
+2019-04-13 23:42:10,004 INFO - __main__ - Running pair 62/133
+2019-04-13 23:42:10,079 INFO - ptstrategy - -
+2019-04-13 23:42:10,080 INFO - __main__ - Performance of this pair: {'pair': 'AMN-KFY', 'sharperatio': -0.17166829288385674, 'returnstd': 13119.577002878857, 'startcash': 1000000, 'endcash': 1026372.2467293754, 'profit': 0.026372246729375444}
+2019-04-13 23:42:10,080 INFO - __main__ - Running pair 63/133
+2019-04-13 23:42:10,157 INFO - ptstrategy - -
+2019-04-13 23:42:10,158 INFO - __main__ - Performance of this pair: {'pair': 'NSP-WUBA', 'sharperatio': -0.6033075851686122, 'returnstd': 18972.179250253885, 'startcash': 1000000, 'endcash': 715517.2283710265, 'profit': -0.28448277162897356}
+2019-04-13 23:42:10,158 INFO - __main__ - Running pair 64/133
+2019-04-13 23:42:10,279 INFO - ptstrategy - -
+2019-04-13 23:42:10,280 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-ITW', 'sharperatio': 0.41753912543503185, 'returnstd': 7423.562549100905, 'startcash': 1000000, 'endcash': 1055026.8405621878, 'profit': 0.05502684056218783}
+2019-04-13 23:42:10,280 INFO - __main__ - Running pair 65/133
+2019-04-13 23:42:10,400 INFO - ptstrategy - -
+2019-04-13 23:42:10,401 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-QTWO', 'sharperatio': 0.771626248265308, 'returnstd': 8413.637897316976, 'startcash': 1000000, 'endcash': 1180013.2502401716, 'profit': 0.18001325024017156}
+2019-04-13 23:42:10,401 INFO - __main__ - Running pair 66/133
+2019-04-13 23:42:10,490 INFO - ptstrategy - -
+2019-04-13 23:42:10,491 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RHT', 'sharperatio': -0.9548792047790345, 'returnstd': 9094.48602782046, 'startcash': 1000000, 'endcash': 809991.4922052119, 'profit': -0.19000850779478812}
+2019-04-13 23:42:10,491 INFO - __main__ - Running pair 67/133
+2019-04-13 23:42:10,577 INFO - ptstrategy - -
+2019-04-13 23:42:10,578 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RNG', 'sharperatio': -0.825982988805769, 'returnstd': 14377.064431350573, 'startcash': 1000000, 'endcash': 837818.8187945198, 'profit': -0.16218118120548025}
+2019-04-13 23:42:10,578 INFO - __main__ - Running pair 68/133
+2019-04-13 23:42:10,639 INFO - ptstrategy - -
+2019-04-13 23:42:10,640 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-SAP', 'sharperatio': -1.3599945759552348, 'returnstd': 9051.52880593788, 'startcash': 1000000, 'endcash': 935975.6443112267, 'profit': -0.06402435568877334}
+2019-04-13 23:42:10,640 INFO - __main__ - Running pair 69/133
+2019-04-13 23:42:10,733 INFO - ptstrategy - -
+2019-04-13 23:42:10,734 INFO - __main__ - Performance of this pair: {'pair': 'AMN-CLGX', 'sharperatio': 0.4875285445235062, 'returnstd': 12273.564257698226, 'startcash': 1000000, 'endcash': 1143515.3719419166, 'profit': 0.14351537194191663}
+2019-04-13 23:42:10,734 INFO - __main__ - Running pair 70/133
+2019-04-13 23:42:10,835 INFO - ptstrategy - -
+2019-04-13 23:42:10,836 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ETN', 'sharperatio': -2.540775021618342, 'returnstd': 6919.594859952791, 'startcash': 1000000, 'endcash': 962861.944919857, 'profit': -0.037138055080143034}
+2019-04-13 23:42:10,836 INFO - __main__ - Running pair 71/133
+2019-04-13 23:42:10,913 INFO - ptstrategy - -
+2019-04-13 23:42:10,915 INFO - __main__ - Performance of this pair: {'pair': 'AMN-ANET', 'sharperatio': -0.7206170505162127, 'returnstd': 18321.11561031395, 'startcash': 1000000, 'endcash': 786740.9108294523, 'profit': -0.21325908917054767}
+2019-04-13 23:42:10,915 INFO - __main__ - Running pair 72/133
+2019-04-13 23:42:10,978 INFO - ptstrategy - -
+2019-04-13 23:42:10,978 INFO - __main__ - Performance of this pair: {'pair': 'FDS-ZEN', 'sharperatio': 0.6083552567590702, 'returnstd': 15836.251386709715, 'startcash': 1000000, 'endcash': 1142116.4632969915, 'profit': 0.14211646329699154}
+2019-04-13 23:42:10,978 INFO - __main__ - Running pair 73/133
+2019-04-13 23:42:11,041 INFO - ptstrategy - -
+2019-04-13 23:42:11,042 INFO - __main__ - Performance of this pair: {'pair': 'FDS-VMW', 'sharperatio': 0.44725049241613524, 'returnstd': 12487.461388670623, 'startcash': 1000000, 'endcash': 1099524.5990362642, 'profit': 0.09952459903626423}
+2019-04-13 23:42:11,042 INFO - __main__ - Running pair 74/133
+2019-04-13 23:42:11,105 INFO - ptstrategy - -
+2019-04-13 23:42:11,105 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TGH', 'sharperatio': 0.8115255879373933, 'returnstd': 22756.639980996264, 'startcash': 1000000, 'endcash': 1118655.8725708874, 'profit': 0.11865587257088744}
+2019-04-13 23:42:11,105 INFO - __main__ - Running pair 75/133
+2019-04-13 23:42:11,168 INFO - ptstrategy - -
+2019-04-13 23:42:11,169 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TDC', 'sharperatio': 0.3161029608992154, 'returnstd': 12016.32286484851, 'startcash': 1000000, 'endcash': 1049472.9879783567, 'profit': 0.049472987978356656}
+2019-04-13 23:42:11,169 INFO - __main__ - Running pair 76/133
+2019-04-13 23:42:11,301 INFO - ptstrategy - -
+2019-04-13 23:42:11,302 INFO - __main__ - Performance of this pair: {'pair': 'PAYC-WUBA', 'sharperatio': 0.5670859780540657, 'returnstd': 10446.879411165404, 'startcash': 1000000, 'endcash': 1151500.3696666802, 'profit': 0.15150036966668023}
+2019-04-13 23:42:11,302 INFO - __main__ - Running pair 77/133
+2019-04-13 23:42:11,363 INFO - ptstrategy - -
+2019-04-13 23:42:11,363 INFO - __main__ - Performance of this pair: {'pair': 'FDS-RHT', 'sharperatio': -0.9601160313458049, 'returnstd': 13022.715872566232, 'startcash': 1000000, 'endcash': 845905.8530323207, 'profit': -0.15409414696767926}
+2019-04-13 23:42:11,363 INFO - __main__ - Running pair 78/133
+2019-04-13 23:42:11,436 INFO - ptstrategy - -
+2019-04-13 23:42:11,437 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RHT', 'sharperatio': -0.6903033704597165, 'returnstd': 10747.583813332789, 'startcash': 1000000, 'endcash': 939542.571188348, 'profit': -0.060457428811652}
+2019-04-13 23:42:11,437 INFO - __main__ - Running pair 79/133
+2019-04-13 23:42:11,510 INFO - ptstrategy - -
+2019-04-13 23:42:11,511 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RNG', 'sharperatio': -0.666199809387027, 'returnstd': 15775.551012391588, 'startcash': 1000000, 'endcash': 699542.7888732809, 'profit': -0.30045721112671914}
+2019-04-13 23:42:11,511 INFO - __main__ - Running pair 80/133
+2019-04-13 23:42:11,615 INFO - ptstrategy - -
+2019-04-13 23:42:11,616 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-ELLI', 'sharperatio': 0.6642296914197802, 'returnstd': 8503.98722489551, 'startcash': 1000000, 'endcash': 1096709.9427293143, 'profit': 0.09670994272931432}
+2019-04-13 23:42:11,616 INFO - __main__ - Running pair 81/133
+2019-04-13 23:42:11,681 INFO - ptstrategy - -
+2019-04-13 23:42:11,682 INFO - __main__ - Performance of this pair: {'pair': 'ETN-STM', 'sharperatio': -1.8727157607004363, 'returnstd': 16288.466266156196, 'startcash': 1000000, 'endcash': 931672.8152189158, 'profit': -0.06832718478108418}
+2019-04-13 23:42:11,682 INFO - __main__ - Running pair 82/133
+2019-04-13 23:42:11,769 INFO - ptstrategy - -
+2019-04-13 23:42:11,769 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-HPQ', 'sharperatio': 0.6135213684361847, 'returnstd': 9086.83422265554, 'startcash': 1000000, 'endcash': 1226672.1149393464, 'profit': 0.22667211493934644}
+2019-04-13 23:42:11,769 INFO - __main__ - Running pair 83/133
+2019-04-13 23:42:11,850 INFO - ptstrategy - -
+2019-04-13 23:42:11,851 INFO - __main__ - Performance of this pair: {'pair': 'RHT-SAP', 'sharperatio': -1.521374657100286, 'returnstd': 8938.715125447474, 'startcash': 1000000, 'endcash': 957090.5221502974, 'profit': -0.04290947784970258}
+2019-04-13 23:42:11,851 INFO - __main__ - Running pair 84/133
+2019-04-13 23:42:11,979 INFO - ptstrategy - -
+2019-04-13 23:42:11,980 INFO - __main__ - Performance of this pair: {'pair': 'AL-ZEN', 'sharperatio': 0.6058464199318354, 'returnstd': 10209.254039872683, 'startcash': 1000000, 'endcash': 1209491.6823596586, 'profit': 0.20949168235965865}
+2019-04-13 23:42:11,980 INFO - __main__ - Running pair 85/133
+2019-04-13 23:42:12,056 INFO - ptstrategy - -
+2019-04-13 23:42:12,057 INFO - __main__ - Performance of this pair: {'pair': 'RHT-STM', 'sharperatio': 0.6294531592128522, 'returnstd': 15004.638248131965, 'startcash': 1000000, 'endcash': 1097033.1240468505, 'profit': 0.09703312404685048}
+2019-04-13 23:42:12,057 INFO - __main__ - Running pair 86/133
+2019-04-13 23:42:12,200 INFO - ptstrategy - -
+2019-04-13 23:42:12,201 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-JBL', 'sharperatio': 0.34928771316193136, 'returnstd': 6318.334887635714, 'startcash': 1000000, 'endcash': 1059284.720494932, 'profit': 0.05928472049493203}
+2019-04-13 23:42:12,201 INFO - __main__ - Running pair 87/133
+2019-04-13 23:42:12,274 INFO - ptstrategy - -
+2019-04-13 23:42:12,274 INFO - __main__ - Performance of this pair: {'pair': 'RHT-TDC', 'sharperatio': -1.6582254168985513, 'returnstd': 13982.174392502555, 'startcash': 1000000, 'endcash': 962077.8926506754, 'profit': -0.03792210734932462}
+2019-04-13 23:42:12,274 INFO - __main__ - Running pair 88/133
+2019-04-13 23:42:12,410 INFO - ptstrategy - -
+2019-04-13 23:42:12,411 INFO - __main__ - Performance of this pair: {'pair': 'AL-TDC', 'sharperatio': 0.6359826450106766, 'returnstd': 7283.740544237279, 'startcash': 1000000, 'endcash': 1298256.0432529112, 'profit': 0.29825604325291116}
+2019-04-13 23:42:12,411 INFO - __main__ - Running pair 89/133
+2019-04-13 23:42:12,504 INFO - ptstrategy - -
+2019-04-13 23:42:12,505 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-LDOS', 'sharperatio': -0.46121951579384185, 'returnstd': 8005.114527885297, 'startcash': 1000000, 'endcash': 1015360.107056752, 'profit': 0.015360107056751964}
+2019-04-13 23:42:12,505 INFO - __main__ - Running pair 90/133
+2019-04-13 23:42:12,573 INFO - ptstrategy - -
+2019-04-13 23:42:12,573 INFO - __main__ - Performance of this pair: {'pair': 'RHT-VMW', 'sharperatio': 0.0684681935057177, 'returnstd': 10247.096691852068, 'startcash': 1000000, 'endcash': 1033927.9050678802, 'profit': 0.033927905067880175}
+2019-04-13 23:42:12,574 INFO - __main__ - Running pair 91/133
+2019-04-13 23:42:12,635 INFO - ptstrategy - -
+2019-04-13 23:42:12,635 INFO - __main__ - Performance of this pair: {'pair': 'RHT-ZEN', 'sharperatio': -0.9193350120438529, 'returnstd': 15003.540496476957, 'startcash': 1000000, 'endcash': 886543.883032321, 'profit': -0.113456116967679}
+2019-04-13 23:42:12,635 INFO - __main__ - Running pair 92/133
+2019-04-13 23:42:12,698 INFO - ptstrategy - -
+2019-04-13 23:42:12,698 INFO - __main__ - Performance of this pair: {'pair': 'AL-RHT', 'sharperatio': -1.0550072840094722, 'returnstd': 13882.215681733222, 'startcash': 1000000, 'endcash': 901620.6830323208, 'profit': -0.09837931696767918}
+2019-04-13 23:42:12,698 INFO - __main__ - Running pair 93/133
+2019-04-13 23:42:12,767 INFO - ptstrategy - -
+2019-04-13 23:42:12,768 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NOK', 'sharperatio': -0.6569310439820522, 'returnstd': 15478.522229059863, 'startcash': 1000000, 'endcash': 876174.9770760618, 'profit': -0.12382502292393824}
+2019-04-13 23:42:12,768 INFO - __main__ - Running pair 94/133
+2019-04-13 23:42:12,915 INFO - ptstrategy - -
+2019-04-13 23:42:12,916 INFO - __main__ - Performance of this pair: {'pair': 'RNG-SAP', 'sharperatio': 0.6174435739841483, 'returnstd': 8433.08765506311, 'startcash': 1000000, 'endcash': 1236587.60485459, 'profit': 0.23658760485459002}
+2019-04-13 23:42:12,916 INFO - __main__ - Running pair 95/133
+2019-04-13 23:42:12,991 INFO - ptstrategy - -
+2019-04-13 23:42:12,991 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NSP', 'sharperatio': -1.175874945216545, 'returnstd': 12620.453336351562, 'startcash': 1000000, 'endcash': 943779.8077266108, 'profit': -0.056220192273389195}
+2019-04-13 23:42:12,991 INFO - __main__ - Running pair 96/133
+2019-04-13 23:42:13,093 INFO - ptstrategy - -
+2019-04-13 23:42:13,094 INFO - __main__ - Performance of this pair: {'pair': 'AL-LLL', 'sharperatio': 0.4351266860794744, 'returnstd': 8204.549288981036, 'startcash': 1000000, 'endcash': 1083517.6895551765, 'profit': 0.08351768955517654}
+2019-04-13 23:42:13,094 INFO - __main__ - Running pair 97/133
+2019-04-13 23:42:13,178 INFO - ptstrategy - -
+2019-04-13 23:42:13,178 INFO - __main__ - Performance of this pair: {'pair': 'STM-VMW', 'sharperatio': -0.9580604593618415, 'returnstd': 19206.968594163358, 'startcash': 1000000, 'endcash': 628407.6391630343, 'profit': -0.37159236083696573}
+2019-04-13 23:42:13,178 INFO - __main__ - Running pair 98/133
+2019-04-13 23:42:13,241 INFO - ptstrategy - -
+2019-04-13 23:42:13,242 INFO - __main__ - Performance of this pair: {'pair': 'AL-FDS', 'sharperatio': 0.45606186271547144, 'returnstd': 11285.964244098132, 'startcash': 1000000, 'endcash': 1077053.9128065691, 'profit': 0.07705391280656913}
+2019-04-13 23:42:13,242 INFO - __main__ - Running pair 99/133
+2019-04-13 23:42:13,338 INFO - ptstrategy - -
+2019-04-13 23:42:13,338 INFO - __main__ - Performance of this pair: {'pair': 'AL-ETN', 'sharperatio': 0.5164687560258705, 'returnstd': 8655.994771488507, 'startcash': 1000000, 'endcash': 1114709.3152060295, 'profit': 0.11470931520602945}
+2019-04-13 23:42:13,338 INFO - __main__ - Running pair 100/133
+2019-04-13 23:42:13,396 INFO - ptstrategy - -
+2019-04-13 23:42:13,397 INFO - __main__ - Performance of this pair: {'pair': 'RXN-SAP', 'sharperatio': -1.3790460960955628, 'returnstd': 10396.497463855589, 'startcash': 1000000, 'endcash': 963138.8789859494, 'profit': -0.036861121014050556}
+2019-04-13 23:42:13,397 INFO - __main__ - Running pair 101/133
+2019-04-13 23:42:13,504 INFO - ptstrategy - -
+2019-04-13 23:42:13,504 INFO - __main__ - Performance of this pair: {'pair': 'ETN-ITW', 'sharperatio': -1.0044033549095464, 'returnstd': 5485.080108478493, 'startcash': 1000000, 'endcash': 960991.6238929455, 'profit': -0.03900837610705453}
+2019-04-13 23:42:13,504 INFO - __main__ - Running pair 102/133
+2019-04-13 23:42:13,582 INFO - ptstrategy - -
+2019-04-13 23:42:13,582 INFO - __main__ - Performance of this pair: {'pair': 'AL-AYR', 'sharperatio': -0.8511187676165466, 'returnstd': 7230.134671597938, 'startcash': 1000000, 'endcash': 860335.932085614, 'profit': -0.13966406791438604}
+2019-04-13 23:42:13,583 INFO - __main__ - Running pair 103/133
+2019-04-13 23:42:13,642 INFO - ptstrategy - -
+2019-04-13 23:42:13,643 INFO - __main__ - Performance of this pair: {'pair': 'SAP-STM', 'sharperatio': 0.7015976737865168, 'returnstd': 14400.346706871043, 'startcash': 1000000, 'endcash': 1230389.4189859494, 'profit': 0.23038941898594936}
+2019-04-13 23:42:13,643 INFO - __main__ - Running pair 104/133
+2019-04-13 23:42:13,761 INFO - ptstrategy - -
+2019-04-13 23:42:13,762 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-PAYC', 'sharperatio': -3.672784343060847, 'returnstd': 7221.025836817609, 'startcash': 1000000, 'endcash': 984285.5693258891, 'profit': -0.01571443067411089}
+2019-04-13 23:42:13,762 INFO - __main__ - Running pair 105/133
+2019-04-13 23:42:13,824 INFO - ptstrategy - -
+2019-04-13 23:42:13,825 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-LDOS', 'sharperatio': -1.089791057626763, 'returnstd': 12293.18797820243, 'startcash': 1000000, 'endcash': 878761.6134291186, 'profit': -0.12123838657088136}
+2019-04-13 23:42:13,825 INFO - __main__ - Running pair 106/133
+2019-04-13 23:42:13,900 INFO - ptstrategy - -
+2019-04-13 23:42:13,900 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-HPQ', 'sharperatio': -0.8179523568589457, 'returnstd': 11336.401637252507, 'startcash': 1000000, 'endcash': 853130.4436306813, 'profit': -0.14686955636931875}
+2019-04-13 23:42:13,900 INFO - __main__ - Running pair 107/133
+2019-04-13 23:42:13,982 INFO - ptstrategy - -
+2019-04-13 23:42:13,983 INFO - __main__ - Performance of this pair: {'pair': 'CLS-TRTN', 'sharperatio': -0.9810881924514604, 'returnstd': 17652.1513655331, 'startcash': 1000000, 'endcash': 743625.2979901654, 'profit': -0.2563747020098346}
+2019-04-13 23:42:13,983 INFO - __main__ - Running pair 108/133
+2019-04-13 23:42:14,077 INFO - ptstrategy - -
+2019-04-13 23:42:14,078 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-GWRE', 'sharperatio': -0.8089725319341325, 'returnstd': 14079.309106927649, 'startcash': 1000000, 'endcash': 853195.6843044155, 'profit': -0.14680431569558453}
+2019-04-13 23:42:14,078 INFO - __main__ - Running pair 109/133
+2019-04-13 23:42:14,162 INFO - ptstrategy - -
+2019-04-13 23:42:14,163 INFO - __main__ - Performance of this pair: {'pair': 'CLS-VMW', 'sharperatio': -0.8559744832018006, 'returnstd': 13043.410776942941, 'startcash': 1000000, 'endcash': 795959.9737533997, 'profit': -0.2040400262466003}
+2019-04-13 23:42:14,163 INFO - __main__ - Running pair 110/133
+2019-04-13 23:42:14,229 INFO - ptstrategy - -
+2019-04-13 23:42:14,230 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-NSP', 'sharperatio': -0.7314842052170987, 'returnstd': 17064.13894691673, 'startcash': 1000000, 'endcash': 817465.9131248002, 'profit': -0.1825340868751998}
+2019-04-13 23:42:14,230 INFO - __main__ - Running pair 111/133
+2019-04-13 23:42:14,309 INFO - ptstrategy - -
+2019-04-13 23:42:14,309 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-LLL', 'sharperatio': -0.7880093459550582, 'returnstd': 13253.655452801888, 'startcash': 1000000, 'endcash': 838111.1347925386, 'profit': -0.1618888652074614}
+2019-04-13 23:42:14,309 INFO - __main__ - Running pair 112/133
+2019-04-13 23:42:14,410 INFO - ptstrategy - -
+2019-04-13 23:42:14,411 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-LLL', 'sharperatio': 0.4370908921440712, 'returnstd': 12539.834679330786, 'startcash': 1000000, 'endcash': 1156357.5984406143, 'profit': 0.1563575984406143}
+2019-04-13 23:42:14,411 INFO - __main__ - Running pair 113/133
+2019-04-13 23:42:14,543 INFO - ptstrategy - -
+2019-04-13 23:42:14,543 INFO - __main__ - Performance of this pair: {'pair': 'AL-XRX', 'sharperatio': -1.2684974759393852, 'returnstd': 8090.146797831142, 'startcash': 1000000, 'endcash': 983640.1592131852, 'profit': -0.016359840786814805}
+2019-04-13 23:42:14,543 INFO - __main__ - Running pair 114/133
+2019-04-13 23:42:14,634 INFO - ptstrategy - -
+2019-04-13 23:42:14,634 INFO - __main__ - Performance of this pair: {'pair': 'TGH-URI', 'sharperatio': -0.6188594011592745, 'returnstd': 20392.34609277987, 'startcash': 1000000, 'endcash': 977827.0277864292, 'profit': -0.022172972213570844}
+2019-04-13 23:42:14,635 INFO - __main__ - Running pair 115/133
+2019-04-13 23:42:14,711 INFO - ptstrategy - -
+2019-04-13 23:42:14,712 INFO - __main__ - Performance of this pair: {'pair': 'NOK-WUBA', 'sharperatio': -0.8564661083995025, 'returnstd': 17984.91810605784, 'startcash': 1000000, 'endcash': 465570.2058131776, 'profit': -0.5344297941868223}
+2019-04-13 23:42:14,712 INFO - __main__ - Running pair 116/133
+2019-04-13 23:42:14,818 INFO - ptstrategy - -
+2019-04-13 23:42:14,818 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-JBL', 'sharperatio': 0.5384338020209122, 'returnstd': 10156.358385328756, 'startcash': 1000000, 'endcash': 1131516.6209107928, 'profit': 0.13151662091079283}
+2019-04-13 23:42:14,818 INFO - __main__ - Running pair 117/133
+2019-04-13 23:42:14,896 INFO - ptstrategy - -
+2019-04-13 23:42:14,897 INFO - __main__ - Performance of this pair: {'pair': 'JBL-TBI', 'sharperatio': -0.33758809079444274, 'returnstd': 13223.560151213236, 'startcash': 1000000, 'endcash': 1020305.6452219117, 'profit': 0.02030564522191172}
+2019-04-13 23:42:14,897 INFO - __main__ - Running pair 118/133
+2019-04-13 23:42:14,984 INFO - ptstrategy - -
+2019-04-13 23:42:14,985 INFO - __main__ - Performance of this pair: {'pair': 'ETN-RHT', 'sharperatio': -1.2240989584170832, 'returnstd': 9297.287936427001, 'startcash': 1000000, 'endcash': 929690.3540984855, 'profit': -0.07030964590151445}
+2019-04-13 23:42:14,985 INFO - __main__ - Running pair 119/133
+2019-04-13 23:42:15,064 INFO - ptstrategy - -
+2019-04-13 23:42:15,065 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-JBL', 'sharperatio': -0.8388328051111817, 'returnstd': 13023.14427852697, 'startcash': 1000000, 'endcash': 918693.7207707677, 'profit': -0.08130627922923234}
+2019-04-13 23:42:15,065 INFO - __main__ - Running pair 120/133
+2019-04-13 23:42:15,157 INFO - ptstrategy - -
+2019-04-13 23:42:15,158 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-SAP', 'sharperatio': 0.4351953551279241, 'returnstd': 9026.126003034107, 'startcash': 1000000, 'endcash': 1072695.7774121629, 'profit': 0.07269577741216286}
+2019-04-13 23:42:15,158 INFO - __main__ - Running pair 121/133
+2019-04-13 23:42:15,234 INFO - ptstrategy - -
+2019-04-13 23:42:15,234 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NSP', 'sharperatio': -0.684418771107744, 'returnstd': 13685.235580177608, 'startcash': 1000000, 'endcash': 813742.6788048665, 'profit': -0.1862573211951335}
+2019-04-13 23:42:15,234 INFO - __main__ - Running pair 122/133
+2019-04-13 23:42:15,323 INFO - ptstrategy - -
+2019-04-13 23:42:15,324 INFO - __main__ - Performance of this pair: {'pair': 'RHT-RNG', 'sharperatio': -0.062463147087287396, 'returnstd': 13229.31543310747, 'startcash': 1000000, 'endcash': 1024638.3300892048, 'profit': 0.024638330089204828}
+2019-04-13 23:42:15,324 INFO - __main__ - Running pair 123/133
+2019-04-13 23:42:15,418 INFO - ptstrategy - -
+2019-04-13 23:42:15,418 INFO - __main__ - Performance of this pair: {'pair': 'ITW-LLL', 'sharperatio': 0.44616269203968845, 'returnstd': 5853.816014734768, 'startcash': 1000000, 'endcash': 1081294.0561518436, 'profit': 0.08129405615184362}
+2019-04-13 23:42:15,418 INFO - __main__ - Running pair 124/133
+2019-04-13 23:42:15,521 INFO - ptstrategy - -
+2019-04-13 23:42:15,522 INFO - __main__ - Performance of this pair: {'pair': 'LLL-TDC', 'sharperatio': 0.5562426711041137, 'returnstd': 9742.002670260104, 'startcash': 1000000, 'endcash': 1145625.5326471266, 'profit': 0.14562553264712658}
+2019-04-13 23:42:15,522 INFO - __main__ - Running pair 125/133
+2019-04-13 23:42:15,606 INFO - ptstrategy - -
+2019-04-13 23:42:15,607 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-HPQ', 'sharperatio': 0.39667343163763963, 'returnstd': 14935.184274960542, 'startcash': 1000000, 'endcash': 1101458.0012787227, 'profit': 0.10145800127872266}
+2019-04-13 23:42:15,607 INFO - __main__ - Running pair 126/133
+2019-04-13 23:42:15,679 INFO - ptstrategy - -
+2019-04-13 23:42:15,680 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-UMC', 'sharperatio': -0.8394750442385432, 'returnstd': 15484.12556945523, 'startcash': 1000000, 'endcash': 903167.2563645196, 'profit': -0.0968327436354804}
+2019-04-13 23:42:15,680 INFO - __main__ - Running pair 127/133
+2019-04-13 23:42:15,760 INFO - ptstrategy - -
+2019-04-13 23:42:15,761 INFO - __main__ - Performance of this pair: {'pair': 'AL-LEAF', 'sharperatio': 0.09630640735526828, 'returnstd': 13289.884527684468, 'startcash': 1000000, 'endcash': 1040669.3465854403, 'profit': 0.04066934658544033}
+2019-04-13 23:42:15,761 INFO - __main__ - Running pair 128/133
+2019-04-13 23:42:15,856 INFO - ptstrategy - -
+2019-04-13 23:42:15,857 INFO - __main__ - Performance of this pair: {'pair': 'ETN-VMW', 'sharperatio': -1.2537248558672638, 'returnstd': 10421.900623665642, 'startcash': 1000000, 'endcash': 905026.8146245135, 'profit': -0.0949731853754865}
+2019-04-13 23:42:15,857 INFO - __main__ - Running pair 129/133
+2019-04-13 23:42:15,958 INFO - ptstrategy - -
+2019-04-13 23:42:15,958 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-JBL', 'sharperatio': -0.9767125447918434, 'returnstd': 10414.394707134237, 'startcash': 1000000, 'endcash': 1012217.1640288655, 'profit': 0.012217164028865518}
+2019-04-13 23:42:15,958 INFO - __main__ - Running pair 130/133
+2019-04-13 23:42:16,065 INFO - ptstrategy - -
+2019-04-13 23:42:16,066 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-WUBA', 'sharperatio': -0.7603120570989709, 'returnstd': 20760.03453561285, 'startcash': 1000000, 'endcash': 601295.1145951455, 'profit': -0.39870488540485455}
+2019-04-13 23:42:16,066 INFO - __main__ - Running pair 131/133
+2019-04-13 23:42:16,169 INFO - ptstrategy - -
+2019-04-13 23:42:16,170 INFO - __main__ - Performance of this pair: {'pair': 'CRM-LLL', 'sharperatio': 0.5937277850215158, 'returnstd': 7148.182003348198, 'startcash': 1000000, 'endcash': 1187099.940492673, 'profit': 0.1870999404926731}
+2019-04-13 23:42:16,170 INFO - __main__ - Running pair 132/133
+2019-04-13 23:42:16,255 INFO - ptstrategy - -
+2019-04-13 23:42:16,256 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-RNG', 'sharperatio': 0.6477779572279976, 'returnstd': 14388.349565542285, 'startcash': 1000000, 'endcash': 1166424.264830683, 'profit': 0.1664242648306829}
+2019-04-13 23:42:16,256 INFO - __main__ - Running pair 133/133
+2019-04-13 23:42:16,326 INFO - ptstrategy - -
+2019-04-13 23:42:16,327 INFO - __main__ - Performance of this pair: {'pair': 'AL-ELLI', 'sharperatio': 0.28653538786246907, 'returnstd': 16442.57673783926, 'startcash': 1000000, 'endcash': 1041027.7445376038, 'profit': 0.04102774453760381}
+2019-04-13 23:42:16,333 INFO - __main__ - Performance of this set of parameters: (50, 2.0, 0.5, -0.5, -0.39720878962359224, -0.6353226633074291, -0.017117739711988322, -0.01571443067411089, 0.1660049117133973, 'ee00a0d2-4b0d-46bf-ab00-6023350dc5a9')
+2019-04-13 23:42:16,333 INFO - __main__ - Running parameter combination 4/4
+2019-04-13 23:42:16,333 INFO - __main__ - Backtesting all pairs using parameters: {'lookback': 40, 'enter_threshold': 2.0, 'exit_threshold': 0.5, 'loss_limit': -0.5}
+2019-04-13 23:42:16,337 INFO - __main__ - Running pair 1/133
+2019-04-13 23:42:16,487 INFO - ptstrategy - -
+2019-04-13 23:42:16,488 INFO - __main__ - Performance of this pair: {'pair': 'AER-AL', 'sharperatio': -7.491177860306578, 'returnstd': 3879.146595622847, 'startcash': 1000000, 'endcash': 1004039.2059603443, 'profit': 0.004039205960344291}
+2019-04-13 23:42:16,488 INFO - __main__ - Running pair 2/133
+2019-04-13 23:42:16,578 INFO - ptstrategy - -
+2019-04-13 23:42:16,578 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-VMW', 'sharperatio': -0.5705260801014501, 'returnstd': 17072.28439965043, 'startcash': 1000000, 'endcash': 665648.8251699663, 'profit': -0.3343511748300337}
+2019-04-13 23:42:16,578 INFO - __main__ - Running pair 3/133
+2019-04-13 23:42:16,641 INFO - ptstrategy - -
+2019-04-13 23:42:16,641 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-SAIC', 'sharperatio': -0.7139256128546463, 'returnstd': 12178.32682833472, 'startcash': 1000000, 'endcash': 859924.2036893917, 'profit': -0.14007579631060826}
+2019-04-13 23:42:16,641 INFO - __main__ - Running pair 4/133
+2019-04-13 23:42:16,703 INFO - ptstrategy - -
+2019-04-13 23:42:16,703 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-RHT', 'sharperatio': -1.8437892106091847, 'returnstd': 17014.120326581484, 'startcash': 1000000, 'endcash': 906774.2030323208, 'profit': -0.09322579696767917}
+2019-04-13 23:42:16,703 INFO - __main__ - Running pair 5/133
+2019-04-13 23:42:16,789 INFO - ptstrategy - -
+2019-04-13 23:42:16,789 INFO - __main__ - Performance of this pair: {'pair': 'CRM-VMW', 'sharperatio': -1.0118466174964698, 'returnstd': 8409.783162555046, 'startcash': 1000000, 'endcash': 941181.4569045862, 'profit': -0.05881854309541383}
+2019-04-13 23:42:16,790 INFO - __main__ - Running pair 6/133
+2019-04-13 23:42:16,904 INFO - ptstrategy - -
+2019-04-13 23:42:16,905 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-STM', 'sharperatio': 0.5207408011087572, 'returnstd': 18059.87184634237, 'startcash': 1000000, 'endcash': 1312740.103647423, 'profit': 0.312740103647423}
+2019-04-13 23:42:16,905 INFO - __main__ - Running pair 7/133
+2019-04-13 23:42:17,006 INFO - ptstrategy - -
+2019-04-13 23:42:17,006 INFO - __main__ - Performance of this pair: {'pair': 'LDOS-NOK', 'sharperatio': -0.6994056739160687, 'returnstd': 11701.464784010663, 'startcash': 1000000, 'endcash': 759547.4191176011, 'profit': -0.24045258088239888}
+2019-04-13 23:42:17,006 INFO - __main__ - Running pair 8/133
+2019-04-13 23:42:17,085 INFO - ptstrategy - -
+2019-04-13 23:42:17,086 INFO - __main__ - Performance of this pair: {'pair': 'KFY-TBI', 'sharperatio': -0.7664700580571796, 'returnstd': 11798.887197774975, 'startcash': 1000000, 'endcash': 886571.870958565, 'profit': -0.11342812904143497}
+2019-04-13 23:42:17,086 INFO - __main__ - Running pair 9/133
+2019-04-13 23:42:17,161 INFO - ptstrategy - -
+2019-04-13 23:42:17,162 INFO - __main__ - Performance of this pair: {'pair': 'KFY-NSP', 'sharperatio': -1.2889524627207918, 'returnstd': 11973.718906391701, 'startcash': 1000000, 'endcash': 950785.5848017724, 'profit': -0.049214415198227626}
+2019-04-13 23:42:17,162 INFO - __main__ - Running pair 10/133
+2019-04-13 23:42:17,275 INFO - ptstrategy - -
+2019-04-13 23:42:17,275 INFO - __main__ - Performance of this pair: {'pair': 'LLL-RHT', 'sharperatio': 0.5790483607117178, 'returnstd': 7249.207531291498, 'startcash': 1000000, 'endcash': 1165652.5463686003, 'profit': 0.16565254636860033}
+2019-04-13 23:42:17,275 INFO - __main__ - Running pair 11/133
+2019-04-13 23:42:17,359 INFO - ptstrategy - -
+2019-04-13 23:42:17,360 INFO - __main__ - Performance of this pair: {'pair': 'ATHM-CRM', 'sharperatio': -0.1822783511562726, 'returnstd': 21104.203449831526, 'startcash': 1000000, 'endcash': 999414.989632769, 'profit': -0.0005850103672309779}
+2019-04-13 23:42:17,360 INFO - __main__ - Running pair 12/133
+2019-04-13 23:42:17,461 INFO - ptstrategy - -
+2019-04-13 23:42:17,462 INFO - __main__ - Performance of this pair: {'pair': 'LLL-STM', 'sharperatio': 0.697015513332114, 'returnstd': 15016.671065608321, 'startcash': 1000000, 'endcash': 1261669.649345813, 'profit': 0.2616696493458131}
+2019-04-13 23:42:17,462 INFO - __main__ - Running pair 13/133
+2019-04-13 23:42:17,533 INFO - ptstrategy - -
+2019-04-13 23:42:17,534 INFO - __main__ - Performance of this pair: {'pair': 'JBL-SAP', 'sharperatio': -0.7674728291611244, 'returnstd': 10061.633569637548, 'startcash': 1000000, 'endcash': 869855.6672208301, 'profit': -0.1301443327791699}
+2019-04-13 23:42:17,534 INFO - __main__ - Running pair 14/133
+2019-04-13 23:42:17,627 INFO - ptstrategy - -
+2019-04-13 23:42:17,628 INFO - __main__ - Performance of this pair: {'pair': 'JBL-RHT', 'sharperatio': -0.7770302250672327, 'returnstd': 10501.053824142777, 'startcash': 1000000, 'endcash': 788524.9564386931, 'profit': -0.2114750435613069}
+2019-04-13 23:42:17,628 INFO - __main__ - Running pair 15/133
+2019-04-13 23:42:17,692 INFO - ptstrategy - -
+2019-04-13 23:42:17,693 INFO - __main__ - Performance of this pair: {'pair': 'CRM-STM', 'sharperatio': 0.6090825027057256, 'returnstd': 14528.497460890036, 'startcash': 1000000, 'endcash': 1156090.815390333, 'profit': 0.15609081539033307}
+2019-04-13 23:42:17,693 INFO - __main__ - Running pair 16/133
+2019-04-13 23:42:17,824 INFO - ptstrategy - -
+2019-04-13 23:42:17,825 INFO - __main__ - Performance of this pair: {'pair': 'JBL-ORCL', 'sharperatio': 0.47918592719563574, 'returnstd': 7017.701456646238, 'startcash': 1000000, 'endcash': 1093072.6744137343, 'profit': 0.09307267441373435}
+2019-04-13 23:42:17,825 INFO - __main__ - Running pair 17/133
+2019-04-13 23:42:17,947 INFO - ptstrategy - -
+2019-04-13 23:42:17,948 INFO - __main__ - Performance of this pair: {'pair': 'CRM-SAP', 'sharperatio': 0.19302654440169287, 'returnstd': 4537.5670361199245, 'startcash': 1000000, 'endcash': 1048168.8559240787, 'profit': 0.04816885592407873}
+2019-04-13 23:42:17,948 INFO - __main__ - Running pair 18/133
+2019-04-13 23:42:18,026 INFO - ptstrategy - -
+2019-04-13 23:42:18,027 INFO - __main__ - Performance of this pair: {'pair': 'JBL-NSP', 'sharperatio': -0.6798865588566542, 'returnstd': 14665.324629154835, 'startcash': 1000000, 'endcash': 749466.2874617757, 'profit': -0.2505337125382243}
+2019-04-13 23:42:18,027 INFO - __main__ - Running pair 19/133
+2019-04-13 23:42:18,124 INFO - ptstrategy - -
+2019-04-13 23:42:18,125 INFO - __main__ - Performance of this pair: {'pair': 'JBL-LLL', 'sharperatio': -0.7678236950079724, 'returnstd': 8522.33315140953, 'startcash': 1000000, 'endcash': 842916.9611558601, 'profit': -0.1570830388441399}
+2019-04-13 23:42:18,125 INFO - __main__ - Running pair 20/133
+2019-04-13 23:42:18,235 INFO - ptstrategy - -
+2019-04-13 23:42:18,236 INFO - __main__ - Performance of this pair: {'pair': 'ITW-STM', 'sharperatio': 0.03600319322831616, 'returnstd': 8949.166932063301, 'startcash': 1000000, 'endcash': 1031189.0610335609, 'profit': 0.031189061033560894}
+2019-04-13 23:42:18,236 INFO - __main__ - Running pair 21/133
+2019-04-13 23:42:18,339 INFO - ptstrategy - -
+2019-04-13 23:42:18,340 INFO - __main__ - Performance of this pair: {'pair': 'ITW-SAP', 'sharperatio': -1.3211551321994481, 'returnstd': 5735.290129304942, 'startcash': 1000000, 'endcash': 995318.1674588344, 'profit': -0.00468183254116564}
+2019-04-13 23:42:18,340 INFO - __main__ - Running pair 22/133
+2019-04-13 23:42:18,432 INFO - ptstrategy - -
+2019-04-13 23:42:18,433 INFO - __main__ - Performance of this pair: {'pair': 'MAN-RXN', 'sharperatio': -1.6543591323204783, 'returnstd': 9149.258460035599, 'startcash': 1000000, 'endcash': 962548.7027272339, 'profit': -0.037451297272766124}
+2019-04-13 23:42:18,433 INFO - __main__ - Running pair 23/133
+2019-04-13 23:42:18,541 INFO - ptstrategy - -
+2019-04-13 23:42:18,542 INFO - __main__ - Performance of this pair: {'pair': 'MAN-SAP', 'sharperatio': 0.4349048100601706, 'returnstd': 8590.537262333532, 'startcash': 1000000, 'endcash': 1086824.0112544494, 'profit': 0.08682401125444937}
+2019-04-13 23:42:18,542 INFO - __main__ - Running pair 24/133
+2019-04-13 23:42:18,682 INFO - ptstrategy - -
+2019-04-13 23:42:18,683 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RNG', 'sharperatio': 0.44167822070832874, 'returnstd': 8100.500686582661, 'startcash': 1000000, 'endcash': 1086163.7223585653, 'profit': 0.08616372235856531}
+2019-04-13 23:42:18,683 INFO - __main__ - Running pair 25/133
+2019-04-13 23:42:18,767 INFO - ptstrategy - -
+2019-04-13 23:42:18,768 INFO - __main__ - Performance of this pair: {'pair': 'CRM-RHT', 'sharperatio': 0.29759956832778567, 'returnstd': 7130.890365452445, 'startcash': 1000000, 'endcash': 1041768.8170789386, 'profit': 0.04176881707893859}
+2019-04-13 23:42:18,768 INFO - __main__ - Running pair 26/133
+2019-04-13 23:42:18,863 INFO - ptstrategy - -
+2019-04-13 23:42:18,864 INFO - __main__ - Performance of this pair: {'pair': 'ITW-RHT', 'sharperatio': 0.2530991114247299, 'returnstd': 10407.727693837307, 'startcash': 1000000, 'endcash': 1057910.0707851013, 'profit': 0.05791007078510127}
+2019-04-13 23:42:18,864 INFO - __main__ - Running pair 27/133
+2019-04-13 23:42:18,953 INFO - ptstrategy - -
+2019-04-13 23:42:18,953 INFO - __main__ - Performance of this pair: {'pair': 'MAN-STM', 'sharperatio': 0.677198092636397, 'returnstd': 15551.894976786702, 'startcash': 1000000, 'endcash': 1158080.4256328763, 'profit': 0.15808042563287633}
+2019-04-13 23:42:18,953 INFO - __main__ - Running pair 28/133
+2019-04-13 23:42:19,035 INFO - ptstrategy - -
+2019-04-13 23:42:19,036 INFO - __main__ - Performance of this pair: {'pair': 'ITW-QTWO', 'sharperatio': -0.549761639610079, 'returnstd': 10413.272691757174, 'startcash': 1000000, 'endcash': 943717.9630597557, 'profit': -0.05628203694024426}
+2019-04-13 23:42:19,036 INFO - __main__ - Running pair 29/133
+2019-04-13 23:42:19,128 INFO - ptstrategy - -
+2019-04-13 23:42:19,129 INFO - __main__ - Performance of this pair: {'pair': 'ITW-ORCL', 'sharperatio': -1.3474856724066337, 'returnstd': 8090.904004374076, 'startcash': 1000000, 'endcash': 961493.3439305461, 'profit': -0.03850665606945392}
+2019-04-13 23:42:19,129 INFO - __main__ - Running pair 30/133
+2019-04-13 23:42:19,190 INFO - ptstrategy - -
+2019-04-13 23:42:19,190 INFO - __main__ - Performance of this pair: {'pair': 'MODN-RHT', 'sharperatio': 0.2523989775004633, 'returnstd': 14905.154601893693, 'startcash': 1000000, 'endcash': 1074250.0530323207, 'profit': 0.0742500530323207}
+2019-04-13 23:42:19,190 INFO - __main__ - Running pair 31/133
+2019-04-13 23:42:19,261 INFO - ptstrategy - -
+2019-04-13 23:42:19,262 INFO - __main__ - Performance of this pair: {'pair': 'MODN-XRX', 'sharperatio': -0.5747073815261939, 'returnstd': 12603.442786062453, 'startcash': 1000000, 'endcash': 943190.7161919483, 'profit': -0.056809283808051725}
+2019-04-13 23:42:19,262 INFO - __main__ - Running pair 32/133
+2019-04-13 23:42:19,355 INFO - ptstrategy - -
+2019-04-13 23:42:19,355 INFO - __main__ - Performance of this pair: {'pair': 'MODN-ZEN', 'sharperatio': 0.513221019406479, 'returnstd': 15458.37029355603, 'startcash': 1000000, 'endcash': 1215754.7513678498, 'profit': 0.21575475136784977}
+2019-04-13 23:42:19,355 INFO - __main__ - Running pair 33/133
+2019-04-13 23:42:19,421 INFO - ptstrategy - -
+2019-04-13 23:42:19,422 INFO - __main__ - Performance of this pair: {'pair': 'IBM-TGH', 'sharperatio': -0.9312480140152645, 'returnstd': 21299.810514984492, 'startcash': 1000000, 'endcash': 683913.2284000055, 'profit': -0.3160867715999945}
+2019-04-13 23:42:19,422 INFO - __main__ - Running pair 34/133
+2019-04-13 23:42:19,520 INFO - ptstrategy - -
+2019-04-13 23:42:19,520 INFO - __main__ - Performance of this pair: {'pair': 'MXL-VMW', 'sharperatio': 0.3962514237395197, 'returnstd': 14158.912867367562, 'startcash': 1000000, 'endcash': 1049011.9279273371, 'profit': 0.04901192792733712}
+2019-04-13 23:42:19,521 INFO - __main__ - Running pair 35/133
+2019-04-13 23:42:19,595 INFO - ptstrategy - -
+2019-04-13 23:42:19,596 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-ZEN', 'sharperatio': -1.0791730929829502, 'returnstd': 14105.445741354488, 'startcash': 1000000, 'endcash': 919443.4602275727, 'profit': -0.08055653977242729}
+2019-04-13 23:42:19,596 INFO - __main__ - Running pair 36/133
+2019-04-13 23:42:19,709 INFO - ptstrategy - -
+2019-04-13 23:42:19,710 INFO - __main__ - Performance of this pair: {'pair': 'CRM-MAN', 'sharperatio': 0.5165055739166664, 'returnstd': 8441.832997098569, 'startcash': 1000000, 'endcash': 1070232.1181172566, 'profit': 0.07023211811725656}
+2019-04-13 23:42:19,710 INFO - __main__ - Running pair 37/133
+2019-04-13 23:42:19,787 INFO - ptstrategy - -
+2019-04-13 23:42:19,788 INFO - __main__ - Performance of this pair: {'pair': 'NOK-NSP', 'sharperatio': -0.6771887499366053, 'returnstd': 16924.805305656013, 'startcash': 1000000, 'endcash': 598870.9414716458, 'profit': -0.4011290585283542}
+2019-04-13 23:42:19,788 INFO - __main__ - Running pair 38/133
+2019-04-13 23:42:19,865 INFO - ptstrategy - -
+2019-04-13 23:42:19,866 INFO - __main__ - Performance of this pair: {'pair': 'ANET-NOK', 'sharperatio': -0.5986174773932531, 'returnstd': 23056.86537026275, 'startcash': 1000000, 'endcash': 445757.11436588573, 'profit': -0.5542428856341143}
+2019-04-13 23:42:19,866 INFO - __main__ - Running pair 39/133
+2019-04-13 23:42:19,937 INFO - ptstrategy - -
+2019-04-13 23:42:19,938 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-RHT', 'sharperatio': 0.6146986215193764, 'returnstd': 15014.846553800851, 'startcash': 1000000, 'endcash': 1188263.3662419438, 'profit': 0.18826336624194379}
+2019-04-13 23:42:19,938 INFO - __main__ - Running pair 40/133
+2019-04-13 23:42:20,016 INFO - ptstrategy - -
+2019-04-13 23:42:20,017 INFO - __main__ - Performance of this pair: {'pair': 'ANET-LDOS', 'sharperatio': -0.6404776378569387, 'returnstd': 21972.27683495489, 'startcash': 1000000, 'endcash': 735539.9256060354, 'profit': -0.26446007439396463}
+2019-04-13 23:42:20,017 INFO - __main__ - Running pair 41/133
+2019-04-13 23:42:20,095 INFO - ptstrategy - -
+2019-04-13 23:42:20,096 INFO - __main__ - Performance of this pair: {'pair': 'ANET-HPQ', 'sharperatio': -0.5985505742751116, 'returnstd': 21101.28174337218, 'startcash': 1000000, 'endcash': 649270.0323286306, 'profit': -0.35072996767136944}
+2019-04-13 23:42:20,096 INFO - __main__ - Running pair 42/133
+2019-04-13 23:42:20,202 INFO - ptstrategy - -
+2019-04-13 23:42:20,202 INFO - __main__ - Performance of this pair: {'pair': 'HUBS-JBL', 'sharperatio': -0.8344698900167772, 'returnstd': 13341.419279276408, 'startcash': 1000000, 'endcash': 839905.4976695257, 'profit': -0.16009450233047431}
+2019-04-13 23:42:20,202 INFO - __main__ - Running pair 43/133
+2019-04-13 23:42:20,289 INFO - ptstrategy - -
+2019-04-13 23:42:20,289 INFO - __main__ - Performance of this pair: {'pair': 'TRTN-VMW', 'sharperatio': -0.6665387842749441, 'returnstd': 16336.178817101754, 'startcash': 1000000, 'endcash': 982792.2435338824, 'profit': -0.017207756466117573}
+2019-04-13 23:42:20,289 INFO - __main__ - Running pair 44/133
+2019-04-13 23:42:20,387 INFO - ptstrategy - -
+2019-04-13 23:42:20,388 INFO - __main__ - Performance of this pair: {'pair': 'ANET-EPAM', 'sharperatio': 0.7388626181746756, 'returnstd': 19602.657508504, 'startcash': 1000000, 'endcash': 1194120.6021312308, 'profit': 0.19412060213123075}
+2019-04-13 23:42:20,388 INFO - __main__ - Running pair 45/133
+2019-04-13 23:42:20,465 INFO - ptstrategy - -
+2019-04-13 23:42:20,466 INFO - __main__ - Performance of this pair: {'pair': 'ANET-CLGX', 'sharperatio': -0.6567489618367484, 'returnstd': 21638.335794200295, 'startcash': 1000000, 'endcash': 634622.3345099997, 'profit': -0.3653776654900003}
+2019-04-13 23:42:20,466 INFO - __main__ - Running pair 46/133
+2019-04-13 23:42:20,549 INFO - ptstrategy - -
+2019-04-13 23:42:20,550 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-RNG', 'sharperatio': -0.7076120180264185, 'returnstd': 14948.292844997193, 'startcash': 1000000, 'endcash': 702776.6405996516, 'profit': -0.2972233594003484}
+2019-04-13 23:42:20,550 INFO - __main__ - Running pair 47/133
+2019-04-13 23:42:20,612 INFO - ptstrategy - -
+2019-04-13 23:42:20,613 INFO - __main__ - Performance of this pair: {'pair': 'NOW-TRTN', 'sharperatio': -0.6381973786434686, 'returnstd': 17789.689381707343, 'startcash': 1000000, 'endcash': 873151.7076359589, 'profit': -0.12684829236404108}
+2019-04-13 23:42:20,613 INFO - __main__ - Running pair 48/133
+2019-04-13 23:42:20,707 INFO - ptstrategy - -
+2019-04-13 23:42:20,708 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ORCL', 'sharperatio': 0.527848859250842, 'returnstd': 9848.231364365678, 'startcash': 1000000, 'endcash': 1118339.0011806842, 'profit': 0.11833900118068419}
+2019-04-13 23:42:20,708 INFO - __main__ - Running pair 49/133
+2019-04-13 23:42:20,782 INFO - ptstrategy - -
+2019-04-13 23:42:20,783 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NOK', 'sharperatio': -1.0403953923538014, 'returnstd': 16112.437681319563, 'startcash': 1000000, 'endcash': 929745.7894544422, 'profit': -0.07025421054555778}
+2019-04-13 23:42:20,783 INFO - __main__ - Running pair 50/133
+2019-04-13 23:42:20,889 INFO - ptstrategy - -
+2019-04-13 23:42:20,890 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ITW', 'sharperatio': 0.7040421325860285, 'returnstd': 6829.898547064467, 'startcash': 1000000, 'endcash': 1167213.8476907918, 'profit': 0.1672138476907918}
+2019-04-13 23:42:20,890 INFO - __main__ - Running pair 51/133
+2019-04-13 23:42:20,991 INFO - ptstrategy - -
+2019-04-13 23:42:20,992 INFO - __main__ - Performance of this pair: {'pair': 'TGH-VMW', 'sharperatio': -0.7406353283280823, 'returnstd': 19013.55603185403, 'startcash': 1000000, 'endcash': 959244.5692978061, 'profit': -0.040755430702193875}
+2019-04-13 23:42:20,992 INFO - __main__ - Running pair 52/133
+2019-04-13 23:42:21,080 INFO - ptstrategy - -
+2019-04-13 23:42:21,081 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-LDOS', 'sharperatio': -0.7176597137211607, 'returnstd': 8297.866922019752, 'startcash': 1000000, 'endcash': 993791.3987795549, 'profit': -0.006208601220445125}
+2019-04-13 23:42:21,081 INFO - __main__ - Running pair 53/133
+2019-04-13 23:42:21,165 INFO - ptstrategy - -
+2019-04-13 23:42:21,166 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-ITW', 'sharperatio': 0.6881660258636472, 'returnstd': 8795.643333474027, 'startcash': 1000000, 'endcash': 1143435.2026814728, 'profit': 0.14343520268147275}
+2019-04-13 23:42:21,166 INFO - __main__ - Running pair 54/133
+2019-04-13 23:42:21,239 INFO - ptstrategy - -
+2019-04-13 23:42:21,240 INFO - __main__ - Performance of this pair: {'pair': 'NSP-PAYC', 'sharperatio': -3.8196505504728844, 'returnstd': 15634.937737660859, 'startcash': 1000000, 'endcash': 985217.1095789664, 'profit': -0.014782890421033604}
+2019-04-13 23:42:21,240 INFO - __main__ - Running pair 55/133
+2019-04-13 23:42:21,311 INFO - ptstrategy - -
+2019-04-13 23:42:21,312 INFO - __main__ - Performance of this pair: {'pair': 'TGH-TRTN', 'sharperatio': 0.521742280080049, 'returnstd': 17549.30925874672, 'startcash': 1000000, 'endcash': 1122228.9361815786, 'profit': 0.12222893618157855}
+2019-04-13 23:42:21,312 INFO - __main__ - Running pair 56/133
+2019-04-13 23:42:21,419 INFO - ptstrategy - -
+2019-04-13 23:42:21,420 INFO - __main__ - Performance of this pair: {'pair': 'TDC-ZEN', 'sharperatio': 0.633578559023451, 'returnstd': 12310.930001545594, 'startcash': 1000000, 'endcash': 1242654.6884891745, 'profit': 0.24265468848917446}
+2019-04-13 23:42:21,420 INFO - __main__ - Running pair 57/133
+2019-04-13 23:42:21,516 INFO - ptstrategy - -
+2019-04-13 23:42:21,517 INFO - __main__ - Performance of this pair: {'pair': 'AMN-SAIC', 'sharperatio': 0.6394300024629641, 'returnstd': 18088.139462719802, 'startcash': 1000000, 'endcash': 1231107.5608693422, 'profit': 0.23110756086934217}
+2019-04-13 23:42:21,517 INFO - __main__ - Running pair 58/133
+2019-04-13 23:42:21,594 INFO - ptstrategy - -
+2019-04-13 23:42:21,595 INFO - __main__ - Performance of this pair: {'pair': 'AMN-NOK', 'sharperatio': -0.7619754236187221, 'returnstd': 17427.85662843583, 'startcash': 1000000, 'endcash': 773325.793491641, 'profit': -0.22667420650835907}
+2019-04-13 23:42:21,595 INFO - __main__ - Running pair 59/133
+2019-04-13 23:42:21,693 INFO - ptstrategy - -
+2019-04-13 23:42:21,694 INFO - __main__ - Performance of this pair: {'pair': 'TDC-VMW', 'sharperatio': -2.327635282166649, 'returnstd': 12704.863983179757, 'startcash': 1000000, 'endcash': 963250.7920317852, 'profit': -0.03674920796821476}
+2019-04-13 23:42:21,694 INFO - __main__ - Running pair 60/133
+2019-04-13 23:42:21,761 INFO - ptstrategy - -
+2019-04-13 23:42:21,762 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-NSP', 'sharperatio': 0.6052642316597457, 'returnstd': 15411.13005445979, 'startcash': 1000000, 'endcash': 1131464.579036517, 'profit': 0.13146457903651707}
+2019-04-13 23:42:21,762 INFO - __main__ - Running pair 61/133
+2019-04-13 23:42:21,852 INFO - ptstrategy - -
+2019-04-13 23:42:21,853 INFO - __main__ - Performance of this pair: {'pair': 'AMN-LDOS', 'sharperatio': 0.5386055841327496, 'returnstd': 13735.307370451465, 'startcash': 1000000, 'endcash': 1125893.4880374982, 'profit': 0.1258934880374982}
+2019-04-13 23:42:21,853 INFO - __main__ - Running pair 62/133
+2019-04-13 23:42:21,929 INFO - ptstrategy - -
+2019-04-13 23:42:21,930 INFO - __main__ - Performance of this pair: {'pair': 'AMN-KFY', 'sharperatio': -0.018673855305694567, 'returnstd': 13472.428476200253, 'startcash': 1000000, 'endcash': 1029788.8616213996, 'profit': 0.029788861621399643}
+2019-04-13 23:42:21,930 INFO - __main__ - Running pair 63/133
+2019-04-13 23:42:22,020 INFO - ptstrategy - -
+2019-04-13 23:42:22,021 INFO - __main__ - Performance of this pair: {'pair': 'NSP-WUBA', 'sharperatio': -0.6214882060469858, 'returnstd': 18507.129889103675, 'startcash': 1000000, 'endcash': 654696.9141184244, 'profit': -0.3453030858815756}
+2019-04-13 23:42:22,021 INFO - __main__ - Running pair 64/133
+2019-04-13 23:42:22,142 INFO - ptstrategy - -
+2019-04-13 23:42:22,142 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-ITW', 'sharperatio': 0.4798258822386286, 'returnstd': 7495.336066160773, 'startcash': 1000000, 'endcash': 1066215.8241494526, 'profit': 0.06621582414945261}
+2019-04-13 23:42:22,142 INFO - __main__ - Running pair 65/133
+2019-04-13 23:42:22,264 INFO - ptstrategy - -
+2019-04-13 23:42:22,264 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-QTWO', 'sharperatio': 0.7899969165323569, 'returnstd': 8195.435103728394, 'startcash': 1000000, 'endcash': 1160112.082758355, 'profit': 0.16011208275835495}
+2019-04-13 23:42:22,264 INFO - __main__ - Running pair 66/133
+2019-04-13 23:42:22,354 INFO - ptstrategy - -
+2019-04-13 23:42:22,355 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RHT', 'sharperatio': -0.9548792047790345, 'returnstd': 9094.48602782046, 'startcash': 1000000, 'endcash': 809991.4922052119, 'profit': -0.19000850779478812}
+2019-04-13 23:42:22,355 INFO - __main__ - Running pair 67/133
+2019-04-13 23:42:22,439 INFO - ptstrategy - -
+2019-04-13 23:42:22,439 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-RNG', 'sharperatio': -0.8250814785668745, 'returnstd': 15200.40576487288, 'startcash': 1000000, 'endcash': 843712.8217763664, 'profit': -0.15628717822363355}
+2019-04-13 23:42:22,439 INFO - __main__ - Running pair 68/133
+2019-04-13 23:42:22,497 INFO - ptstrategy - -
+2019-04-13 23:42:22,498 INFO - __main__ - Performance of this pair: {'pair': 'ORCL-SAP', 'sharperatio': -1.2129142667301713, 'returnstd': 9034.45163558218, 'startcash': 1000000, 'endcash': 921171.9289859494, 'profit': -0.07882807101405062}
+2019-04-13 23:42:22,498 INFO - __main__ - Running pair 69/133
+2019-04-13 23:42:22,593 INFO - ptstrategy - -
+2019-04-13 23:42:22,594 INFO - __main__ - Performance of this pair: {'pair': 'AMN-CLGX', 'sharperatio': 0.4742974675572867, 'returnstd': 12178.262314493655, 'startcash': 1000000, 'endcash': 1133843.0218994482, 'profit': 0.13384302189944824}
+2019-04-13 23:42:22,594 INFO - __main__ - Running pair 70/133
+2019-04-13 23:42:22,690 INFO - ptstrategy - -
+2019-04-13 23:42:22,691 INFO - __main__ - Performance of this pair: {'pair': 'CRM-ETN', 'sharperatio': -2.328508333393835, 'returnstd': 7190.970153807313, 'startcash': 1000000, 'endcash': 976971.1003596539, 'profit': -0.023028899640346063}
+2019-04-13 23:42:22,691 INFO - __main__ - Running pair 71/133
+2019-04-13 23:42:22,768 INFO - ptstrategy - -
+2019-04-13 23:42:22,768 INFO - __main__ - Performance of this pair: {'pair': 'AMN-ANET', 'sharperatio': -0.7206170505162127, 'returnstd': 18321.11561031395, 'startcash': 1000000, 'endcash': 786740.9108294523, 'profit': -0.21325908917054767}
+2019-04-13 23:42:22,769 INFO - __main__ - Running pair 72/133
+2019-04-13 23:42:22,833 INFO - ptstrategy - -
+2019-04-13 23:42:22,833 INFO - __main__ - Performance of this pair: {'pair': 'FDS-ZEN', 'sharperatio': 0.6083552567590702, 'returnstd': 15836.251386709715, 'startcash': 1000000, 'endcash': 1142116.4632969915, 'profit': 0.14211646329699154}
+2019-04-13 23:42:22,833 INFO - __main__ - Running pair 73/133
+2019-04-13 23:42:22,897 INFO - ptstrategy - -
+2019-04-13 23:42:22,897 INFO - __main__ - Performance of this pair: {'pair': 'FDS-VMW', 'sharperatio': 0.44725049241613524, 'returnstd': 12487.461388670623, 'startcash': 1000000, 'endcash': 1099524.5990362642, 'profit': 0.09952459903626423}
+2019-04-13 23:42:22,897 INFO - __main__ - Running pair 74/133
+2019-04-13 23:42:22,960 INFO - ptstrategy - -
+2019-04-13 23:42:22,961 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TGH', 'sharperatio': 0.8115255879373933, 'returnstd': 22756.639980996264, 'startcash': 1000000, 'endcash': 1118655.8725708874, 'profit': 0.11865587257088744}
+2019-04-13 23:42:22,961 INFO - __main__ - Running pair 75/133
+2019-04-13 23:42:23,024 INFO - ptstrategy - -
+2019-04-13 23:42:23,024 INFO - __main__ - Performance of this pair: {'pair': 'FDS-TDC', 'sharperatio': 0.3161029608992154, 'returnstd': 12016.32286484851, 'startcash': 1000000, 'endcash': 1049472.9879783567, 'profit': 0.049472987978356656}
+2019-04-13 23:42:23,024 INFO - __main__ - Running pair 76/133
+2019-04-13 23:42:23,148 INFO - ptstrategy - -
+2019-04-13 23:42:23,149 INFO - __main__ - Performance of this pair: {'pair': 'PAYC-WUBA', 'sharperatio': 0.6276027013233699, 'returnstd': 11200.11655473468, 'startcash': 1000000, 'endcash': 1266819.0547215096, 'profit': 0.2668190547215096}
+2019-04-13 23:42:23,149 INFO - __main__ - Running pair 77/133
+2019-04-13 23:42:23,210 INFO - ptstrategy - -
+2019-04-13 23:42:23,211 INFO - __main__ - Performance of this pair: {'pair': 'FDS-RHT', 'sharperatio': -0.9601160313458049, 'returnstd': 13022.715872566232, 'startcash': 1000000, 'endcash': 845905.8530323207, 'profit': -0.15409414696767926}
+2019-04-13 23:42:23,211 INFO - __main__ - Running pair 78/133
+2019-04-13 23:42:23,281 INFO - ptstrategy - -
+2019-04-13 23:42:23,281 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RHT', 'sharperatio': -0.6859977745943825, 'returnstd': 10916.690107586035, 'startcash': 1000000, 'endcash': 950716.8873327055, 'profit': -0.04928311266729445}
+2019-04-13 23:42:23,281 INFO - __main__ - Running pair 79/133
+2019-04-13 23:42:23,355 INFO - ptstrategy - -
+2019-04-13 23:42:23,356 INFO - __main__ - Performance of this pair: {'pair': 'QTWO-RNG', 'sharperatio': -0.666199809387027, 'returnstd': 15775.551012391588, 'startcash': 1000000, 'endcash': 699542.7888732809, 'profit': -0.30045721112671914}
+2019-04-13 23:42:23,356 INFO - __main__ - Running pair 80/133
+2019-04-13 23:42:23,454 INFO - ptstrategy - -
+2019-04-13 23:42:23,455 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-ELLI', 'sharperatio': 0.6587706560685842, 'returnstd': 8719.02041886337, 'startcash': 1000000, 'endcash': 1090982.272931448, 'profit': 0.09098227293144795}
+2019-04-13 23:42:23,455 INFO - __main__ - Running pair 81/133
+2019-04-13 23:42:23,520 INFO - ptstrategy - -
+2019-04-13 23:42:23,521 INFO - __main__ - Performance of this pair: {'pair': 'ETN-STM', 'sharperatio': -1.8727157607004363, 'returnstd': 16288.466266156196, 'startcash': 1000000, 'endcash': 931672.8152189158, 'profit': -0.06832718478108418}
+2019-04-13 23:42:23,521 INFO - __main__ - Running pair 82/133
+2019-04-13 23:42:23,612 INFO - ptstrategy - -
+2019-04-13 23:42:23,613 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-HPQ', 'sharperatio': 0.5881670952624904, 'returnstd': 8710.97463095873, 'startcash': 1000000, 'endcash': 1178352.6101552097, 'profit': 0.17835261015520967}
+2019-04-13 23:42:23,613 INFO - __main__ - Running pair 83/133
+2019-04-13 23:42:23,694 INFO - ptstrategy - -
+2019-04-13 23:42:23,694 INFO - __main__ - Performance of this pair: {'pair': 'RHT-SAP', 'sharperatio': -1.521374657100286, 'returnstd': 8938.715125447474, 'startcash': 1000000, 'endcash': 957090.5221502974, 'profit': -0.04290947784970258}
+2019-04-13 23:42:23,694 INFO - __main__ - Running pair 84/133
+2019-04-13 23:42:23,823 INFO - ptstrategy - -
+2019-04-13 23:42:23,824 INFO - __main__ - Performance of this pair: {'pair': 'AL-ZEN', 'sharperatio': 0.615533701030767, 'returnstd': 10405.556961436336, 'startcash': 1000000, 'endcash': 1231653.269711026, 'profit': 0.23165326971102598}
+2019-04-13 23:42:23,824 INFO - __main__ - Running pair 85/133
+2019-04-13 23:42:23,885 INFO - ptstrategy - -
+2019-04-13 23:42:23,886 INFO - __main__ - Performance of this pair: {'pair': 'RHT-STM', 'sharperatio': -0.15066258813335406, 'returnstd': 15157.52838970022, 'startcash': 1000000, 'endcash': 1027099.6230323208, 'profit': 0.027099623032320757}
+2019-04-13 23:42:23,886 INFO - __main__ - Running pair 86/133
+2019-04-13 23:42:24,028 INFO - ptstrategy - -
+2019-04-13 23:42:24,029 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-JBL', 'sharperatio': 0.46245191356672954, 'returnstd': 6624.6179272229865, 'startcash': 1000000, 'endcash': 1086706.6477849963, 'profit': 0.08670664778499632}
+2019-04-13 23:42:24,029 INFO - __main__ - Running pair 87/133
+2019-04-13 23:42:24,091 INFO - ptstrategy - -
+2019-04-13 23:42:24,091 INFO - __main__ - Performance of this pair: {'pair': 'RHT-TDC', 'sharperatio': -1.0131006276544627, 'returnstd': 14620.929594304007, 'startcash': 1000000, 'endcash': 897085.6430323207, 'profit': -0.10291435696767934}
+2019-04-13 23:42:24,091 INFO - __main__ - Running pair 88/133
+2019-04-13 23:42:24,230 INFO - ptstrategy - -
+2019-04-13 23:42:24,231 INFO - __main__ - Performance of this pair: {'pair': 'AL-TDC', 'sharperatio': 0.6197781937728645, 'returnstd': 8497.067164531278, 'startcash': 1000000, 'endcash': 1230742.8301307582, 'profit': 0.23074283013075822}
+2019-04-13 23:42:24,231 INFO - __main__ - Running pair 89/133
+2019-04-13 23:42:24,321 INFO - ptstrategy - -
+2019-04-13 23:42:24,322 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-LDOS', 'sharperatio': -6.549852427104642, 'returnstd': 8180.196041565672, 'startcash': 1000000, 'endcash': 991881.6270976448, 'profit': -0.008118372902355156}
+2019-04-13 23:42:24,322 INFO - __main__ - Running pair 90/133
+2019-04-13 23:42:24,406 INFO - ptstrategy - -
+2019-04-13 23:42:24,406 INFO - __main__ - Performance of this pair: {'pair': 'RHT-VMW', 'sharperatio': 0.32701229957197037, 'returnstd': 10230.053546930563, 'startcash': 1000000, 'endcash': 1062835.0637201862, 'profit': 0.06283506372018624}
+2019-04-13 23:42:24,407 INFO - __main__ - Running pair 91/133
+2019-04-13 23:42:24,468 INFO - ptstrategy - -
+2019-04-13 23:42:24,468 INFO - __main__ - Performance of this pair: {'pair': 'RHT-ZEN', 'sharperatio': -0.9193350120438529, 'returnstd': 15003.540496476957, 'startcash': 1000000, 'endcash': 886543.883032321, 'profit': -0.113456116967679}
+2019-04-13 23:42:24,468 INFO - __main__ - Running pair 92/133
+2019-04-13 23:42:24,529 INFO - ptstrategy - -
+2019-04-13 23:42:24,530 INFO - __main__ - Performance of this pair: {'pair': 'AL-RHT', 'sharperatio': -1.0550072840094722, 'returnstd': 13882.215681733222, 'startcash': 1000000, 'endcash': 901620.6830323208, 'profit': -0.09837931696767918}
+2019-04-13 23:42:24,530 INFO - __main__ - Running pair 93/133
+2019-04-13 23:42:24,598 INFO - ptstrategy - -
+2019-04-13 23:42:24,599 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NOK', 'sharperatio': -0.6591416667312805, 'returnstd': 15268.343178934423, 'startcash': 1000000, 'endcash': 864510.843871379, 'profit': -0.13548915612862097}
+2019-04-13 23:42:24,599 INFO - __main__ - Running pair 94/133
+2019-04-13 23:42:24,743 INFO - ptstrategy - -
+2019-04-13 23:42:24,743 INFO - __main__ - Performance of this pair: {'pair': 'RNG-SAP', 'sharperatio': 0.6213365167696657, 'returnstd': 9821.680943868429, 'startcash': 1000000, 'endcash': 1247325.848647158, 'profit': 0.2473258486471579}
+2019-04-13 23:42:24,744 INFO - __main__ - Running pair 95/133
+2019-04-13 23:42:24,819 INFO - ptstrategy - -
+2019-04-13 23:42:24,820 INFO - __main__ - Performance of this pair: {'pair': 'CLGX-NSP', 'sharperatio': -1.2098324685018473, 'returnstd': 12467.374911456278, 'startcash': 1000000, 'endcash': 947145.6342699331, 'profit': -0.0528543657300669}
+2019-04-13 23:42:24,820 INFO - __main__ - Running pair 96/133
+2019-04-13 23:42:24,924 INFO - ptstrategy - -
+2019-04-13 23:42:24,925 INFO - __main__ - Performance of this pair: {'pair': 'AL-LLL', 'sharperatio': 0.4401903801965681, 'returnstd': 8092.91001376276, 'startcash': 1000000, 'endcash': 1085168.4347925296, 'profit': 0.08516843479252956}
+2019-04-13 23:42:24,925 INFO - __main__ - Running pair 97/133
+2019-04-13 23:42:25,007 INFO - ptstrategy - -
+2019-04-13 23:42:25,008 INFO - __main__ - Performance of this pair: {'pair': 'STM-VMW', 'sharperatio': -0.9428216211882703, 'returnstd': 19807.854237734384, 'startcash': 1000000, 'endcash': 582431.0093026259, 'profit': -0.4175689906973741}
+2019-04-13 23:42:25,008 INFO - __main__ - Running pair 98/133
+2019-04-13 23:42:25,070 INFO - ptstrategy - -
+2019-04-13 23:42:25,071 INFO - __main__ - Performance of this pair: {'pair': 'AL-FDS', 'sharperatio': 0.45606186271547144, 'returnstd': 11285.964244098132, 'startcash': 1000000, 'endcash': 1077053.9128065691, 'profit': 0.07705391280656913}
+2019-04-13 23:42:25,071 INFO - __main__ - Running pair 99/133
+2019-04-13 23:42:25,168 INFO - ptstrategy - -
+2019-04-13 23:42:25,168 INFO - __main__ - Performance of this pair: {'pair': 'AL-ETN', 'sharperatio': 0.5164687560258705, 'returnstd': 8655.994771488507, 'startcash': 1000000, 'endcash': 1114709.3152060295, 'profit': 0.11470931520602945}
+2019-04-13 23:42:25,169 INFO - __main__ - Running pair 100/133
+2019-04-13 23:42:25,226 INFO - ptstrategy - -
+2019-04-13 23:42:25,227 INFO - __main__ - Performance of this pair: {'pair': 'RXN-SAP', 'sharperatio': -1.3790460960955628, 'returnstd': 10396.497463855589, 'startcash': 1000000, 'endcash': 963138.8789859494, 'profit': -0.036861121014050556}
+2019-04-13 23:42:25,227 INFO - __main__ - Running pair 101/133
+2019-04-13 23:42:25,334 INFO - ptstrategy - -
+2019-04-13 23:42:25,335 INFO - __main__ - Performance of this pair: {'pair': 'ETN-ITW', 'sharperatio': -2.7481514373461033, 'returnstd': 5979.772763706161, 'startcash': 1000000, 'endcash': 1006835.0699795246, 'profit': 0.006835069979524589}
+2019-04-13 23:42:25,335 INFO - __main__ - Running pair 102/133
+2019-04-13 23:42:25,412 INFO - ptstrategy - -
+2019-04-13 23:42:25,413 INFO - __main__ - Performance of this pair: {'pair': 'AL-AYR', 'sharperatio': -0.8511187676165466, 'returnstd': 7230.134671597938, 'startcash': 1000000, 'endcash': 860335.932085614, 'profit': -0.13966406791438604}
+2019-04-13 23:42:25,413 INFO - __main__ - Running pair 103/133
+2019-04-13 23:42:25,473 INFO - ptstrategy - -
+2019-04-13 23:42:25,473 INFO - __main__ - Performance of this pair: {'pair': 'SAP-STM', 'sharperatio': 0.7015976737865168, 'returnstd': 14400.346706871043, 'startcash': 1000000, 'endcash': 1230389.4189859494, 'profit': 0.23038941898594936}
+2019-04-13 23:42:25,473 INFO - __main__ - Running pair 104/133
+2019-04-13 23:42:25,590 INFO - ptstrategy - -
+2019-04-13 23:42:25,590 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-PAYC', 'sharperatio': 0.250933198909803, 'returnstd': 7472.390460809784, 'startcash': 1000000, 'endcash': 1050924.9131476716, 'profit': 0.05092491314767161}
+2019-04-13 23:42:25,590 INFO - __main__ - Running pair 105/133
+2019-04-13 23:42:25,653 INFO - ptstrategy - -
+2019-04-13 23:42:25,654 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-LDOS', 'sharperatio': -1.089791057626763, 'returnstd': 12293.18797820243, 'startcash': 1000000, 'endcash': 878761.6134291186, 'profit': -0.12123838657088136}
+2019-04-13 23:42:25,654 INFO - __main__ - Running pair 106/133
+2019-04-13 23:42:25,729 INFO - ptstrategy - -
+2019-04-13 23:42:25,730 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-HPQ', 'sharperatio': -0.8179523568589457, 'returnstd': 11336.401637252507, 'startcash': 1000000, 'endcash': 853130.4436306813, 'profit': -0.14686955636931875}
+2019-04-13 23:42:25,730 INFO - __main__ - Running pair 107/133
+2019-04-13 23:42:25,818 INFO - ptstrategy - -
+2019-04-13 23:42:25,819 INFO - __main__ - Performance of this pair: {'pair': 'CLS-TRTN', 'sharperatio': -0.963306038865907, 'returnstd': 17535.189333003473, 'startcash': 1000000, 'endcash': 728841.1841215339, 'profit': -0.27115881587846613}
+2019-04-13 23:42:25,819 INFO - __main__ - Running pair 108/133
+2019-04-13 23:42:25,908 INFO - ptstrategy - -
+2019-04-13 23:42:25,909 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-GWRE', 'sharperatio': -0.8016144093984735, 'returnstd': 14017.275113082509, 'startcash': 1000000, 'endcash': 841114.4290024944, 'profit': -0.15888557099750555}
+2019-04-13 23:42:25,909 INFO - __main__ - Running pair 109/133
+2019-04-13 23:42:25,994 INFO - ptstrategy - -
+2019-04-13 23:42:25,994 INFO - __main__ - Performance of this pair: {'pair': 'CLS-VMW', 'sharperatio': -0.8559744832018006, 'returnstd': 13043.410776942941, 'startcash': 1000000, 'endcash': 795959.9737533997, 'profit': -0.2040400262466003}
+2019-04-13 23:42:25,994 INFO - __main__ - Running pair 110/133
+2019-04-13 23:42:26,065 INFO - ptstrategy - -
+2019-04-13 23:42:26,065 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-NSP', 'sharperatio': -0.8270499805237036, 'returnstd': 16997.790403044914, 'startcash': 1000000, 'endcash': 823139.5897989438, 'profit': -0.17686041020105617}
+2019-04-13 23:42:26,065 INFO - __main__ - Running pair 111/133
+2019-04-13 23:42:26,139 INFO - ptstrategy - -
+2019-04-13 23:42:26,140 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-LLL', 'sharperatio': -0.7795569198161916, 'returnstd': 13650.602325645457, 'startcash': 1000000, 'endcash': 821584.8528036367, 'profit': -0.1784151471963633}
+2019-04-13 23:42:26,140 INFO - __main__ - Running pair 112/133
+2019-04-13 23:42:26,241 INFO - ptstrategy - -
+2019-04-13 23:42:26,241 INFO - __main__ - Performance of this pair: {'pair': 'LEAF-LLL', 'sharperatio': 0.4378575936474461, 'returnstd': 12767.155289623637, 'startcash': 1000000, 'endcash': 1156940.5420402002, 'profit': 0.1569405420402002}
+2019-04-13 23:42:26,241 INFO - __main__ - Running pair 113/133
+2019-04-13 23:42:26,370 INFO - ptstrategy - -
+2019-04-13 23:42:26,371 INFO - __main__ - Performance of this pair: {'pair': 'AL-XRX', 'sharperatio': -1.2635247422139235, 'returnstd': 8076.771288058967, 'startcash': 1000000, 'endcash': 983187.7110496223, 'profit': -0.016812288950377726}
+2019-04-13 23:42:26,371 INFO - __main__ - Running pair 114/133
+2019-04-13 23:42:26,431 INFO - ptstrategy - -
+2019-04-13 23:42:26,432 INFO - __main__ - Performance of this pair: {'pair': 'TGH-URI', 'sharperatio': -0.6517659763810267, 'returnstd': 22668.55942815445, 'startcash': 1000000, 'endcash': 969608.9229888687, 'profit': -0.03039107701113133}
+2019-04-13 23:42:26,432 INFO - __main__ - Running pair 115/133
+2019-04-13 23:42:26,505 INFO - ptstrategy - -
+2019-04-13 23:42:26,505 INFO - __main__ - Performance of this pair: {'pair': 'NOK-WUBA', 'sharperatio': -0.8654044784324028, 'returnstd': 19531.39773469625, 'startcash': 1000000, 'endcash': 492310.35509270197, 'profit': -0.5076896449072981}
+2019-04-13 23:42:26,505 INFO - __main__ - Running pair 116/133
+2019-04-13 23:42:26,570 INFO - ptstrategy - -
+2019-04-13 23:42:26,570 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-JBL', 'sharperatio': 0.5638771913393524, 'returnstd': 15591.443596849953, 'startcash': 1000000, 'endcash': 1233233.2892862256, 'profit': 0.23323328928622558}
+2019-04-13 23:42:26,571 INFO - __main__ - Running pair 117/133
+2019-04-13 23:42:26,650 INFO - ptstrategy - -
+2019-04-13 23:42:26,650 INFO - __main__ - Performance of this pair: {'pair': 'JBL-TBI', 'sharperatio': -0.5132577637410521, 'returnstd': 13191.055991287618, 'startcash': 1000000, 'endcash': 1017382.6775972544, 'profit': 0.017382677597254398}
+2019-04-13 23:42:26,651 INFO - __main__ - Running pair 118/133
+2019-04-13 23:42:26,737 INFO - ptstrategy - -
+2019-04-13 23:42:26,738 INFO - __main__ - Performance of this pair: {'pair': 'ETN-RHT', 'sharperatio': -1.5027458165124075, 'returnstd': 9584.0831853503, 'startcash': 1000000, 'endcash': 950429.994049293, 'profit': -0.04957000595070701}
+2019-04-13 23:42:26,738 INFO - __main__ - Running pair 119/133
+2019-04-13 23:42:26,818 INFO - ptstrategy - -
+2019-04-13 23:42:26,819 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-JBL', 'sharperatio': -0.8338390927637804, 'returnstd': 12970.390517432237, 'startcash': 1000000, 'endcash': 914917.1825794762, 'profit': -0.08508281742052384}
+2019-04-13 23:42:26,819 INFO - __main__ - Running pair 120/133
+2019-04-13 23:42:26,911 INFO - ptstrategy - -
+2019-04-13 23:42:26,912 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-SAP', 'sharperatio': 0.4347460658993633, 'returnstd': 9025.307101375238, 'startcash': 1000000, 'endcash': 1072581.5482167518, 'profit': 0.07258154821675178}
+2019-04-13 23:42:26,912 INFO - __main__ - Running pair 121/133
+2019-04-13 23:42:26,987 INFO - ptstrategy - -
+2019-04-13 23:42:26,988 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-NSP', 'sharperatio': -0.6955291225296526, 'returnstd': 13293.92937141307, 'startcash': 1000000, 'endcash': 880007.2794065684, 'profit': -0.11999272059343162}
+2019-04-13 23:42:26,988 INFO - __main__ - Running pair 122/133
+2019-04-13 23:42:27,072 INFO - ptstrategy - -
+2019-04-13 23:42:27,073 INFO - __main__ - Performance of this pair: {'pair': 'RHT-RNG', 'sharperatio': 0.3715926402112326, 'returnstd': 14344.97352866725, 'startcash': 1000000, 'endcash': 1090355.5885220852, 'profit': 0.09035558852208522}
+2019-04-13 23:42:27,073 INFO - __main__ - Running pair 123/133
+2019-04-13 23:42:27,166 INFO - ptstrategy - -
+2019-04-13 23:42:27,167 INFO - __main__ - Performance of this pair: {'pair': 'ITW-LLL', 'sharperatio': 0.49464641940596277, 'returnstd': 5942.0885989550725, 'startcash': 1000000, 'endcash': 1099845.464150645, 'profit': 0.09984546415064507}
+2019-04-13 23:42:27,167 INFO - __main__ - Running pair 124/133
+2019-04-13 23:42:27,271 INFO - ptstrategy - -
+2019-04-13 23:42:27,272 INFO - __main__ - Performance of this pair: {'pair': 'LLL-TDC', 'sharperatio': 0.5671931918779549, 'returnstd': 9866.230160345485, 'startcash': 1000000, 'endcash': 1157133.483621096, 'profit': 0.157133483621096}
+2019-04-13 23:42:27,272 INFO - __main__ - Running pair 125/133
+2019-04-13 23:42:27,336 INFO - ptstrategy - -
+2019-04-13 23:42:27,337 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-HPQ', 'sharperatio': 0.16031470635794806, 'returnstd': 15844.579388156366, 'startcash': 1000000, 'endcash': 1046175.2553104418, 'profit': 0.04617525531044183}
+2019-04-13 23:42:27,337 INFO - __main__ - Running pair 126/133
+2019-04-13 23:42:27,408 INFO - ptstrategy - -
+2019-04-13 23:42:27,408 INFO - __main__ - Performance of this pair: {'pair': 'EPAM-UMC', 'sharperatio': -0.8552119709046833, 'returnstd': 15749.993846083342, 'startcash': 1000000, 'endcash': 916170.4720308152, 'profit': -0.0838295279691848}
+2019-04-13 23:42:27,408 INFO - __main__ - Running pair 127/133
+2019-04-13 23:42:27,488 INFO - ptstrategy - -
+2019-04-13 23:42:27,489 INFO - __main__ - Performance of this pair: {'pair': 'AL-LEAF', 'sharperatio': -0.13253219373502864, 'returnstd': 13364.097180924226, 'startcash': 1000000, 'endcash': 1015059.9252203485, 'profit': 0.015059925220348522}
+2019-04-13 23:42:27,489 INFO - __main__ - Running pair 128/133
+2019-04-13 23:42:27,579 INFO - ptstrategy - -
+2019-04-13 23:42:27,579 INFO - __main__ - Performance of this pair: {'pair': 'ETN-VMW', 'sharperatio': -1.0620027483266512, 'returnstd': 11175.308599945245, 'startcash': 1000000, 'endcash': 857210.7029113079, 'profit': -0.1427892970886921}
+2019-04-13 23:42:27,579 INFO - __main__ - Running pair 129/133
+2019-04-13 23:42:27,679 INFO - ptstrategy - -
+2019-04-13 23:42:27,679 INFO - __main__ - Performance of this pair: {'pair': 'HPQ-JBL', 'sharperatio': -4.427835136740812, 'returnstd': 10532.594049128118, 'startcash': 1000000, 'endcash': 993551.518494213, 'profit': -0.006448481505787}
+2019-04-13 23:42:27,679 INFO - __main__ - Running pair 130/133
+2019-04-13 23:42:27,786 INFO - ptstrategy - -
+2019-04-13 23:42:27,787 INFO - __main__ - Performance of this pair: {'pair': 'ELLI-WUBA', 'sharperatio': -0.7619758816998449, 'returnstd': 20778.18242568993, 'startcash': 1000000, 'endcash': 613385.2525893786, 'profit': -0.38661474741062135}
+2019-04-13 23:42:27,787 INFO - __main__ - Running pair 131/133
+2019-04-13 23:42:27,890 INFO - ptstrategy - -
+2019-04-13 23:42:27,891 INFO - __main__ - Performance of this pair: {'pair': 'CRM-LLL', 'sharperatio': 0.6109722998886209, 'returnstd': 7073.795738323365, 'startcash': 1000000, 'endcash': 1220661.7557945251, 'profit': 0.22066175579452516}
+2019-04-13 23:42:27,891 INFO - __main__ - Running pair 132/133
+2019-04-13 23:42:28,023 INFO - ptstrategy - -
+2019-04-13 23:42:28,023 INFO - __main__ - Performance of this pair: {'pair': 'GWRE-RNG', 'sharperatio': -0.797170889751815, 'returnstd': 7759.189480404148, 'startcash': 1000000, 'endcash': 1017693.6747296889, 'profit': 0.01769367472968891}
+2019-04-13 23:42:28,024 INFO - __main__ - Running pair 133/133
+2019-04-13 23:42:28,088 INFO - ptstrategy - -
+2019-04-13 23:42:28,088 INFO - __main__ - Performance of this pair: {'pair': 'AL-ELLI', 'sharperatio': -1.11979157998292, 'returnstd': 16629.569510979618, 'startcash': 1000000, 'endcash': 997539.3990403502, 'profit': -0.0024606009596497753}
+2019-04-13 23:42:28,096 INFO - __main__ - Performance of this set of parameters: (40, 2.0, 0.5, -0.5, -0.4839521755719362, -0.6404776378569387, -0.024263231353137956, -0.008118372902355156, 0.1734313665479493, '629ae12f-a9eb-4f2f-83a3-a4ea6bf0abb4')

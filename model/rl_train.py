@@ -21,6 +21,8 @@ from pytz import timezone, utc
 plt.rcParams["font.size"] = 16
 plt.rcParams["patch.force_edgecolor"] = True
 
+sys.path.append("./model")
+
 from process_raw_prices import *
 import trading_env
 import rl_load_data
@@ -28,7 +30,6 @@ import rl_constants
 from log_helper import LogHelper
 
 tf.enable_eager_execution()
-
 
 ########################## functions ##############################
 
@@ -184,15 +185,17 @@ def evaluate_a_pair(data_indices, pair_name):
                               'portfolio_value': saved_portfolio_val,
                               'softmax_0': softmax[:, 0],
                               'softmax_1': softmax[:, 1],
-                              'softmax_2': softmax[:, 2]
+                              'softmax_2': softmax[:, 2],
+                              'data0': yclose,
+                              'data1': xclose
                              })
     
     action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0]
     dic = {0: "exit_spread", 1: "long_spread", 2: "short_spread"}
     action_df = action_df.replace({'latest_trade_action': dic})
     
-    _logger.info("\n{}".format(result_df))
-    _logger.info("\n{}".format(action_df))
+#     _logger.info("\n{}".format(result_df.head(10)))
+#     _logger.info("\n{}".format(action_df.head(10)))
     return result_df, action_df
 
 
@@ -653,7 +656,7 @@ def main(filter_pairs):
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
     plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
     
-    
+
 def plot_distribution(config):
     
     model_paths = sorted(glob.glob(checkpoint_dir+"*"))
@@ -668,7 +671,7 @@ def plot_distribution(config):
     # evaluate performance on test dataset
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
     plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_before_train', '')
-    
+
     _logger.info("restore model from {}".format(model_paths[-1]))
     _logger.info("evaluate return distribution")
     restore_model(model_paths[-1])

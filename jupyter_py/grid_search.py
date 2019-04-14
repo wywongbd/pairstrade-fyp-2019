@@ -122,6 +122,7 @@ def main():
     K = int(config.pct * N * (N-1) / 2)
     
     if config.strategy_type == "distance":
+        _logger.info("Choosing the best {} pairs out of {}.".format(K, N))
         good_pairs = select_pairs_for_all_combin(train_df=ps_df, test_df=None, 
                                                  config={'n': K, 
                                                          'score_function': distance_score, 
@@ -133,6 +134,8 @@ def main():
         tmp_df = tmp_df.reset_index(drop=True)
         good_pairs = coint(df=tmp_df, intercept=True, sig_level=0.005)
         good_pairs.sort(key=lambda x: x[2])
+        K = int(config.pct * len(good_pairs))
+        _logger.info("Choosing the best {} pairs out of {}.".format(K, len(good_pairs)))
         good_pairs = good_pairs[0 : K]
     
     # log all selected pairs
