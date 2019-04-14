@@ -5,6 +5,7 @@ import pandas as pd
 import logging
 
 import rl_constants
+import process_raw_prices
 
 _logger = logging.getLogger(__name__)
 
@@ -19,24 +20,26 @@ for i, c in enumerate(df_columns):
         col_name_to_ind['spread'] = i
     elif c == 'date':
         col_name_to_ind['date'] = i
-        
 
-def load_data(dataset_folder_path='./dataset/nyse-daily-transformed',
-              raw_files_path_pattern="./dataset/nyse-daily-trimmed-same-length/*.csv",
+
+def load_data(dataset_folder_path='./model/dataset/nyse-daily-transformed',
+              raw_files_path_pattern="./model/dataset/nyse-daily-trimmed-same-length/*.csv",
               filter_pairs=None
              ):
+    _logger.info("raw csv files loaded from {}".format(raw_files_path_pattern))
     
     os.makedirs(dataset_folder_path, exist_ok=True)
 
     # compute dataset
     all_pairs_slices = [splitext(f)[0] for f in os.listdir(dataset_folder_path) if isfile(join(dataset_folder_path, f))]
     if len(all_pairs_slices) == 0:
-        generate_pairs_training_data(raw_files_path_pattern=raw_files_path_pattern,
-                                     result_path=dataset_folder_path,
-                                     min_size=252*rl_constants.num_of_period,
-                                     training_period=52,
-                                     points_per_cut=252
-                                    )
+        process_raw_prices.generate_pairs_training_data(
+            raw_files_path_pattern=raw_files_path_pattern,
+            result_path=dataset_folder_path,
+            min_size=252*rl_constants.num_of_period,
+            training_period=52,
+            points_per_cut=252
+        )
 
     #     generate_pairs_data(raw_files_path_pattern, result_path=dataset_folder_path)
         all_pairs_slices = [splitext(f)[0] for f in os.listdir(dataset_folder_path) if isfile(join(dataset_folder_path, f))]
@@ -44,7 +47,8 @@ def load_data(dataset_folder_path='./dataset/nyse-daily-transformed',
 
     # split for training and testing
     if filter_pairs == None:
-        all_pairs = sorted(list(set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])))[:rl_constants.num_of_pair]
+        all_pairs = sorted(list(set(['-'.join(p.split('-')[0:2]) for p in all_pairs_slices])))
+        rl_constants.num_of_pair = len(all_pairs)
     else:
         all_pairs = []
         for p in filter_pairs:

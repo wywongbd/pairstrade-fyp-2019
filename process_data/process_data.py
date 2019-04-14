@@ -21,9 +21,9 @@ from process_raw_prices import get_filename_without_ext
 plt.rcParams["patch.force_edgecolor"] = True
 plt.rcParams["font.size"] = 12
 
-def my_read_csv(p):
+def my_read_csv(p, date_format):
     df = pd.read_csv(p)
-    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"], format=date_format)
     return df
 
 
@@ -41,10 +41,11 @@ def recreate_dir(folder):
 
 def trim_raw_data_files(
     start_date=datetime.date(2015, 1, 1),
-    end_date=datetime.date(2019, 1, 5),
+    end_date=datetime.date(2019, 1, 4),
     raw_folder="../../dataset/nyse-daily/",
     result_folder="../../dataset/nyse-daily-trimmed-same-length/",
     plot=False,
+    date_format="%Y-%m-%d"
 ):
 
     raw_files_path_pattern = raw_folder + "*.csv"
@@ -65,7 +66,7 @@ def trim_raw_data_files(
 
     for p in nyse_csv_paths:
         filename = get_filename_without_ext(p)
-        df = my_read_csv(p)
+        df = my_read_csv(p, date_format)
         df = df[
             (pd.Timestamp(start_date) <= df["date"])
             & (df["date"] < pd.Timestamp(end_date))
@@ -127,4 +128,6 @@ def trim_raw_data_files(
 
 
 if __name__ == "__main__":
-    trim_raw_data_files()
+    trim_raw_data_files(raw_folder="./model/dataset/other_assets/",
+                        result_folder="./model/dataset/other_assets-trimmed-same-length/",
+                        date_format="%d/%m/%Y")

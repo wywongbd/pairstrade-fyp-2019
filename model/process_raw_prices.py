@@ -1,16 +1,14 @@
 import os
 import glob
-
 import pandas as pd
 import numpy as np
-
 import statsmodels.tsa.stattools as smts
 import statsmodels.api as sm
-
 import itertools
-
 import time
+import logging
 
+_logger = logging.getLogger(__name__)
 
 def get_filename_without_ext(path):
     filename = os.path.basename(path)
@@ -134,7 +132,7 @@ def generate_pairs_data(raw_files_path_pattern,
     min_size = sum(points_per_cut)
 
     nyse_csv_paths = sorted(glob.glob(raw_files_path_pattern))
-    print("Collected %d stocks in raw data." % len(nyse_csv_paths))
+    _logger.info("Collected %d stocks in raw data." % len(nyse_csv_paths))
 
     data = {}
     N_STOCKS_TAKEN = 0
@@ -150,7 +148,7 @@ def generate_pairs_data(raw_files_path_pattern,
         if len(df) >= min_size:
             data[filename_without_ext] = df
             N_STOCKS_TAKEN += 1
-    print("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
+    _logger.info("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
 
     stocks = list(data.keys())
     TOTAL_NUM_OF_PAIRS = len(stocks) * (len(stocks)-1) // 2
@@ -171,7 +169,7 @@ def generate_pairs_data(raw_files_path_pattern,
         
         if i % 100 == 0:
             # print message
-            print((str(i) + "/" + str(TOTAL_NUM_OF_PAIRS) + " completed. time_spent: {:.1f}s").format(time.time()-start_time))
+            _logger.info((str(i) + "/" + str(TOTAL_NUM_OF_PAIRS) + " completed. time_spent: {:.1f}s").format(time.time()-start_time))
             start_time = time.time()
         i += 1
 
@@ -181,7 +179,7 @@ def generate_pairs_training_data(raw_files_path_pattern,
                                  points_per_cut=252, min_size=252*4, training_period=52):
 
     nyse_csv_paths = sorted(glob.glob(raw_files_path_pattern))
-    print("Collected %d stocks in raw data." % len(nyse_csv_paths))
+    _logger.info("Collected %d stocks in raw data." % len(nyse_csv_paths))
 
     data = {}
     N_STOCKS_TAKEN = 0
@@ -197,13 +195,15 @@ def generate_pairs_training_data(raw_files_path_pattern,
         if len(df) >= min_size:
             data[filename_without_ext] = df
             N_STOCKS_TAKEN += 1
-    print("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
+    _logger.info("Collected %d stocks with at least %d data points." % (N_STOCKS_TAKEN, min_size))
 
     stocks = list(data.keys())
     TOTAL_NUM_OF_PAIRS = len(stocks) * (len(stocks)-1) // 2
-    i = 0
+    i = 1
+    start_time = time.time()
     num_cut = min_size // points_per_cut
     for stk1, stk2 in itertools.combinations(stocks, 2):
+#         _logger.info("current pair = {} {}".format(stk1, stk2))
         df1, df2 = data[stk1], data[stk2]
 
         for j in range(num_cut):
@@ -215,6 +215,10 @@ def generate_pairs_training_data(raw_files_path_pattern,
             PATH = stk1 + "-" + stk2 + "-" + str(j)
             df3.to_csv(path_or_buf=os.path.join(result_path, PATH+".csv"), index=False)
 
-        # print message
-        print(str(i + 1) + "/" + str(TOTAL_NUM_OF_PAIRS) + " completed.")
+        if i % 100 == 0:
+            # print message
+            time_spent = time.time()-start_time
+            time_left = (TOTAL_NUM_OF_PAIRS-i)/100*time_spent
+            _logger.info("{}/{} completed. time_spent: {:.1f}s. time_left: {:.1f}s.".format(i, TOTAL_NUM_OF_PAIRS, time_spent, time_left))
+            start_time = time.time()
         i += 1

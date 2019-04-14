@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../log_helper")
+sys.path.append("./log_helper")
 
 import tensorflow as tf
 import numpy as np
@@ -12,6 +12,7 @@ import random
 import argparse
 import time
 import logging
+import glob
 
 from os.path import isfile, join, splitext
 from datetime import datetime, timedelta
@@ -103,7 +104,7 @@ def run_rl_backtest(stock1, stock2, period_index):
     
     main_global_setup(config, filter_pairs=[pair_name])
     
-    restore_model("./logging/train_012_test_3_new/saved_models/20190410_050826")
+    restore_model("./model/logging/train_012_test_3_new/saved_models/20190410_050826")
     
     return evaluate_a_pair([period_index], pair_name)
 
@@ -246,7 +247,7 @@ def run_epoch_for_evaluate_performance(data_indices):
 def plot_rs_dist(rs, fig_name, fig_title):
     return_in_percent = np.array(rs) / rl_constants.initial_cash
     plt.figure()
-    stat = plt.hist(return_in_percent, bins=30)
+    stat = plt.hist(return_in_percent, bins=30, range=(-1, 5))
     
     mean = return_in_percent.mean()
     median = np.median(return_in_percent)
@@ -489,7 +490,12 @@ class StateEncodingModel(tf.keras.Model):
 def generate_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--job_name", type=str, required=True, help="The job name.")
-    parser.add_argument("--is_train", default=False, action='store_true', help="Is this job training?")
+    parser.add_argument("--run_mode", type=str, required=True, choices=["train", "plot_distribution", "plot_progress"],
+                        help="What will this script do, either train, plot_distribution, or plot_progress")
+    parser.add_argument("--load_which_data", default="tech", choices=["tech", "energy", "other"],
+                        help="Indicate which data to load")
+    
+#     parser.add_argument("--is_train", default=False, action='store_true', help="Is this job training?")
     parser.add_argument("--batch_size", type=int, default=300)
     parser.add_argument("--num_of_epoch", type=int, default=80)
     # h_dim 300 is very good
@@ -567,9 +573,9 @@ def main_global_setup(config, filter_pairs=None):
     global checkpoint_dir
     global _logger
     
-    plot_folder_path = './logging/{}/plots/'.format(job_name)
-    checkpoint_dir = './logging/{}/saved_models/'.format(job_name)
-    log_folder_path = './logging/{}/'.format(job_name)
+    plot_folder_path = './model/logging/{}/plots/'.format(job_name)
+    checkpoint_dir = './model/logging/{}/saved_models/'.format(job_name)
+    log_folder_path = './model/logging/{}/'.format(job_name)
 
     os.makedirs(plot_folder_path, exist_ok=True)
     os.makedirs(checkpoint_dir, exist_ok=True)
@@ -585,7 +591,18 @@ def main_global_setup(config, filter_pairs=None):
     _logger.info("num_of_batch = {}".format(num_of_batch))
     
     # load data
-    all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data(filter_pairs=filter_pairs)
+    if config.load_which_data == "tech":
+        all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data(filter_pairs=filter_pairs)
+    elif config.load_which_data == "energy":
+        all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data(
+            dataset_folder_path='./model/dataset/nyse-daily-energy-transformed',
+            raw_files_path_pattern="./model/dataset/nyse-daily-energy-trimmed-same-length/*.csv",
+            filter_pairs=filter_pairs)
+    elif config.load_which_data == "other":
+        all_pairs_slices, all_pairs_df, trading_period = rl_load_data.load_data(
+            dataset_folder_path='./model/dataset/other-assets-transformed',
+            raw_files_path_pattern="./model/dataset/other-assets-trimmed-same-length/*.csv",
+            filter_pairs=filter_pairs)
 
     # create objects
     pi = TradingPolicyModel()
@@ -636,6 +653,34 @@ def main(filter_pairs):
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
     plot_rs_dist(test_rs, 'RL_test_result_after_train', '')
     
+    
+def plot_distribution(config):
+    
+    model_paths = sorted(glob.glob(checkpoint_dir+"*"))
+    _logger.info("restore model from {}".format(model_paths[0]))
+    _logger.info("evaluate return distribution")
+    restore_model(model_paths[0])
+    
+    # evaluate performance on train dataset
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_before_train', '')
+    
+    # evaluate performance on test dataset
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_before_train', '')
+    
+    _logger.info("restore model from {}".format(model_paths[-1]))
+    _logger.info("evaluate return distribution")
+    restore_model(model_paths[-1])
+    
+    # evaluate performance on train dataset
+    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_after_train', '')
+    
+    # evaluate performance on test dataset
+    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_after_train', '')
+    
 
 def plot_progress(config):
     i = 0
@@ -643,41 +688,19 @@ def plot_progress(config):
     train_rs_list = []
     test_rs_list = []
     
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_003432")
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
-    i += 1
-    train_rs_list.append(train_rs)
-    test_rs_list.append(test_rs)
+    model_paths = sorted(glob.glob(checkpoint_dir+"*"))
+    x = (len(model_paths)-1)//3
+    selected_model_paths = [model_paths[0], model_paths[x], model_paths[2*x], model_paths[-1]]
     
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_010609")
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
-    i += 1
-    train_rs_list.append(train_rs)
-    test_rs_list.append(test_rs)
-    
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_034223")
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
-    i += 1
-    train_rs_list.append(train_rs)
-    test_rs_list.append(test_rs)
-    
-    restore_model("./logging/train_0_test_1_new/saved_models/20190410_043649")
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-#     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-#     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
-    i += 1
-    train_rs_list.append(train_rs)
-    test_rs_list.append(test_rs)
+    for selected_p in selected_model_paths:
+        restore_model(selected_p)
+        train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+    #     plot_rs_dist(train_rs, 'RL_train_result_{}'.format(i), '')
+        test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+    #     plot_rs_dist(test_rs, 'RL_test_result_{}'.format(i), '')
+        i += 1
+        train_rs_list.append(train_rs)
+        test_rs_list.append(test_rs)
     
     plt.figure()
     plot_rs_dist_overlap(train_rs_list[0], '', methodName="model "+str(0), mean=False)
@@ -705,7 +728,9 @@ if __name__ == '__main__':
     filter_pairs = None
     main_global_setup(config, filter_pairs=filter_pairs)
     
-    if config.is_train:
+    if config.run_mode == "train":
         main(filter_pairs)
+    elif config.run_mode == "plot_distribution":
+        plot_distribution(config)
     else:
         plot_progress(config)
