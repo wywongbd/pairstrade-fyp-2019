@@ -18,7 +18,7 @@ from os.path import isfile, join, splitext
 from datetime import datetime, timedelta
 from pytz import timezone, utc
 
-plt.rcParams["font.size"] = 16
+plt.rcParams["font.size"] = 12
 plt.rcParams["patch.force_edgecolor"] = True
 
 sys.path.append("./model")
@@ -99,13 +99,16 @@ def get_hkg_time():
 def run_rl_backtest(stock1, stock2, period_index):
     pair_name = "-".join([stock1, stock2])
     
-    config = generate_parser().parse_args(['--job_name', 'run_rl_backtest', '--is_train', 'False'])
+    config = generate_parser().parse_args(['--job_name', '0412_train_012_test_3', '--run_mode', 'plot_distribution'])
     
     copy_config(config)
     
     main_global_setup(config, filter_pairs=[pair_name])
-    
-    restore_model("./model/logging/train_012_test_3_new/saved_models/20190410_050826")
+
+    model_paths = sorted(glob.glob(checkpoint_dir+"*"))
+    _logger.info("restore model from {}".format(model_paths[-1]))
+    _logger.info("evaluate return distribution")
+    restore_model(model_paths[-1])
     
     return evaluate_a_pair([period_index], pair_name)
 
@@ -143,6 +146,8 @@ def evaluate_a_pair(data_indices, pair_name):
     date = env.history[:,-1,0]
     yclose = env.history[:, rl_load_data.col_name_to_ind["y_close"], 0]
     xclose = env.history[:, rl_load_data.col_name_to_ind["x_close"], 0]
+    normalized_data0 = env.history[:, 2, 0]
+    normalized_data1 = env.history[:, 3, 0]
     y_val = yclose*np.array(y_quantity)
     x_val = xclose*np.array(x_quantity)
     
@@ -153,18 +158,6 @@ def evaluate_a_pair(data_indices, pair_name):
 #     plt.plot(env.history[:,-1,0], saved_a)
 #     plt.savefig(join(plot_folder_path, 'spread_action_{}.png'.format(pair_name)))
     
-    fig, (ax1, ax2) = plt.subplots(2, sharex=True, figsize=(14, 7))
-    ax1.plot(env.history[:,rl_load_data.col_name_to_ind["spread"],0], color='b', label='spread')
-    ax1.set_ylabel('spread', color='b')
-    ax1_ = ax1.twinx()
-    ax1_.plot(saved_a, color='r', label='action')
-    ax1_.set_ylabel('action', color='r')
-    ax2.plot(saved_portfolio_val)
-    ax2.set_ylabel('value')
-    ax2.plot(y_val)
-    ax2.plot(x_val)
-    fig.tight_layout()
-    fig.savefig(join(plot_folder_path, 'spread_action_portval_{}_{}.png'.format(pair_name, data_indices[0])))
     
 #     plt.figure()
 #     plt.plot(env.history[:,-1,0], saved_portfolio_val)
@@ -187,12 +180,41 @@ def evaluate_a_pair(data_indices, pair_name):
                               'softmax_1': softmax[:, 1],
                               'softmax_2': softmax[:, 2],
                               'data0': yclose,
-                              'data1': xclose
+                              'data1': xclose,
+                              'normalized_data0': normalized_data0,
+                              'normalized_data1': normalized_data1
                              })
+    
     
     action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0]
     dic = {0: "exit_spread", 1: "long_spread", 2: "short_spread"}
     action_df = action_df.replace({'latest_trade_action': dic})
+    
+    exit_df = action_df.loc[action_df['latest_trade_action'] == 'exit_spread']
+    long_df = action_df.loc[action_df['latest_trade_action'] == 'long_spread']
+    short_df = action_df.loc[action_df['latest_trade_action'] == 'short_spread']
+    
+    ball_size = 50
+    fig, (ax1, ax3) = plt.subplots(2, sharex=True, figsize=(14, 7))
+    ax1.plot(result_df.index, result_df['spread'], label='spread')
+    ax1.scatter(exit_df.index, exit_df['spread'], s=ball_size, color='r', label="exit")
+    ax1.scatter(long_df.index, long_df['spread'], s=ball_size, color='b', label="long")
+    ax1.scatter(short_df.index, short_df['spread'], s=ball_size, color='g', label="short")
+    ax1.set_ylabel('spread')
+    ax1.legend(loc='upper right')
+
+#     ax2.plot(saved_portfolio_val)
+#     ax2.set_ylabel('value')
+#     ax2.plot(y_val, label='y_price*y_q')
+#     ax2.plot(x_val, label='x_price*x_q')
+#     ax2.legend(loc='upper right')
+    
+    ax3.plot(result_df['normalized_data0'], label='normalized_log_y')
+    ax3.plot(result_df['normalized_data1'], label='normalized_log_x')
+    ax3.legend(loc='upper right')
+    
+    fig.tight_layout()
+#     fig.savefig(join(plot_folder_path, 'spread_action_portval_{}_{}.png'.format(pair_name, data_indices[0])))
     
 #     _logger.info("\n{}".format(result_df.head(10)))
 #     _logger.info("\n{}".format(action_df.head(10)))
@@ -660,29 +682,30 @@ def main(filter_pairs):
 def plot_distribution(config):
     
     model_paths = sorted(glob.glob(checkpoint_dir+"*"))
-    _logger.info("restore model from {}".format(model_paths[0]))
-    _logger.info("evaluate return distribution")
-    restore_model(model_paths[0])
+#     _logger.info("restore model from {}".format(model_paths[0]))
+#     _logger.info("evaluate return distribution")
+#     restore_model(model_paths[0])
     
-    # evaluate performance on train dataset
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_before_train', '')
+#     # evaluate performance on train dataset
+#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+#     plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_before_train', '')
     
-    # evaluate performance on test dataset
-    test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_before_train', '')
+#     # evaluate performance on test dataset
+#     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
+#     plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_before_train', '')
 
     _logger.info("restore model from {}".format(model_paths[-1]))
     _logger.info("evaluate return distribution")
     restore_model(model_paths[-1])
     
-    # evaluate performance on train dataset
-    train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
-    plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_after_train', '')
+#     # evaluate performance on train dataset
+#     train_rs, train_total_r_dict = run_epoch_for_evaluate_performance(config.train_indices)
+#     plot_rs_dist(train_rs, config.load_which_data+'_RL_train_result_after_train', '')
     
     # evaluate performance on test dataset
     test_rs, test_total_r_dict = run_epoch_for_evaluate_performance(config.test_indices)
-    plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_after_train', '')
+    _logger.info("\n{}".format(test_rs))
+#     plot_rs_dist(test_rs, config.load_which_data+'_RL_test_result_after_train', '')
     
 
 def plot_progress(config):

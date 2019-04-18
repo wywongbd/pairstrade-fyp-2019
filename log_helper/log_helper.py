@@ -26,12 +26,15 @@ class LogHelper:
 
         logging.Formatter.converter = customTime
 
-        # Set up logging to console
-        console = logging.StreamHandler()
-        console.setLevel(logging.DEBUG)
-        console.setFormatter(logging.Formatter(LogHelper.log_format))
         # Add the console handler to the root logger
-        logging.getLogger('').addHandler(console)
+        logger = logging.getLogger(None)
+        # avoid adding handlers multiple times
+        if len(logger.handlers) < 2:
+            # Set up logging to console
+            console = logging.StreamHandler()
+            console.setLevel(logging.DEBUG)
+            console.setFormatter(logging.Formatter(LogHelper.log_format))
+            logger.addHandler(console)
 
         # Log for unhandled exception
         logger = logging.getLogger(__name__)
