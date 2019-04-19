@@ -1,0 +1,9 @@
+Feature,Description
+Set backtest params,-
+Backtest a given pair using Distance method,Obtain table of relevant performance statistics
+Backtest a given pair using Cointegration (rolling OLS) method,Obtain table of relevant performance statistics
+Backtest a given pair using Cointegration (Kalman Filter) method,Obtain table of relevant performance statistics
+Backtest a given pair using Reinforcement Learning trading agent method,Obtain table of relevant performance statistics
+Show stock prices of a given pair,Eyeball comparison of spread
+Show how the spread changes over time,Identify when the spread diverges from the mean to form a trade opportunity
+Indicate specific points in time when a trade action is made,"Label the action, and the amounts a stock is bought or sold"
