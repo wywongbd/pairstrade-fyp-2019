@@ -3,9 +3,12 @@ import os
 import sys
 import glob
 import logging
+import traceback
 import pandas as pd
 import numpy as np
 from datetime import date, datetime
+
+pd.set_option('display.max_columns', 500)
 
 # figure plotting
 import bokeh.models as bkm
@@ -93,7 +96,7 @@ def build_price_and_spread_fig(data, action_df):
     
     try:
         spread_source = ColumnDataSource(data=dict(date=dates, 
-                                                   spread=data['spread'], 
+                                                   spread=data['spread'],
                                                    upper_limit=data['upper_limit'], 
                                                    lower_limit=data['lower_limit']))
     except:
@@ -119,6 +122,7 @@ def build_price_and_spread_fig(data, action_df):
     # ========== plot data points ============= #
     # plot the POINT coords of the ACTIONS
     if len(action_df) > 0:
+        logging.info("BUILDING CIRCLES")
         action_source = ColumnDataSource(action_df)
         circles = spread_p.circle("date", "spread", size=12, source=action_source, fill_alpha=0.8)
 
@@ -129,17 +133,15 @@ def build_price_and_spread_fig(data, action_df):
             ("Stock Sold", "@sell_stk"),
             ("Sold Amount", "@sell_amt")
             ])
-
+        
         spread_p.add_tools(circles_hover)
 
     # plot the spread over time
     spread_p.line('date', 'spread', source=spread_source, line_color = LINE_COLOR, line_width = LINE_WIDTH)
     
-    try:
+    if ('upper_limit' in data.columns) and ('lower_limit' in data.columns):
         spread_p.line('date', 'upper_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
         spread_p.line('date', 'lower_limit', source=spread_source, line_color = "#FFA500", line_width = LINE_WIDTH)
-    except:
-        pass
     
     spread_p.xaxis[0].formatter = DatetimeTickFormatter()
 
@@ -320,14 +322,26 @@ def run_backtest():
         
     else:
         # perform RL backtest
-        backtest_df, trades_df = run_rl_backtest(backtest_params["stk_0"], backtest_params["stk_1"], RL_period_idx)
+        logging.info("{}".format("PERFORMING RL CALCULATION"))
+        
+        try:
+            backtest_df, trades_df = run_rl_backtest(backtest_params["stk_0"], backtest_params["stk_1"], RL_period_idx)
+        except Exception as e:
+            logging.warning("{}".format(e))
+            logging.warning("{}".format(traceback.format_exc()))
+        
+        logging.info("{}".format("FINISH RL CALCULATION"))
+
         logging.info("done RL")
         metrics_ls = [{'Metrics': 'Sharpe Ratio', 'Value': None}]
         metrics_pd = pd.DataFrame(metrics_ls)
         metrics_pd.columns = ['Metrics', 'Value']
     
+    logging.info("DONE CALCULATION")
     logging.info("{}".format(backtest_df.columns))
     logging.info("{}".format(trades_df.columns))
+    logging.info("{}".format(backtest_df.head()))
+    logging.info("{}".format(trades_df.head()))
     
     # build figures
     spread_fig = build_price_and_spread_fig(backtest_df, trades_df)
@@ -358,7 +372,7 @@ def run_backtest():
     curdoc().add_root(grid)
     logging.info("really done all")
     logging.info("FIRST_ITER: {}".format(FIRST_ITER))
-    logging.info("Frid: {}".format(grid))
+    logging.info("Grid: {}".format(grid))
 
 if FIRST_ITER[1]:
     def update_stk_1(attrname, old, new):
