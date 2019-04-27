@@ -99,7 +99,9 @@ def get_hkg_time():
 def run_rl_backtest(stock1, stock2, period_index):
     pair_name = "-".join([stock1, stock2])
     
-    config = generate_parser().parse_args(['--job_name', '0412_train_012_test_3', '--run_mode', 'plot_distribution'])
+    job_name = {1: '0412_train_0_test_1', 2: '0412_train_01_test_2', 3: '0412_train_012_test_3'}
+    
+    config = generate_parser().parse_args(['--job_name', job_name[period_index], '--run_mode', 'plot_distribution'])
     
     copy_config(config)
     
@@ -148,8 +150,10 @@ def evaluate_a_pair(data_indices, pair_name):
     xclose = env.history[:, rl_load_data.col_name_to_ind["x_close"], 0]
     normalized_data0 = env.history[:, 2, 0]
     normalized_data1 = env.history[:, 3, 0]
-    y_val = yclose*np.array(y_quantity)
-    x_val = xclose*np.array(x_quantity)
+    y_quantity = np.array(y_quantity)
+    x_quantity = np.array(x_quantity)
+    y_val = yclose*y_quantity
+    x_val = xclose*x_quantity
     
     softmax = np.array(softmax)
 
@@ -163,14 +167,6 @@ def evaluate_a_pair(data_indices, pair_name):
 #     plt.plot(env.history[:,-1,0], saved_portfolio_val)
 #     plt.savefig(join(plot_folder_path, 'portfolio_val_{}.png'.format(pair_name)))
 
-    
-#     for i, v in enumerate(saved_a):
-#         if v == 0:
-#             saved_a[i] = 'exit_spread'
-#         elif v == 1:
-#             saved_a[i] = 'long_spread'
-#         elif v == 2:
-#             saved_a[i] = 'short_spread'
 
     result_df = pd.DataFrame({'spread': env.history[:,rl_load_data.col_name_to_ind["spread"],0],
                               'date': env.history[:,-1,0],
@@ -182,13 +178,25 @@ def evaluate_a_pair(data_indices, pair_name):
                               'data0': yclose,
                               'data1': xclose,
                               'normalized_data0': normalized_data0,
-                              'normalized_data1': normalized_data1
+                              'normalized_data1': normalized_data1,
+                              'quantity0': y_quantity,
+                              'quantity1': x_quantity
                              })
+    result_df['quantity0'] = result_df['quantity0'].diff().values
+    result_df['quantity1'] = result_df['quantity1'].diff().values
     
     
-    action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0]
+    columns_required = ['spread', 'date', 'latest_trade_action']
+    action_df = result_df.loc[result_df['latest_trade_action'].diff() != 0][columns_required]
     dic = {0: "exit_spread", 1: "long_spread", 2: "short_spread"}
     action_df = action_df.replace({'latest_trade_action': dic})
+    action_df = action_df.iloc[1:]
+    
+    action_df["sell_stk"] = None
+    action_df["buy_stk"] = None
+    action_df["buy_amt"] = None
+    action_df["sell_amt"] = None
+    action_df = action_df.reset_index()
     
     exit_df = action_df.loc[action_df['latest_trade_action'] == 'exit_spread']
     long_df = action_df.loc[action_df['latest_trade_action'] == 'long_spread']
