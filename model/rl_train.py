@@ -194,9 +194,12 @@ def evaluate_a_pair(data_indices, pair_name):
     
     action_df["sell_stk"] = None
     action_df["buy_stk"] = None
-    action_df["buy_amt"] = None
-    action_df["sell_amt"] = None
+    action_df["buy_amt"] = np.nan
+    action_df["sell_amt"] = np.nan
     action_df = action_df.reset_index()
+    
+    action_df['spread'] = pd.to_numeric(action_df['spread'])
+    action_df['date'] = pd.to_datetime(action_df['date'])
     
     exit_df = action_df.loc[action_df['latest_trade_action'] == 'exit_spread']
     long_df = action_df.loc[action_df['latest_trade_action'] == 'long_spread']

@@ -123,6 +123,7 @@ def build_price_and_spread_fig(data, action_df):
     # plot the POINT coords of the ACTIONS
     if len(action_df) > 0:
         logging.info("BUILDING CIRCLES")
+        logging.info("ACTION_DF: {}".format(action_df.head()))
         action_source = ColumnDataSource(action_df)
         circles = spread_p.circle("date", "spread", size=12, source=action_source, fill_alpha=0.8)
 
