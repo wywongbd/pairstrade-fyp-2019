@@ -2,3 +2,7 @@
 .ipynb_checkpoints
 __pycache__
 tmp-data/
+tmp/
+.DS_Store
+model/logging
+model/dataset
