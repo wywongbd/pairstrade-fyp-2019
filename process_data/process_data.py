@@ -128,6 +128,6 @@ def trim_raw_data_files(
 
 
 if __name__ == "__main__":
-    trim_raw_data_files(raw_folder="./model/dataset/other_assets/",
-                        result_folder="./model/dataset/other_assets-trimmed-same-length/",
-                        date_format="%d/%m/%Y")
+    trim_raw_data_files(raw_folder="./data/nyse-daily-tech/",
+                        result_folder="./model/dataset/nyse-daily-trimmed-same-length/",
+                        date_format="%Y-%m-%d")
