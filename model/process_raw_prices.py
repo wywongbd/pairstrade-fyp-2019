@@ -33,7 +33,7 @@ def compute_alpha_beta(Y, X):
 
 
 def normalize_array(arr, train_arr):
-    return (arr - np.mean(arr))/np.std(train_arr)
+    return (arr - np.mean(train_arr))/np.std(train_arr)
 
 
 def normalize_log_close(df, training_period):
