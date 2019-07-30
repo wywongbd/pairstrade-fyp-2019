@@ -13,7 +13,7 @@ FYP members: [myself](https://github.com/wywongbd), [Gordon](https://github.com/
 - Run `./setup.sh` to install all dependencies
 
 ### Note
-- In our experiments, we used financial data taken from the Interactive Brokers platform, which is not free. Due to their regulations, we cannot released the financial data used in our experiments to the public. Feel free to use your own price data to perform experiments. 
+- In our experiments, we used financial data taken from the Interactive Brokers platform, which is not free. Due to their regulations, we cannot release the financial data used in our experiments to the public. Feel free to use your own price data to perform experiments. 
 
 ### Disclaimer
 - The strategies we implemented have not been proven to be profitable in a live trading account
