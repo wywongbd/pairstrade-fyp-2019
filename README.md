@@ -1,4 +1,4 @@
-# statistical-arbitrage-18-19
+# pairstrade-fyp-2019
 Final year project at HKUST. We tested 3 main approaches for performing Pairs Trading: 
 - distance method
 - cointegration method (rolling OLS, Kalman Filter)
