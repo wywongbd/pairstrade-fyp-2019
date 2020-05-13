@@ -4,8 +4,7 @@ Final year project at HKUST. We tested 3 main approaches for performing Pairs Tr
 - cointegration method (rolling OLS, Kalman Filter)
 - reinforcement learning agent (proposed)
 
-Final report can be found [here](https://github.com/wywongbd/statistical-arbitrage-18-19/blob/master/reports/FYP_Final_Report_LZ2.pdf).
-Presentation slides can be found [here](https://github.com/wywongbd/statistical-arbitrage-18-19/blob/master/reports/FYP_Final_Presentation.pdf).
+[Final report](https://github.com/wywongbd/statistical-arbitrage-18-19/blob/master/reports/FYP_Final_Report_LZ2.pdf).
 
 FYP members: [myself](https://github.com/wywongbd), [Gordon](https://github.com/GordonCW), [Brendan](https://github.com/thambrendan)
 
@@ -18,3 +17,6 @@ FYP members: [myself](https://github.com/wywongbd), [Gordon](https://github.com/
 ### Disclaimer
 - The strategies we implemented have not been proven to be profitable in a live trading account
 - The reported returns are purely from backtesting procedures, and they may be susceptible to lookahead bias that we are not aware of
+
+### Updates
+- We're no longer developing this, check out [Yuri](https://github.com/ScrapeWithYuri/pairstrade-fyp-2019)'s findings regarding the RL agent
